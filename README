@@ -1,0 +1,54 @@
+/**
+ *  Html5 Form Vlidation Plugin for IE - jQuery plugin
+ *
+ *  Author: by Yoshiyuki Mikomde http://www.rapidexp.com
+ *
+ *  Copyright (c) 2012 Yoshiyuki Mikome (http://www.rapidexp.com)
+ *  Dual licensed under the MIT (MIT-LICENSE.txt)
+ *  and GPL (GPL-LICENSE.txt) licenses.
+ *
+ *  Built for jQuery library
+ *	http://jquery.com
+ *
+ */
+
+
+This plugin gives all browsers the HTML5 form validation such as Opera. *1
+
+ * The controls of date will be extended in Chrome and Safari.
+
+ * The controls of date and number will be extended in FireFox.
+
+ * In addtiion to them in IE, the attribute of requied, spaceHolder and autoFocus
+   and the validation of url, email and pattern will be all enabled.
+   The error message will be balloon like other modern browsers.
+
+ * As a result will not be anything in the Opera.
+
+These features are judged by whether or not the  input element has there object.
+For future versions of browsers or for unknown browsers, they will be able to support
+nearly maintenance-free. *2
+
+
+And this will also fix all of the bug in IE on submit, and will allow you to use
+button elements.
+
+ * When you click the button element of submit, IE does not send the value of the
+   clicked button but send the context of all button.
+
+ * When you press Enter in input element of text, IE does not send the value of the
+   first button element of submit.
+
+ * When you press Enter in input element of text, IE does not send the value of the
+   first input element of submit if there is only one input element of text.
+
+ * The default type of button element in IE is button rather than submit.
+
+
+Note
+ *1 The specification of the global date and time (datetime) has been adopted the W3C
+    draft. Therefore, it's user interface is unlike the Opera.
+
+ *2 Whether there is a calendar in the interface of date are determined by the
+    type of browser. This part will need to be changed when the version-up of browsers.
+

@@ -127,6 +127,12 @@ Copyright (c) 2010 Matias Mancini (http://www.matiasmancini.com.ar)
 改変履歴
 ============================
 
+Version 2.x
+
+ * formのnovaliadte属性に対応
+ * IEのオブジェクトからはrequiredが判定できていない
+
+
 Version 2.2		(2012-06-15)
 
  * input要素のないフォームでのエラーを修正
@@ -179,7 +185,7 @@ Version 1.1		(2012-05-31)
 
 Version 1.0		(2012-05-26)
 
- * ダイナミックrequiedに対応
+ * ダイナミックrequiredに対応
  * pattern属性、urlタイプに対応
 
 

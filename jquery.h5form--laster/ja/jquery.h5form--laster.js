@@ -16,6 +16,10 @@
 
     $.fn.h5form = function(options) {
 
+		if (!('outerHTML' in document.createElement('div'))) {
+			HTMLElement.prototype.__defineGetter__('outerHTML', function() { return this.ownerDocument.createElement('div').appendChild(this.cloneNode(true)).parentNode.innerHTML })
+		}
+
 		//default configuration properties
 		var defaults = {
 			classResponse : 'h5form-response',
@@ -49,7 +53,7 @@
 			hasCustomValidity = ('setCustomValidity' in test1),
 			hasAppendTitle = ($.browser.webkit && version >= 533),	// maybe
 			hasAutofocus = ('autofocus' in test1),
-			hasRequired = ('required' in test1),
+			hasRequired = ('required' in test1 && !($.browser.msie && version < 10)),	// why IE6-7 have this attribute? I don't know!
 			hasPlaceholder = ('placeholder' in test1),
 			hasPattern = ('pattern' in test1),
 			hasEmail = hasUrl = hasCustomValidity && hasPattern, // maybe
@@ -79,8 +83,10 @@
 				elmPlaceholder = new Array(),
 				customValidity = new Object(),
 				validatable = ':input:enabled:not(:button, :submit, :radio, :checkbox, :hidden)',
-				validatableElements = form.find(validatable);
-
+				validatableElements = form.find(validatable),
+				novalidate = !!form.get(0).outerHTML.match(/^[^>]+ novalidate/);
+				// form.attr('novalidate') result undefined,
+				// when from has novalidate rather than novalidate="novalidate"
 
 			/**
 			 * Set a custom Validity to the elements
@@ -89,6 +95,7 @@
 			 */
 			$.fn.setCustomValidity = function(message) {
 				return this.each(function() {
+					if (novalidate) message = null;
 					var ui = $(this);
 					if (ui.is(validatable)) {
 						// Add a title to the message
@@ -265,7 +272,7 @@
 						// clear validity first
 						ui.setCustomValidity('');
 
-						// Requied
+						// Required
 						if (!hasRequired && ui.attr('required')) {
 							isNecessary = true;
 							if (isEmpty) {
@@ -389,7 +396,7 @@
 				// The correct default type of button is "submit".
 				form.find('button').each(function() {
 					var html = $(this).get(0).outerHTML;
-					if (!html.match(/type\s*=/)) {
+					if (!html.match(/^[^>]+ type/)) {
 						$(this).after(html.replace(/<button/i, '<button type="submit"')).remove();
 					}
 				});

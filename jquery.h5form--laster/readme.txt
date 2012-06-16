@@ -21,15 +21,15 @@ This plugin gives all browsers the HTML5 form validation such as Opera. *1
 
  * The controls of date and number will be extended in FireFox.
 
- * In addtiion to them in IE, the attribute of requied, spaceHolder and autoFocus
-   and the validation of url, email and pattern will be all enabled.
+ * In addtiion to them in IE, the attribute of required, spaceHolder, autoFocus
+   and novalidate and the validation of url, email and pattern will be all enabled.
    The error message will be balloon like other modern browsers.
 
  * As a result will not be anything in the Opera.
 
-These features are judged by whether or not the  input element has there object.
-For future versions of browsers or for unknown browsers, they will be able to support
-nearly maintenance-free. *2
+These features are judged by whether or not the input element has there object.
+For future versions of browsers or for unknown browsers, they will be able to
+support nearly maintenance-free. *2
 
 
 And this will also fix all of the bug in IE on submit, and will allow you to use
@@ -48,11 +48,11 @@ button elements.
 
 
 Note
- *1 The specification of the global date and time (datetime) has been adopted the W3C
-    draft. Therefore, it's user interface is unlike the Opera.
+ *1 The specification of the global date and time (datetime) has been adopted the
+    W3C draft. Therefore, it's user interface is unlike the Opera.
 
- *2 Whether there is a calendar in the interface of date are determined by the
-    type of browser. This part will need to be changed when the version-up of browsers.
+ *2 Whether there is a calendar in the interface of date are determined by the type
+    of browser. This part will need to be changed when the version-up of browsers.
 
 
 
@@ -123,6 +123,12 @@ Copyright (c) 2010 Matias Mancini (http://www.matiasmancini.com.ar)
 
 History
 ============================
+
+Version 2.x
+
+ * Added support novalidate of form elemnt.
+ * Why object have a required attribute in IE6-7?
+
 
 Version 2.2		(2012-06-15)
 

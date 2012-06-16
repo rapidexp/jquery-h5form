@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>HTML5 Form Validation Plugin</title>
 
-	<link rel="stylesheet" type="text/css" href="../../css/smoothness/jquery-ui-custom.css" />
+	<link rel="stylesheet" type="text/css" href="/lib/css/smoothness/jquery-ui-custom.css" />
 	<link rel="stylesheet" type="text/css" href="../css/jquery.h5form--laster.css" />
 	<style style="text/css">
 	  body, td, input, select, textarea { font-size: 10pt; }
@@ -77,9 +77,6 @@
 
 	<p>This plugin gives all browsers the HTML5 form validation such as Opera.<br>
 	  And this will also fix all of the bug in IE on submit, and will allow you to use button elements.</p>
-
-
-
 
 
 	<form action="" method="post">

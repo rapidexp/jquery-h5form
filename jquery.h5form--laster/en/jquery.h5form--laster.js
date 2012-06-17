@@ -44,16 +44,13 @@
 		var opts = $.extend({}, defaults, options);
 
 		// Test browser
-		// Append textbox in case it does not exist even one.
-		$('<input type="text">').hide().appendTo($(this));
-		var version = parseInt($.browser.version);
-
- 		var test1 = $('input:first').get(0),
+		var version = parseInt($.browser.version),
+ 			test1 = $('<input>').hide().appendTo($('body')).get(0),
  			test2 = $('textarea:first').get(0) || new Object(),
 			hasCustomValidity = ('setCustomValidity' in test1),
 			hasAppendTitle = ($.browser.webkit && version >= 533),	// maybe
 			hasAutofocus = ('autofocus' in test1),
-			hasRequired = ('required' in test1 && !($.browser.msie && version < 10)),	// why IE6-7 have this attribute? I don't know!
+			hasRequired = ('required' in test1),
 			hasPlaceholder = ('placeholder' in test1),
 			hasPattern = ('pattern' in test1),
 			hasEmail = hasUrl = hasCustomValidity && hasPattern, // maybe
@@ -62,12 +59,7 @@
 			hasMaxlength = ('maxLength' in test2),
 			hasIeBugs = ($.browser.msie && version < 9);
 
-		if (!hasIeBugs) {
-			// Does not remove after testing in IE.
-			// Because if there is only one input:text, it does not send a value of input:submit
-			// when you press Enter in the input:text.
-			$(this).find(':text:last').remove();
-		}
+		$('input:last').remove();
 
 		// clear balloons
 		$('body').click(function () {

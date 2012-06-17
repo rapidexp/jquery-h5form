@@ -273,7 +273,13 @@ $('[name="email"]').change(function() {
 		<tr>
 		  <th></th>
 		  <td>
-			<button name="submit" value="validate">Vlidate</button>
+			<button name="submit" value="1">Submit 1</button>
+			<button name="submit" value="2">Sbumit 2</button>
+			<br>
+			<div class="source">
+			  &lt;button name="submit" value="1"&gt;Submit 1&lt;/button&gt;<br>
+			  &lt;button name="submit" value="2"&gt;Submit 2&lt;/button&gt;
+			</div>
 		  </td>
 		</tr>
 

@@ -78,7 +78,6 @@
 	<p>This plugin gives all browsers the HTML5 form validation such as Opera.<br>
 	  And this will also fix all of the bug in IE on submit, and will allow you to use button elements.</p>
 
-
 	<form action="" method="post">
 	  <table>
 		<tr>

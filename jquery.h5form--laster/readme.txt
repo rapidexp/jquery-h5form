@@ -1,6 +1,6 @@
 /**
  *  Html5 Form Vlidation Plugin for IE - jQuery plugin
- *  Version--laster
+ *  Version -laster
  *
  *  Author: by Yoshiyuki Mikomde http://www.rapidexp.com
  *
@@ -124,10 +124,9 @@ Copyright (c) 2010 Matias Mancini (http://www.matiasmancini.com.ar)
 History
 ============================
 
-Version 2.x
+Version 2.3		(2012-06-18)
 
  * Added support novalidate of form elemnt.
- * Why object have a required attribute in IE6-7?
 
 
 Version 2.2		(2012-06-15)

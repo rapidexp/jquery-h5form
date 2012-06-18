@@ -272,7 +272,13 @@ $('[name="email"]').change(function() {
 		<tr>
 		  <th></th>
 		  <td>
-			<button name="submit" value="validate">確認</button>
+			<button name="submit" value="1">Submit 1</button>
+			<button name="submit" value="2">Sbumit 2</button>
+			<br>
+			<div class="source">
+			  &lt;button name="submit" value="1"&gt;Submit 1&lt;/button&gt;<br>
+			  &lt;button name="submit" value="2"&gt;Submit 2&lt;/button&gt;
+			</div>
 		  </td>
 		</tr>
 
@@ -282,7 +288,7 @@ $('[name="email"]').change(function() {
 
 <?php if (isset($_POST['submit'])):?>
 	<div id="result">
-	  <span id="close_result">[非表示]</span>
+	  <span id="close_result">[Close]</span>
 	  <pre>$_POST = <?php print_r($_POST); ?></pre>
 	</div>
 <?php endif; ?>

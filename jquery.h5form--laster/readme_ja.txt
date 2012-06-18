@@ -1,6 +1,6 @@
 /**
  *  Html5 Form Vlidation Plugin for IE - jQuery plugin
- *  Version--laster
+ *  Version -laster
  *
  *  Author: by Yoshiyuki Mikomde http://www.rapidexp.com
  *
@@ -127,10 +127,9 @@ Copyright (c) 2010 Matias Mancini (http://www.matiasmancini.com.ar)
 改変履歴
 ============================
 
-Version 2.x
+Version 2.3		(2012-06-18)
 
  * formのnovaliadte属性に対応
- * IEのオブジェクトからはrequiredが判定できていない
 
 
 Version 2.2		(2012-06-15)

@@ -1,6 +1,6 @@
 /**
  *  Html5 Form Vlidation Plugin - jQuery plugin
- *  Version--laster  / Japanese
+ *  Version -laster  / Japanese
  *
  *  Author: by Yoshiyuki Mikomde http://www.rapidexp.com
  *
@@ -16,9 +16,11 @@
 
     $.fn.h5form = function(options) {
 
-		if (!('outerHTML' in document.createElement('div'))) {
-			HTMLElement.prototype.__defineGetter__('outerHTML', function() { return this.ownerDocument.createElement('div').appendChild(this.cloneNode(true)).parentNode.innerHTML })
-		}
+		$.fn.outerHTML = function() {
+			// Firefox 10 or earlier does not have outerHTML
+			var obj = $(this).get(0);
+			return obj.outerHTML || new XMLSerializer().serializeToString(obj);
+		};
 
 		//default configuration properties
 		var defaults = {
@@ -47,6 +49,7 @@
 		var version = parseInt($.browser.version),
  			test1 = $('<input>').hide().appendTo($('body')).get(0),
  			test2 = $('textarea:first').get(0) || new Object(),
+//			test3 = $('button:first').get(0) || new Object(),
 			hasCustomValidity = ('setCustomValidity' in test1),
 			hasAppendTitle = ($.browser.webkit && version >= 533),	// maybe
 			hasAutofocus = ('autofocus' in test1),
@@ -57,6 +60,7 @@
 			hasNumber  = hasRange = ('step' in test1) && ('min' in test1),	// maybe
 			hasDateTime = ($.browser.opera && version > 9),	// maybe
 			hasMaxlength = ('maxLength' in test2),
+//			hasFormAttr = ('formAction' in test3),
 			hasIeBugs = ($.browser.msie && version < 9);
 
 		$('input:last').remove();
@@ -76,7 +80,7 @@
 				customValidity = new Object(),
 				validatable = ':input:enabled:not(:button, :submit, :radio, :checkbox, :hidden)',
 				validatableElements = form.find(validatable),
-				novalidate = !!form.get(0).outerHTML.match(/^[^>]+ novalidate/);
+				novalidate = !!form.outerHTML().match(/^[^>]+ novalidate/);
 				// form.attr('novalidate') result undefined,
 				// when from has novalidate rather than novalidate="novalidate"
 
@@ -384,10 +388,10 @@
 			validatableElements.initControl();
 
 
-			if (1||hasIeBugs) {
+			if (hasIeBugs) {
 				// The correct default type of button is "submit".
 				form.find('button').each(function() {
-					var html = $(this).get(0).outerHTML;
+					var html = $(this).outerHTML();
 					if (!html.match(/^[^>]+ type/)) {
 						$(this).after(html.replace(/<button/i, '<button type="submit"')).remove();
 					}

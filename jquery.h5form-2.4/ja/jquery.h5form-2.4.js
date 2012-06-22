@@ -1,6 +1,6 @@
 /**
  *  jQuery.h5form - HTML5 Forms Plugin
- *  Version -laster  / English
+ *  Version 2.4  / Japanese
  *
  *  Author: by Yoshiyuki Mikomde http://www.rapidexp.com
  *
@@ -31,15 +31,15 @@
 			classDatetime: 'h5form-datetime',
 			colorOff : '#a1a1a1',
 			colorErr : 'mistyrose',
-			emptyMessage : 'Please enter this field.',
-			unselectedMessage : 'Please select an item in the list.',
-			emailMessage : 'E-mail address is not correct.',
-			urlMessage : 'URL is not correct.',
-			patternMessage : 'Does not match the requierd pattern.',
-			invalidMessage : 'Value is invalid.',
-			minMessage : 'Please be greater than or equal to #.',
-			maxMessage : 'Please be less than or equal to #.',
-			maxlengthMessage : 'Too many # characters.',
+			emptyMessage : 'このフィールドを入力してください。',
+			unselectedMessage : 'リスト内の項目を選択してください。',
+			emailMessage : 'メールアドレスが正しくありません。',
+			urlMessage : 'URLが正しくありません。',
+			patternMessage : '必用なパターンに一致していません。',
+			invalidMessage : '値が無効です。',
+			minMessage : '# 以上にしてください。',
+			maxMessage : '# 以下にしてください。',
+			maxlengthMessage : '指定の文字数上限より # 文字多いです。',
 			dynamicHtml : false
 		};
 		var opts = $.extend({}, defaults, options);

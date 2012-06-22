@@ -1,5 +1,5 @@
 /**
- *  Html5 Form Vlidation Plugin - jQuery plugin
+ *  jQuery.h5form - HTML5 Forms Plugin
  *  Version -laster  / Japanese
  *
  *  Author: by Yoshiyuki Mikomde http://www.rapidexp.com
@@ -29,7 +29,6 @@
 			classSpinTime : 'h5form-spinTime',
 			classRange : 'h5form-range',
 			classDatetime: 'h5form-datetime',
-			classDummy: 'h5form-dummy',
 			colorOff : '#a1a1a1',
 			colorErr : 'mistyrose',
 			emptyMessage : 'このフィールドを入力してください。',
@@ -41,7 +40,7 @@
 			minMessage : '# 以上にしてください。',
 			maxMessage : '# 以下にしてください。',
 			maxlengthMessage : '指定の文字数上限より # 文字多いです。',
-			dinamicHtml : false
+			dynamicHtml : false
 		};
 		var opts = $.extend({}, defaults, options);
 
@@ -49,7 +48,7 @@
 		var version = parseInt($.browser.version),
  			test1 = $('<input>').hide().appendTo($('body')).get(0),
  			test2 = $('textarea:first').get(0) || new Object(),
-//			test3 = $('button:first').get(0) || new Object(),
+			test3 = $('button:first').get(0) || new Object(),
 			hasCustomValidity = ('setCustomValidity' in test1),
 			hasAppendTitle = ($.browser.webkit && version >= 533),	// maybe
 			hasAutofocus = ('autofocus' in test1),
@@ -60,7 +59,7 @@
 			hasNumber  = hasRange = ('step' in test1) && ('min' in test1),	// maybe
 			hasDateTime = ($.browser.opera && version > 9),	// maybe
 			hasMaxlength = ('maxLength' in test2),
-//			hasFormAttr = ('formAction' in test3),
+			hasFormAttr = ('formAction' in test3),
 			hasIeBugs = ($.browser.msie && version < 9);
 
 		$('input:last').remove();
@@ -82,37 +81,36 @@
 				validatableElements = form.find(validatable),
 				novalidate = !!form.outerHTML().match(/^[^>]+ novalidate/);
 				// form.attr('novalidate') result undefined,
-				// when from has novalidate rather than novalidate="novalidate"
+				// when from has simply "novalidate" rather than "novalidate='novalidate'"
 
 			/**
 			 * Set a custom Validity to the elements
 			 * @param string message
 			 * @return object this
 			 */
-			$.fn.setCustomValidity = function(message) {
-				return this.each(function() {
-					if (novalidate) message = null;
-					var ui = $(this);
-					if (ui.is(validatable)) {
-						// Add a title to the message
-						if (!hasAppendTitle && message && (title = ui.attr('title'))) {
-							message += '\n' + title;
-						}
-						// Set a custon validity
-						if (hasCustomValidity) {
-							ui.get(0).setCustomValidity(message);
+			$.fn.setCustomValidity = function(customValidity, message) {
+				if (novalidate) message = null;
+				var ui = $(this);
+				if (ui.is(validatable)) {
+					// Add a title to the message
+					if (!hasAppendTitle && message && (title = ui.attr('title'))) {
+						message += '\n' + title;
+					}
+					// Set a custon validity
+					if (hasCustomValidity) {
+						ui.get(0).setCustomValidity(message);
+					} else {
+						var i = ui.get(0).tabIndex;
+						if (message) {
+							customValidity[i] = new Array(ui, message.replace(/\n/, '<br />'));
+							ui.css('backgroundColor', opts.colorErr);
 						} else {
-							var i = validatableElements.index(ui);
-							if (message) {
-								customValidity[i] = new Array(ui, message.replace(/\n/, '<br />'));
-								ui.css('backgroundColor', opts.colorErr);
-							} else {
-								customValidity[i] = null;
-								ui.css('backgroundColor', '');
-							}
+							customValidity[i] = null;
+							ui.css('backgroundColor', '');
 						}
 					}
-				});
+				}
+				return ui;
 			};
 
 			/**
@@ -129,7 +127,7 @@
 					base = (isNumber) ? min : 0,
 					val = (isNumber) ? Number(ui.val()) : str2sec(ui.val(), true);
 
-				val = val - ((val - base) % step) + step * ((isNumber) ? -1 : 1);
+				val = val - ((val - base) % step) + step * ((isDown) ? -1 : 1);
 
 				if (max != '' && val > max) val = max;
 				if (min != '' && val < min) val = min;
@@ -148,6 +146,7 @@
 					var ui = $(this),
 						type = ui.attr('type'),
 						placeholder = ui.attr('placeholder');
+
 					if (type) type = type.toLowerCase();
 
 					// Is autofoucs
@@ -190,9 +189,9 @@
 							return false;
 						});
 						ui.unbind('keydown', evKeydown).keydown(evKeydown)
-						.after('<div class="'+className+'">'+
+						.after('<span class="'+className+'">'+
 							   '<button type="button">&and;</button>'+
-							   '<button type="button">&or;</button></div>');
+							   '<button type="button">&or;</button></span>');
 
 						// Click button
 						ui.next().children().click(function() {
@@ -215,7 +214,7 @@
 							step = attr2num(ui, 'step', 1),
 							val = attr2num(ui, 'val', (min+max)/2 - ((min+max)/2%step));
 
-						ui.hide().after('<div class="'+opts.classRange+'"><div></div></div>').val(val);
+						ui.hide().after('<span class="'+opts.classRange+'"><div></div></span>').val(val);
 						ui.next().children().slider({
 							min: min, max: max, step: step, value: val,
 							change : function(ev, sl) {
@@ -235,7 +234,7 @@
 							}
 							return true;
 						});
-						ui.unbind('keypress', evKeypress).keypress(evKeypress)
+						ui.unbind('keypress', evKeypress).keypress(evKeypress);
 					}
 
 					// Datetime
@@ -243,13 +242,15 @@
 						if (!ui.next().hasClass(opts.classDatetime)) {
 							var val = getLocalDatetime(ui.val()),
 								min = getLocalDatetime(ui.attr('min')),
-								max = getLocalDatetime(ui.attr('max'));
+								max = getLocalDatetime(ui.attr('max')),
+								tz = (type == 'datetime') ? '<span class="h5form-timezone">'+getTZ()+'</span>' : '';
 
 							ui.hide().after('<span class="'+opts.classDatetime+'">'+
 											'<input type="date" value="'+val[0]+'" min="'+min[0]+'" max="'+max[0]+'"'+
 											' size="'+ui.attr('size')+'" class="'+ui.attr('class')+'" title="'+ui.attr('title')+'">'+
 											'<input type="time" value="'+val[1]+'" step="'+attr2num(ui, 'step', 60)+'"'+
 											' size="'+ui.attr('size')+'" class="'+ui.attr('class')+'" title="'+ui.attr('title')+'">'+
+											tz+
 											'</span>')
 							.next().children().initControl();
 						}
@@ -266,13 +267,13 @@
 							isEmpty = (ui.val() == '' || (placeholder && ui.val() == placeholder));
 
 						// clear validity first
-						ui.setCustomValidity('');
+						ui.setCustomValidity(customValidity, null);
 
 						// Required
 						if (!hasRequired && ui.attr('required')) {
 							isNecessary = true;
 							if (isEmpty) {
-								ui.setCustomValidity((ui.is('select')) ? opts.unselectedMessage : opts.emptyMessage);
+								ui.setCustomValidity(customValidity, (ui.is('select')) ? opts.unselectedMessage : opts.emptyMessage);
 								return true;
 							}
 						}
@@ -281,7 +282,7 @@
 						if (!hasPattern && (pattern = ui.attr('pattern'))) {
 							isNecessary = true;
 							if (!isEmpty && validateRe(ui, '^(' + pattern.replace(/^\^?(.*)\$?$/, '$1') + ')$')) {
-								ui.setCustomValidity(opts.patternMessage);
+								ui.setCustomValidity(customValidity, opts.patternMessage);
 								return true;
 							}
 						}
@@ -290,7 +291,7 @@
 						if (!hasEmail && type == 'email') {
 							isNecessary = true;
 							if (!isEmpty && validateRe(ui, '[\\w-\\.]{3,}@([\\w-]{2,}\\.)*([\\w-]{2,}\\.)[\\w-]{2,4}', 'i')) {
-								ui.setCustomValidity(opts.emailMessage);
+								ui.setCustomValidity(customValidity, opts.emailMessage);
 								return true;
 							}
 						}
@@ -299,7 +300,7 @@
 						if (!hasUrl && type == 'url') {
 							isNecessary = true;
 							if (!isEmpty && validateRe(ui, '[\\w-\\.]{3,}:\\/\\/([\\w-]{2,}\\.)*([\\w-]{2,}\\.)[\\w-]{2,4}', 'i')) {
-								ui.setCustomValidity(opts.urlMessage);
+								ui.setCustomValidity(customValidity, opts.urlMessage);
 								return true;
 							}
 						}
@@ -308,7 +309,7 @@
 						if (!hasMaxlength && ui.is('textarea') && ui.attr('maxlength')) {
 							isNecessary = true;
 							if (over = validateMaxlength(ui)) {
-								ui.setCustomValidity(opts.maxlengthMessage.replace(/#/, over));
+								ui.setCustomValidity(customValidity, opts.maxlengthMessage.replace(/#/, over));
 								return true;
 							}
 						}
@@ -327,14 +328,14 @@
 								type0 = ui0.attr('type').toLowerCase();	// datetime or datetime-local
 
 								ui2 = ui.parent().children();	// a set of date & time
-								ui2.setCustomValidity('');
+								ui2.setCustomValidity(customValidity, '');
 								var i = ui2.index(ui), date = ui2.eq(0).val(), time = ui2.eq(1).val();
 								if (date != '' || time != '') {
 									// Complement the other control if empty
 									if (date == '' || time == '') {
 										var min = getLocalDatetime(ui0.attr('min'), true);	// use min value
 										if (i == 0 && date != '' && time == '') { ui2.eq(1).val(min[1]); }
-										if (i == 1 && time != '' && date == '') { ui2.eq(2).val(min[0]); }
+										if (i == 1 && time != '' && date == '') { ui2.eq(0).val(min[0]); }
 										date = ui2.eq(0).val(), time = ui2.eq(1).val();
 									}
 									// Copy to hidden datetime control
@@ -362,18 +363,33 @@
 
 							// Perform validtions
 							if (validateRe(ui0, pattern) || (validateStep(ui0, min, step))) {
-								ui2.setCustomValidity(opts.invalidMessage);
+								ui2.setCustomValidity(customValidity, opts.invalidMessage);
 								return true;
 							}
 							if (validateMin(ui0)) {
-								ui2.setCustomValidity(opts.minMessage.replace(/#/, ui0.attr('min')));
+								ui2.setCustomValidity(customValidity, opts.minMessage.replace(/#/, ui0.attr('min')));
 								return true;
 							}
 							if (validateMax(ui0)) {
-								ui2.setCustomValidity(opts.maxMessage.replace(/#/, ui0.attr('max')));
+								ui2.setCustomValidity(customValidity, opts.maxMessage.replace(/#/, ui0.attr('max')));
 								return true;
 							}
 						}
+
+						if (hasIeBugs && !ui.is('select, textarea, button')) {
+							// Keypress event attach
+							var evKeypress2 = (function(ev) {
+								var cc = ev.charCode || ev.keyCode;
+								if (cc == 13) {
+ 									form.find('input:submit, button:submit').eq(0).click();
+									return false;
+								}
+								return true;
+							});
+							ui.unbind('keypress', evKeypress2).keypress(evKeypress2);
+							isNecessary = true;
+						}
+
 						return isNecessary;
 					});
 
@@ -387,24 +403,6 @@
 			};
 			validatableElements.initControl();
 
-
-			if (hasIeBugs) {
-				// The correct default type of button is "submit".
-				form.find('button').each(function() {
-					var html = $(this).outerHTML();
-					if (!html.match(/^[^>]+ type/)) {
-						$(this).after(html.replace(/<button/i, '<button type="submit"')).remove();
-					}
-				});
-				// IE does not send a value of button:submit
-				// when you press Enter in a input:text.
-				form.find('button:submit, input:submit').each(function(i) {
-					if (!i && $(this).is('button')) {
-						$('<input type="hidden" name="'+$(this).attr('name')+'" value="'+$(this).val()+'" class="'+opts.classDummy+'">').appendTo(form);
-					}
-				});
-			}
-
 			if (elmAutofocus) {
 				elmAutofocus.focus().select();	// focus only does not work in IE
 			}
@@ -416,9 +414,39 @@
 
 			form.find('input:submit, input:image, input:button, button:submit').click(function() {
 
+				var ui = $(this);
+
+				if (!hasFormAttr) {
+					if (attr = ui.attr('form')) {
+						form = $('#'+attr);
+						hasIeBugs = true;	// for submit()
+					}
+					if (attr = ui.attr('formaction')) {
+						form.attr('action', attr);
+					}
+					if (attr = ui.attr('formeenctype')) {
+						form.attr('enctype', attr);
+					}
+					if (attr = ui.attr('formmethod')) {
+						form.attr('method', attr);
+					}
+					if (attr = ui.attr('formtarget')) {
+						form.attr('target', attr);
+					}
+					if (attr = ui.attr('formnovalidate')) {
+						form.attr('novalidate', attr);
+						if (attr == 'novalidate') {
+							//validatableElements.each().setCustomValidity(customValidity, '');	// It couse an error on IE 6
+							validatableElements.each(function() {
+								$(this).setCustomValidity(customValidity, '');
+							});
+						}
+					}
+				}
+
 				// Re-scan for dinamic controls
-				if (opts.dinamicHtml) {
-					form.find(opts.dinamicHtml).initControl();
+				if (opts.dynamicHtml) {
+					form.find(opts.dynamicHtml).initControl();
 				}
 
 				// Show balloons message
@@ -428,14 +456,14 @@
 						if (customValidity[j] && (i == null || i > j)) i = j;
 					}
 					if (i != null) {
-						var ui = customValidity[i][0],
+						var err = customValidity[i][0],
 							message = customValidity[i][1];
 
-						if (!ui.prev().hasClass(opts.classResponse)) {
-							ui.before('<span class="' + opts.classResponse + '"></span>');
+						if (!err.prev().hasClass(opts.classResponse)) {
+							err.before('<span class="' + opts.classResponse + '"></span>');
 						}
-						ui.prev().html('<p>'+message.replace(/\n/, '<br/>')+'</p>');
-						ui.focus().select();	// focus only does not work in IE
+						err.prev().html('<p>'+message.replace(/\n/, '<br/>')+'</p>');
+						err.focus().select();	// focus only does not work in IE
 						return false;
 					}
 				}
@@ -445,23 +473,27 @@
 				// Clear Placeholder
 				if (!hasPlaceholder) {
 					for(var i in elmPlaceholder) {
-						var ui = elmPlaceholder[i];
-						if (ui.val() == ui.attr('placeholder')) {
-							ui.val('');
+						if (i != undefined) {
+							var elm = elmPlaceholder[i];
+							if (elm.val() == elm.attr('placeholder')) {
+								elm.val('');
+							}
 						}
 					}
 				}
 
 				if (hasIeBugs)
 				{
-					// Remove dummy of button first
-					$('.' + opts.classDummy).remove();
-					if ($(this).is('button')) {
-						// Set a value of button:submit you clicked to input:hidden.
-						$('<input type="hidden" name="'+$(this).attr('name')+'" value="'+$(this).val()+'">').appendTo(form);
-						// Remove names of all buttons so that IE does not send the context.
-						$('button').attr('name','');
+					// Set a value of button:submit you clicked to input:hidden.
+					$('<input type="hidden" name="'+ui.attr('name')+'" value="'+ui.val()+'">').appendTo(form);
+
+					form.find('button, input:submit').attr('name', '');
+
+					if (ui.is('button')) {
+						form.find('input:submit').remove();
 					}
+					form.submit();
+					return false;
 				}
 			});
 
@@ -546,6 +578,19 @@
 		function utc2js(val) {
 			return val.replace(/-/g, '/').replace(/T/, ' ').replace(/Z/, ' GMT').replace(/([+-])(\d+):(\d+)/, ' GMT$1$2$3');
 		}
+		function getTZ ()
+		{
+			var dt = new Date(),
+				min = -1 * dt.getTimezoneOffset();
+
+			if (min) {
+				var	ret =  min/60 + ':' + min%60;
+				return ret.replace(/\b(\d)\b/g, '0$1').replace(/^(\d)/, '+$1');
+			} else {
+				return 'UTC';
+			}
+		}
+
 	};
 
 

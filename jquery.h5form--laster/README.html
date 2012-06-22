@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>jQuery.h5form - HTML5 Forms Plugin</title>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
+	<style style="text/css">
+	  body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
+	  header { display: block; color: white; background-color: black; padding: 1em 2em;  }
+	  footer { display: block; margin-top: 6em; padding: 1em; color: white; background-color: black; }
+	  footer a { color: yellow; }
+	  section { display: block; margin: 1em; padding-bottom: 2em; }
+
+	  table.solid { border-collapse: collapse;  /*width: 96%;*/  border: 2px solid gray;  margin: 1em 0; }
+	  table.solid td, table.solid th { border: 1px solid silver; font-weight: normal;  }
+	  table.solid thead th { text-align: center; background-color: dimgray; color: white; }
+	  table.solid tbody th { text-align: left; padding: 0 0.5em;   }
+	  table.solid tbody td { text-align: center; width:4em;  }
+	  dl.note dt { float: left; clear: left; width: 2em; font-size: smaller; color: red; }
+	  dl.note dd { margin-left: 2em; font-size: smaller; }
+	  sup { color: red; }
+
+	  pre.source { margin: 1em; padding: 1em; border: 1px solid gray; overflow: auto; background-color: whitesmoke; }
+	  pre.source .tag { color: teal; }
+	  pre.source .name { color: blue; }
+	  pre.source .str { color: purple; }
+	  pre.source .comm { color: green; }
+	  #history h3 { font-size: 100%; }
+	</style>
+
+	<script type="text/javascript">
+		$(function() {
+			$('table.support tbody td').each(function() {
+				if ($(this).text() == 'E') $(this).css({color: 'blue', fontWeight: 'bold'});
+				if ($(this).text() == 'x') $(this).css({color: 'red'});
+			});
+		});
+	</script>
+
+  <?php  if (file_exists('../site.inc.php')) include '../site.inc.php'; ?>
+  </head>
+
+  <body>
+
+	<header>
+	  <h1>jQuery.h5form - HTML5 Forms Plugin</h1>
+
+	  <p>This plugin gives all browsers the HTML5 forms like the Opera.</p>
+
+	  <p>
+		Whether these enhancements are determined in the presence or absence of the object in a input element.<br>
+		For the other versions of browsers, it will be able to support nearly maintenance-free ... maybe.
+	  </p>
+
+	  <p>And this will also fix several bugs of the Internet Explorer on submit, and will allow you to use the button element.</p>
+
+	</header>
+
+
+	<section id="support">
+	  <h2>Supported Forms</h2>
+
+	  <p>
+		In the following table the feature by the browser itself is marked as "S",
+		and the enhancement by this plugin is marked as "E".<br>
+		<a href="./testing.php">Demo and testing form is here!</a>
+	  </p>
+
+	  <table class="solid support">
+		<thead>
+		  <tr>
+			<th colspan="2"></th>
+			<th>IE 6</th>
+			<th>IE 7</th>
+			<th>IE 8</th>
+			<th>IE 9</th>
+			<th>IE10</th>
+			<th>Firefox</th>
+			<th>Chrome</th>
+			<th>Safari</th>
+			<th>Opeara</th>
+		  </tr>
+		</thead>
+
+		<tbody>
+
+		  <tr>
+			<th>All elements</th>
+			<th>The balloon message</th>
+			<td>*1</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>The form element</th>
+			<th>The novaidation attribute</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>?</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th rowspan="17">The input element</th>
+			<th>The required attribute</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>The placeholder attribute</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>The pattern attribute</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>The autofocus attribute</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>?</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>The autocomplete attribute</th>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>?</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>URL state</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>E-mail state</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>Number state</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>*7</td>
+			<td>E</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>Range state</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>*7</td>
+			<td>E</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>Date state</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>Time state</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>Date and Time state<sup>*2</sup></th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>Local Datge and Time state</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>Month state<sup>*3</sup></th>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>Week state<sup>*3</sup></th>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>Color state<sup>*4</sup></th>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>x</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>Fixed bug on press enter</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+		  </tr>
+
+		  <tr>
+			<th rowspan="1">The textarea element</th>
+			<th>The maxlength attribute</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>?</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th rowspan="8">
+			  The input and button element<br>
+			  in the submit button state
+			</th>
+			<th>The form attribute<sup>*5</sup></th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>?</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>The formaction attribute</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>?</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>The formenctype attribute</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>?</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>The formmethod attribute</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>?</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>The formnovalidate attribute</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>?</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>The formtarget attribute</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>?</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+		  </tr>
+
+		  <tr>
+			<th>Fixed bug on submit</th>
+			<td>E</td>
+			<td>E</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+		  </tr>
+
+		  <tr>
+			<th>Fixed bug of default<sup>*6</sup></th>
+			<td>x</td>
+			<td>x</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+			<td>-</td>
+		  </tr>
+
+
+		</tbody>
+	  </table>
+
+
+	  <dl class="note">
+		<dt>*1</dt>
+		<dd>The balloon message is disappeared behind a select element on IE 6.</dd>
+
+		<dt>*2</dt>
+		<dd>On the specification of the global date and time, I have strict Interpreted the W3C draft.
+		  Oops, <a href="testing.php#test-8">the user interface</a> has been unlike the Opera.</dd>
+
+		<dt>*3</dt>
+		<dd>It is not difficult to support using jQuery UI. Do you want these states?</dd>
+
+		<dt>*4</dt>
+		<dd>The jQuery UI does not have a color widget, so that I can not adopt any plugin as the standard.</dd>
+
+		<dt>*5</dt>
+		<dd>All of form-associated element have a form attribute in HTML5, but the plugin only support it on the submit button.</dd>
+
+		<dt>*6</dt>
+		<dd>Sorry, to solve this problem using the javascript does not seem possible.</dd>
+
+		<dt>*7</dt>
+		<dd>It seems to support to the HTML5 forms on IE 10.
+		  However, it might be the only implementation of validation, phew.<br>
+		  if so, the plugin may not be given the user interface to the number or ohter attribute with no improvement.</dd>
+	  </dl>
+
+	</section>
+
+	<section id="download">
+	  <h2>Download</h2>
+
+	  <p>
+		You can download the archive and the source of this plugin from the following url in the GitHub.
+	  </p>
+
+
+	  <p>
+		<a href="https://github.com/rapidexp/jquery-h5form">https://github.com/rapidexp/jquery-h5form</a>
+	  </p>
+	</section>
+
+	<section id="installation">
+	  <h2>Installation</h2>
+
+	  <p>
+		You may only append to your HTML header the following code.<br>
+		Please rewrite the URL path as appropriate.
+	  </p>
+
+ <pre class="source">
+<span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span> href=<span class="str">"css/jquery.h5form-x.x.css"</span> /&gt;</span>
+<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
+  src=<span class="str">"https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"</span>&gt;&lt;/script&gt;</span>
+<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
+  src=<span class="str">"jquery.h5form-x.x.min.js"</span>&gt;&lt;/script&gt;</span>
+
+<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>&gt;</span>
+$(function() {
+  $(<span class="str">'form'</span>).h5form();
+});
+<span class="tag">&lt;/script&gt;</span>
+</pre>
+
+ 	  <p>Note: It will cause an error using jQuery 1.7 on IE 7 or earlier.</p>
+
+
+
+
+	  <h3>Options</h3>
+
+	  <p>If you have the dynamic html elements that require validation, please add them
+		to the option "dynamicHtml".</p>
+
+
+<pre class="source">
+$(<span class="str">'form'</span>).h5form({ dynamicHtml: <span class="str">'[name="password"]'</span> });
+</pre>
+
+
+
+
+	  <h3>jQuery UI</h3>
+
+	  <p>Please install the jQeury UI for the date and range state.</p>
+
+<pre class="source">
+<span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span>
+  href=<span class="str">"../../css/smoothness/jquery-ui-custom.css"</span> /&gt;</span>
+<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
+  src=<span class="str">"https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"</span>&gt;&lt;/script&gt;</span>
+</pre>
+
+	  <p>On the element of the date or range state, the datepicker or the slider will be
+		automatically handle.<br>
+		Because the judgment the existence of the jQury UI, you do not need to enter
+		additional settings.</p>
+	</section>
+
+	<section id="thanks">
+	  <h2>Thanks</h2>
+
+	  <p>This plugin was derived from jquery.html5form-1.5.js.
+		But the first concept of modification was already different from the original
+		direction. And I had to make significant changes to policy design in version 2.<br>
+		Therefore I determined that &the project become apparent to another code, I was
+		allowed to change to a single copyright in the header from version 2.<br>
+		Some Variable names and structure may still have left a remnant of html5form.</p>
+
+
+	  <p>Based project: jquery.html5form-1.5.js<br>
+		Copyright<br>
+		  (c) 2010 Matias Mancini (http://www.matiasmancini.com.ar)</p>
+	</section>
+
+
+	<section id="history">
+	  <h2>History</h2>
+
+	  <h3>Version 2.4		(2012-06-22)</h3>
+
+	  <ul>
+		<li>Added support the attributes for form submission.</li>
+	  </ul>
+
+
+	  <h3>Version 2.3		(2012-06-18)</h3>
+
+	  <ul>
+		<li>Added support novalidate of form elemnt.</li>
+	  </ul>
+
+	  <h3>Version 2.2		(2012-06-15)</h3>
+
+	  <ul>
+		<li>Fixed an error in the form that does not have any input element.</li>
+		<li>Added support for bugs in IE on submit.</li>
+	  </ul>
+
+	  <h3>Version 2.1		(2012-06-12)</h3>
+
+	  <ul>
+		<li>Judgment of jQuery UI was missing from 2,0.</li>
+		<li>Maxlength control was missing from 2.0 in the textarea.</li>
+		<li>Allowed the capitalization of the value of the type.</li>
+	  </ul>
+
+	  <h3>Version 2.0		(2012-06-10)</h3>
+
+	  <ul>
+		<li>Set to CustomValidity an error during the editing of each control in supported browsers.</li>
+		<li>Simulate artificially the CustomValidity in browsers that do not support.</li>
+		<li>Judge controls in loading and attach events to only the necessary controls.</li>
+		<li>Only display an pre-judgment error when submitting.</li>
+		<li>Rescan before submitting for dynamic HTML is now optional.</li>
+		<li>Judgment the browser and version is no longer needed except for some functions.</li>
+		<li>Removed allBrowsers in options.</li>
+	  </ul>
+
+<!--
+	  <h3>Version 1.3		(2012-06-07)</h3>
+
+	  <ul>
+		<li>Added support type=range used jQuery UI.</li>
+		<li>An error has occurred in IE7 or earlier imperceptibly.</li>
+	  </ul>
+
+	  <h3>Version 1.2.1	(2012-06-06)</h3>
+
+	  <ul>
+		<li>Fixed IE can not read the value of datetime with time zone.</li>
+	  </ul>
+
+	  <h3>Version 1.2		(2012-06-05)</h3>
+
+	  <ul>
+		<li>Renamed again the script file name.</li>
+		<li>Added support type=number.</li>
+		<li>Added support type=time.</li>
+		<li>Added support type=date, datetime and datetime-local used jQuery UI.</li>
+		<li>Improved the maxlength of textarea.</li>
+		<li>Changeed to span the container of responseDiv.</li>
+	  </ul>
+
+	  <h3>Version 1.1		(2012-05-31)</h3>
+
+	  <ul>
+		<li>Added support realtime Validation.</li>
+	  </ul>
+
+	  <h3>Version 1.0		(2012-05-26)</h3>
+
+	  <ul>
+		<li>Added support dinamic required.</li>
+		<li>Added support pattern and type=url.</li>
+	  </ul>
+
+	  <h3>Version 0.0		(2012-05-18)</h3>
+	  <ul>
+		<li>Modified html5form-1.5.js as not to assume asynchronous ajax.</li>
+		<li>Error message will be displayed in balloons for each control.</li>
+	  </ul>
+-->
+	</section>
+
+
+
+	<footer>
+	  <p>Author: by Yoshiyuki Mikome <a href="http://www.rapidexp.com/h5form">http://www.rapidexp.com/h5form</a><br>
+		Copyright (c) 2012 <a href="http://www.rapidexp.com">Yoshiyuki Mikome</a>
+	  </p>
+
+	  <p>
+		Dual licensed under the MIT (MIT-LICENSE.txt) and GPL (GPL-LICENSE.txt) licenses.
+	  </p>
+
+	  <p>Built for <a href="http://jquery.com">jQuery</a></p>
+
+	  <p>I wrote this document  under the guidance of English teacher Google.
+		I'm sorry if there is a cryptic sentence. ;-)</p>
+
+	</footer>
+
+  </body>
+</html>

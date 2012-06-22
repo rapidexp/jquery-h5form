@@ -1,6 +1,6 @@
 /**
  *  jQuery.h5form - HTML5 Forms Plugin
- *  Version -laster  / English
+ *  Version 2.4  / English
  *
  *  Author: by Yoshiyuki Mikomde http://www.rapidexp.com
  *

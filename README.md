@@ -32,7 +32,7 @@ And if you wish, you can get a smaller size javascript by removing unnecessary f
 
 ### Version 2.4.1 (2012-06-26)
 
-** Added the custom download.
+* Added the custom download.
 
 ### Version 2.4 (2012-06-22)
 

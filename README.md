@@ -2,8 +2,8 @@
 
 Author: by Yoshiyuki Mikomde [http://www.rapidexp.com/h5form](http://www.rapidexp.com/h5form)
 
-Copyright (c) 2012 [Yoshiyuki Mikome](http://www.rapidexp.com)  
-Dual licensed under the MIT (MIT-LICENSE.txt)  
+Copyright (c) 2012 [Yoshiyuki Mikome](http://www.rapidexp.com)
+Dual licensed under the MIT (MIT-LICENSE.txt)
 and GPL (GPL-LICENSE.txt) licenses.
 
 Built for [jQuery](http://jquery.com)
@@ -19,14 +19,20 @@ For the other versions of browsers, it will be able to support nearly maintenanc
 And this will also fix several bugs of the Internet Explorer on submit, and will allow you to use the button element.
 
 
+
 __More information about the support of each browser, [please see here...](http://www.rapidexp.com/h5form)__
 
+And if you wish, you can get a smaller size javascript by removing unnecessary features.
 
 
 
 
 
 ## History
+
+### Version 2.4.1 (2012-06-26)
+
+** Added the custom download.
 
 ### Version 2.4 (2012-06-22)
 

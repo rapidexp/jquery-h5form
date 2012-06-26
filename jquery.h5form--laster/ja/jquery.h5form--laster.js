@@ -213,7 +213,7 @@
 							className = opts.classSpinTime;
 							allow = [8, 9, 35, 36, 37, 39, 46, 59, 186, 190];
 							break;
-//#
+//# NUMBER|DATETIME
 						}
 
 						// Keydown event attach

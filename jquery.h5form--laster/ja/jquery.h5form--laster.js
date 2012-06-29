@@ -115,7 +115,7 @@
 					if (hasCustomValidity) {
 						ui.get(0).setCustomValidity(message);
 					} else {
-						var i = ui.get(0).tabIndex;
+						var i = ui.get(0).uniqueNumber;
 						if (message) {
 							customValidity[i] = new Array(ui, message.replace(/\n/, '<br />'));
 							ui.css('backgroundColor', opts.colorErr);
@@ -471,10 +471,6 @@
 				var ui = $(this);
 //# FORM
 				if (!hasFormAttr) {
-					if (attr = ui.attr('form')) {
-						form = $('#'+attr);
-						notIeBugs = false;	// for submit()
-					}
 					if (attr = ui.attr('formaction')) {
 						form.attr('action', attr);
 					}
@@ -549,8 +545,6 @@
 					if (ui.is('button')) {
 						form.find('input:submit').remove();
 					}
-					form.submit();
-					return false;
 				}
 			});
 

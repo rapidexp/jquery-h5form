@@ -30,6 +30,12 @@ And if you wish, you can get a smaller size javascript by removing unnecessary f
 
 ## History
 
+### Version 2.4.2 (2012-06-30)
+
+* Removed support the form attribute and fixed the button element on submit.
+* Fixed the position of the active balloon using the uniqueNumber for get the position.
+
+
 ### Version 2.4.1 (2012-06-26)
 
 * Added the custom download.

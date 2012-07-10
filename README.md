@@ -30,6 +30,11 @@ And if you wish, you can get a smaller size javascript by removing unnecessary f
 
 ## History
 
+### Version 2.4.4 (2012-07-10)
+
+* Fixed en error!! orz
+
+
 ### Version 2.4.3 (2012-07-09)
 
 * Fixed the datetime state that attribue is set to undefined.

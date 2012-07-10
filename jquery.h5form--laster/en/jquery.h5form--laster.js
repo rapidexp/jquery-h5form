@@ -475,7 +475,7 @@
 			//
 
 
-			form.find('input:submit, input:image, input:button, button:submit').click(function() {
+			form.find('input:submit, input:image, input:button, button:submit').click(function(ev) {
 
 				if (!ev.result) return false;	// Canceled in the previous handler
 

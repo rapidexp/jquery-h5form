@@ -2,8 +2,8 @@
 
 Author: by Yoshiyuki Mikomde [http://www.rapidexp.com/h5form](http://www.rapidexp.com/h5form)
 
-Copyright (c) 2012 [Yoshiyuki Mikome](http://www.rapidexp.com) 
-Dual licensed under the MIT (MIT-LICENSE.txt) 
+Copyright (c) 2012 [Yoshiyuki Mikome](http://www.rapidexp.com)
+Dual licensed under the MIT (MIT-LICENSE.txt)
 and GPL (GPL-LICENSE.txt) licenses.
 
 Built for [jQuery](http://jquery.com)
@@ -13,7 +13,7 @@ Built for [jQuery](http://jquery.com)
 
 This plugin gives all browsers the HTML5 forms like the Opera.
 
-Whether these enhancements are determined in the presence or absence of the object in a input element. 
+Whether these enhancements are determined in the presence or absence of the object in a input element.
 For the other versions of browsers, it will be able to support nearly maintenance-free ... maybe.
 
 And this will also fix several bugs of the Internet Explorer on submit, and will allow you to use the button element.
@@ -29,6 +29,10 @@ And if you wish, you can get a smaller size javascript by removing unnecessary f
 
 
 ## History
+
+### Version 2.4.4 (2012-07-13)
+
+* Fixed on submit!!! orz orz
 
 ### Version 2.4.4 (2012-07-10)
 

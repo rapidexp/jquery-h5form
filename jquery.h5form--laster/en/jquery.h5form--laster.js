@@ -477,7 +477,7 @@
 
 			form.find('input:submit, input:image, input:button, button:submit').click(function(ev) {
 
-				if (!ev.result) return false;	// Canceled in the previous handler
+				if (ev.result == false) return false;	// Canceled in the previous handler
 
 				var ui = $(this);
 //# FORM

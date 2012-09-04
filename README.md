@@ -30,6 +30,12 @@ And if you wish, you can get a smaller size javascript by removing unnecessary f
 
 ## History
 
+### Version 2.5.0 (2012-09-04)
+
+* Added support Android.
+* Added hasOptions in options.
+
+
 ### Version 2.4.4 (2012-07-13)
 
 * Fixed on submit!!! orz orz

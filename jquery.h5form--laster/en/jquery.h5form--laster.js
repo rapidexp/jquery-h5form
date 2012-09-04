@@ -47,33 +47,39 @@
 			classSpinTime : 'h5form-spinTime',
 			classDatetime: 'h5form-datetime',
 //#
+			hasOptions: [],
 			dynamicHtml : false
 		};
 		var opts = $.extend({}, defaults, options);
 
 		// Test browser
 		var version = parseInt($.browser.version),
+			isAndroid = (navigator.userAgent.search(/Android/) != -1),
 			test1 = $('<input>').hide().appendTo($('body')).get(0),
 			test2 = $('textarea:first').get(0) || new Object(),
-			hasCustomValidity = ('setCustomValidity' in test1),
-			hasAppendTitle = ($.browser.webkit && version >= 533),	// maybe
+			hasCustomValidity = ('setCustomValidity' in test1) && !isAndroid,
+			hasAppendTitle = (!!$.browser.webkit && version >= 533) && !isAndroid,	// maybe
 			hasAutofocus = ('autofocus' in test1),
-			hasRequired = ('required' in test1),
-			hasPattern = ('pattern' in test1),
+			hasRequired = ('required' in test1) && !isAndroid,
+			hasPattern = ('pattern' in test1) && !isAndroid,
 //# EMAILURL
-			hasEmail = hasUrl = hasCustomValidity && hasPattern, // maybe
+			hasEmail = hasUrl = hasCustomValidity && hasPattern && !isAndroid, // maybe
 //# PLACEHOLDER
 			hasPlaceholder = ('placeholder' in test1),
 //# NUMBER
-			hasNumber  = hasRange = ('step' in test1) && ('min' in test1),	// maybe
+			hasNumber  = hasSpin = hasRange = ('step' in test1) && ('min' in test1) && !isAndroid,	// maybe
 //# DATETIME
-			hasDateTime = ($.browser.opera && version > 9),	// maybe
+			hasDateTime = (!!$.browser.opera && version > 9) && !isAndroid,	// maybe
 //# MAXLENGTH
 			hasMaxlength = ('maxLength' in test2),
 //#ifdef FORM
-			hasFormAttr = ('form' in test1) && ('formAction' in test1),
+			hasFormAttr = ('form' in test1) && ('formAction' in test1) && !isAndroid,
 //#
 			notIeBugs = !($.browser.msie && version < 9);
+
+		for(i in opts.hasOptions) {
+			eval(opts.hasOptions[i]+'=true;');
+		}
 
 		$('input:last').remove();
 
@@ -115,7 +121,7 @@
 					if (hasCustomValidity) {
 						ui.get(0).setCustomValidity(message);
 					} else {
-						var i = ui.get(0).uniqueNumber;
+						var i = validatableElements.index(ui);
 						if (message) {
 							customValidity[i] = new Array(ui, message.replace(/\n/, '<br />'));
 							ui.css('backgroundColor', opts.colorErr);
@@ -199,7 +205,7 @@
 					// Spin button
 					if (false
 //# NUMBER
-						|| (!hasNumber && type=="number")
+						|| (!hasSpin && type=="number")
 //# DATETIME
 						|| (!hasDateTime && type == "time")
 //# NUMBER|DATETIME

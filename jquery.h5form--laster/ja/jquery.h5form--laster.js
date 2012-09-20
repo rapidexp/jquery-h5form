@@ -69,7 +69,7 @@
 //# NUMBER
 			hasNumber  = hasSpin = hasRange = ('step' in test1) && ('min' in test1) && !isAndroid,	// maybe
 //# DATETIME
-			hasDateTime = (!!$.browser.opera && version > 9) && !isAndroid,	// maybe
+			hasDateTime = ($.browser.opera && version > 9 || $.browser.chrome && version >= 20) && !isAndroid,	// maybe
 //# MAXLENGTH
 			hasMaxlength = ('maxLength' in test2),
 //#ifdef FORM

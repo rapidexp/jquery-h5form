@@ -24,7 +24,8 @@
 
 		//default configuration properties
 		var defaults = {
-			classResponse : 'h5form-response',
+			exprResponse : '.h5form-response',
+			exprBehind : '.h5fom-behind',
 			colorErr : 'mistyrose',
 			emptyMessage : 'Please enter this field.',
 			unselectedMessage : 'Please select an item in the list.',
@@ -48,12 +49,13 @@
 			classDatetime: 'h5form-datetime',
 //#
 			hasOptions: [],
-			dynamicHtml : false
+			dynamicHtml : '.h5form-dynamic'.
 		};
 		var opts = $.extend({}, defaults, options);
 
 		// Test browser
-		var version = parseInt($.browser.version),
+		var ua = window.navigator.userAgent.toLowerCase(),
+			version = parseInt($.browser.version),
 			isAndroid = (navigator.userAgent.search(/Android/) != -1),
 			test1 = $('<input>').hide().appendTo($('body')).get(0),
 			test2 = $('textarea:first').get(0) || new Object(),
@@ -69,7 +71,9 @@
 //# NUMBER
 			hasNumber  = hasSpin = hasRange = ('step' in test1) && ('min' in test1) && !isAndroid,	// maybe
 //# DATETIME
-			hasDateTime = (!!$.browser.opera && version > 9) && !isAndroid,	// maybe
+			hasDateTime = (!!$.browser.opera && version > 9) && !isAndroid,
+			hasDate = hasDateTime || (ua.indexOf('chrome') != -1  && version >536) && !isAndroid,
+			hasTime = hasDateTime,
 //# MAXLENGTH
 			hasMaxlength = ('maxLength' in test2),
 //#ifdef FORM
@@ -84,8 +88,9 @@
 		$('input:last').remove();
 
 		// clear balloons
-		$('body').click(function () {
-			$('.'+opts.classResponse).remove();
+		$(opts.exprResponse).live('click', function () {
+			$(opts.exprResponse).remove();
+			$(opts.exprBehind).removeAttr('disabled');
 		});
 
 		// for each form
@@ -207,7 +212,7 @@
 //# NUMBER
 						|| (!hasSpin && type=="number")
 //# DATETIME
-						|| (!hasDateTime && type == "time")
+						|| (!hasTime && type == "time")
 //# NUMBER|DATETIME
 						) {
 						var className, allow;
@@ -246,7 +251,7 @@
 
 //# DATETIME
 					// Datepicker
-					if (!hasDateTime && (type == 'date') && ('datepicker' in ui)) {
+					if (!hasDate && (type == 'date') && ('datepicker' in ui)) {
 						var option = { dateFormat : 'yy-mm-dd' }
 						option.minDate = ui.getAttr('min');
 						option.maxDate = ui.getAttr('max');
@@ -512,9 +517,7 @@
 				}
 //#
 				// Re-scan for dinamic controls
-				if (opts.dynamicHtml) {
-					form.find(opts.dynamicHtml).initControl();
-				}
+				form.find(opts.dynamicHtml).initControl();
 
 				// Show balloons message
 				if (!hasCustomValidity) {
@@ -527,8 +530,9 @@
 							message = customValidity[i][1];
 						err = err.eq(0);
 
-						if (!err.prev().hasClass(opts.classResponse)) {
-							err.before('<span class="' + opts.classResponse + '"></span>');
+						if (!err.prev().is(opts.exprResponse)) {
+							err.before('<span class="' + opts.exprResponse.replace(/^.([^ ]+).*$/, '$1') + '"></span>');
+							$(opts.exprBehind).attr('disabled', 'disabled');
 						}
 						err.prev().html('<p>'+message.replace(/\n/, '<br/>')+'</p>');
 						err.focus().select();	// focus only does not work in IE

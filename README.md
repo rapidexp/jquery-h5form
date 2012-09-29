@@ -30,6 +30,14 @@ And if you wish, you can get a smaller size javascript by removing unnecessary f
 
 ## History
 
+### Version 2.6.0 (2012-09-29)
+
+* Removed support of date state in Chrome.
+* Close baloon when click itself instead of body.
+* Added exprResponse in options.
+* Added exprBehide in options.
+* Removed classResponse in options.
+
 ### Version 2.5.0 (2012-09-04)
 
 * Added support Android.

@@ -49,7 +49,7 @@
 			classDatetime: 'h5form-datetime',
 //#
 			hasOptions: [],
-			dynamicHtml : '.h5form-dynamic'.
+			dynamicHtml : '.h5form-dynamic'
 		};
 		var opts = $.extend({}, defaults, options);
 

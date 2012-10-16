@@ -30,10 +30,21 @@ And if you wish, you can get a smaller size javascript by removing unnecessary f
 
 ## History
 
+### Version 2.7.0 (2012-10-16)
+
+* Invert the balloon that has small right margin.
+* Updated css for inverted balloon.
+* Added support required when press the Enter on a text box with submission button in Android.
+* The required attribute was not working when press the Enter on a text box in IE.
+
+### Version 2.6.1 (2012-09-29)
+
+* Fixed a easy bug.
+
 ### Version 2.6.0 (2012-09-29)
 
 * Removed support of date state in Chrome.
-* Close baloon when click itself instead of body.
+* Close balloon when click itself instead of body.
 * Added exprResponse in options.
 * Added exprBehide in options.
 * Removed classResponse in options.

@@ -30,6 +30,10 @@ And if you wish, you can get a smaller size javascript by removing unnecessary f
 
 ## History
 
+### Version 2.7.1 (2012-11-04)
+
+* Japanese and English version were not in sync.
+
 ### Version 2.7.0 (2012-10-16)
 
 * Invert the balloon that has small right margin.

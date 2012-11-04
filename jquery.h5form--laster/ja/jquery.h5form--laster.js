@@ -24,11 +24,14 @@
 
 		//default configuration properties
 		var defaults = {
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 			exprResponse: '.h5form-response, .h5form-reversed',
 			exprBehind: '.h5fom-behind',
 			colorErr: 'mistyrose',
+//# REQUIRED
 			emptyMessage: 'このフィールドを入力してください。',
 			unselectedMessage: 'リスト内の項目を選択してください。',
+//# PATTERN
 			patternMessage: '必用なパターンに一致していません。',
 //# EMAILURL
 			emailMessage: 'メールアドレスが正しくありません。',
@@ -59,9 +62,12 @@
 			isAndroid = (navigator.userAgent.search(/Android/) != -1),
 			test1 = $('<input>').hide().appendTo($('body')).get(0),
 			test2 = $('textarea:first').get(0) || new Object(),
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 			hasCustomValidity = ('setCustomValidity' in test1) && !isAndroid,
 			hasAppendTitle = (!!$.browser.webkit && version >= 533) && !isAndroid,
+//# AUTOFOCUS
 			hasAutofocus = ('autofocus' in test1),
+//# REQUIRED
 			hasRequired = ('required' in test1) && !isAndroid,
 			hasPattern = ('pattern' in test1) && !isAndroid,
 //# EMAILURL
@@ -81,7 +87,8 @@
 //#ifdef FORM
 			hasFormAttr = ('form' in test1) && ('formAction' in test1) && !isAndroid,
 //#
-			notIeBugs = !($.browser.msie && version < 9);
+			hasBugButton = ($.browser.msie && version < 9);
+			hasBugEnter = ($.browser.msie && version < 9) || isAndroid;
 
 		for (i in opts.hasOptions) {
 			eval(opts.hasOptions[i] + '=true;');
@@ -89,17 +96,20 @@
 
 		$('input:last').remove();
 
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 		// clear balloons
 		$(opts.exprResponse).live('click', function() {
 			$(opts.exprResponse).remove();
 			$(opts.exprBehind).removeAttr('disabled');
 		});
+//#
 
 		// for each form
 		return this.each(function() {
 
 			//Private properties
 			var form = $(this),
+//# AUTOFOCUS
 				elmAutofocus,
 //# PLACEHOLDER
 				elmPlaceholder = new Array(),
@@ -111,6 +121,7 @@
 				// form.attr('novalidate') result undefined,
 				// when from has simply "novalidate" rather than "novalidate='novalidate'"
 
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 			/**
 			 * Set a custom Validity to the elements
 			 * @param {string} message -- message.
@@ -181,11 +192,11 @@
 					var ui = $(this),
 						type = ui.getAttr('type').toLowerCase();
 
+//# AUTOFOCUS
 					// Is autofoucs
 					if (!hasAutofocus && !elmAutofocus && ui.getAttr('autofocus')) {
 						elmAutofocus = ui;
 					}
-
 //# PLACEHOLDER
 					// Focus and blur attach for Placeholder
 					var placeholder = ui.getAttr('placeholder');
@@ -321,13 +332,16 @@
 								' title="' + ui.getAttr('title') + '">' +
 								tz +
 								'</span>');
-
+//# REQUIRED|DATETIME
 							if (ui.getAttr('required')) {
 								ui.removeAttr('required');
 								ui.next().children().attr('required', 'required').initControl();
 							} else {
+//# DATETIME
 								ui.next().children().initControl();
+//# REQUIRED|DATETIME
 							}
+//# DATETIME
 						}
 					}
 //#
@@ -345,9 +359,24 @@
 //#
 									   false);
 
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 						// clear validity first
 						ui.setCustomValidity(customValidity, null);
-
+//#
+						if (hasBugEnter && !ui.is('select, textarea, button')) {
+							// Keypress event attach
+							var evKeypress2 = (function(ev) {
+								var cc = ev.charCode || ev.keyCode;
+								if (cc == 13) {
+									form.find('input:submit, button:submit').eq(0).click();
+									return false;
+								}
+								return true;
+							});
+							ui.unbind('keypress', evKeypress2).keypress(evKeypress2);
+							isNecessary = true;
+						}
+//# REQUIRED
 						// Required
 						if (!hasRequired && ui.getAttr('required')) {
 							isNecessary = true;
@@ -357,7 +386,7 @@
 								return true;
 							}
 						}
-
+//# PATTERN
 						// Pattern
 						if (!hasPattern && (pattern = ui.getAttr('pattern'))) {
 							isNecessary = true;
@@ -367,7 +396,6 @@
 								return true;
 							}
 						}
-
 //# EMAILURL
 						// Email
 						if (!hasEmail && type == 'email') {
@@ -489,20 +517,6 @@
 							}
 						}
 //#
-						if (!notIeBugs && !ui.is('select, textarea, button')) {
-							// Keypress event attach
-							var evKeypress2 = (function(ev) {
-								var cc = ev.charCode || ev.keyCode;
-								if (cc == 13) {
-									form.find('input:submit, button:submit').eq(0).click();
-									return false;
-								}
-								return true;
-							});
-							ui.unbind('keypress', evKeypress2).keypress(evKeypress2);
-							isNecessary = true;
-						}
-
 						return isNecessary;
 					});
 
@@ -516,9 +530,11 @@
 			};
 			validatableElements.initControl();
 
+//# AUTOFOCUS
 			if (elmAutofocus) {
 				elmAutofocus.focus().select();	// focus only does not work in IE
 			}
+//#
 
 			//
 			// When submit
@@ -547,19 +563,20 @@
 					}
 					if (attr = ui.getAttr('formnovalidate')) {
 						form.attr('novalidate', attr);
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 						if (attr == 'novalidate') {
-							//validatableElements.each().setCustomValidity(customValidity, '');
-							// ^It couse an error on IE 6
 							validatableElements.each(function() {
 								$(this).setCustomValidity(customValidity, '');
 							});
 						}
+//# FORM
 					}
 				}
 //#
 				// Re-scan for dinamic controls
 				form.find(opts.dynamicHtml).initControl();
 
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 				// Show balloons message
 				if (!hasCustomValidity) {
 					var i;
@@ -583,7 +600,7 @@
 						return false;
 					}
 				}
-
+//#
 				// Submit if no error
 
 //# PLACEHOLDER
@@ -600,7 +617,7 @@
 				}
 
 //#
-				if (!notIeBugs)
+				if (hasBugButton)
 				{
 					// Set a value of button:submit you clicked to input:hidden.
 					$('<input type="hidden" name="' + ui.getAttr('name') +
@@ -616,6 +633,7 @@
 
 		});
 
+//# PATTERN|EMAILURL|NUMBER|DATETIME
 		// Validations
 		// if error, result value is true (is not zero).
 		// search returns zero when first match.
@@ -624,6 +642,14 @@
 			re = new RegExp(pattern, flags);
 			return ((item.val() != '') && item.val().search(re));
 		}
+//# MAXLENGTH
+		function validateMaxlength(item) {
+			var len = item.val().length,
+				max = attr2num(item, 'maxlength', 0);
+			// if error, reulst value is number of overflow
+			return (len && max && (len	> max)) ? len - max : 0;
+		}
+//# NUMBER|DATETIME
 		function validateStep(item, min, step) {
 			min = (item.getAttr('type').toLowerCase().indexOf('datetime')) ?
 				attr2num(item, 'min', min) : attr2num(item, '', min);
@@ -641,14 +667,7 @@
 				max = attr2num(item, 'max', '');
 			return ((val != '') && (max != '') && (val > max));
 		}
-		function validateMaxlength(item) {
-			var len = item.val().length,
-				max = attr2num(item, 'maxlength', 0);
-			// if error, reulst value is number of overflow
-			return (len && max && (len	> max)) ? len - max : 0;
-		}
 
-//# NUMBER|DATETIME
 		// functions of datetime
 
 		function attr2num(item, name, def) {

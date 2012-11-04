@@ -131,7 +131,7 @@
 
 		  <tr>
 			<th rowspan="17">input 要素</th>
-			<th>* autofocus 属性</th>
+			<th>+ autofocus 属性</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -145,7 +145,7 @@
 		  </tr>
 
 		  <tr>
-			<th>* required 属性</th>
+			<th>+ required 属性</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -159,7 +159,7 @@
 		  </tr>
 
 		  <tr>
-			<th>* pattern 属性</th>
+			<th>+ pattern 属性</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -565,6 +565,8 @@
 
 	  <form action="./custom.php" method="post">
 		<p>
+		  <label><input type="checkbox" name="necessary[]" value="AUTOFOCUS" checked> Autofous 属性</label>
+		  <label><input type="checkbox" name="necessary[]" value="REQUIRED" checked> Required と Pattern 属性</label>
 		  <label><input type="checkbox" name="necessary[]" value="PLACEHOLDER" checked> Placeholder 属性</label>
 		  <label><input type="checkbox" name="necessary[]" value="MAXLENGTH" checked> Maxlength 属性</label>
 		  <label><input type="checkbox" name="necessary[]" value="EMAILURL" checked> Email と URL 状態</label>
@@ -669,6 +671,12 @@ $(<span class="str">'form'</span>).h5form({ exprBehide: <span class="str">'.h5fo
 	  <h2>History</h2>
 
 	  <h3>Version -laster		(-today)</h3>
+
+	  <ul>
+		<li>日本語版と英語版がシンクロしてなかった</li>
+	  </ul>
+
+	  <h3>Version 2.7.0 (2012-10-16)</h3>
 
 	  <ul>
 		<li>右マージンが少ないとき、フキダシを反転</li>

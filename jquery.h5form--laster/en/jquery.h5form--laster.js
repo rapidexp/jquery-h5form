@@ -84,7 +84,7 @@
 			hasTime = hasDateTime,
 //# MAXLENGTH
 			hasMaxlength = ('maxLength' in test2),
-//#ifdef FORM
+//# FORM
 			hasFormAttr = ('form' in test1) && ('formAction' in test1) && !isAndroid,
 //#
 			hasBugButton = ($.browser.msie && version < 9);
@@ -96,10 +96,11 @@
 
 		$('input:last').remove();
 
+		var validatable = ':input:enabled:not(:button, :submit, :radio, :checkbox)';
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 		// clear balloons
-		$(opts.exprResponse).live('click', function() {
-			$(opts.exprResponse).remove();
+		$(validatable).click(function() {
+			$(this).siblings(opts.exprResponse).remove();
 			$(opts.exprBehind).removeAttr('disabled');
 		});
 //#
@@ -115,7 +116,6 @@
 				elmPlaceholder = new Array(),
 //#
 				customValidity = new Object(),
-				validatable = ':input:enabled:not(:button, :submit, :radio, :checkbox)',
 				validatableElements = form.find(validatable),
 				novalidate = !!form.outerHTML().match(/^[^>]+ novalidate/);
 				// form.attr('novalidate') result undefined,
@@ -561,14 +561,12 @@
 					if (attr = ui.getAttr('formtarget')) {
 						form.attr('target', attr);
 					}
-					if (attr = ui.getAttr('formnovalidate')) {
-						form.attr('novalidate', attr);
+					if (null != ui.attr('formnovalidate')) {
+						form.attr('novalidate', 'novalidate');
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
-						if (attr == 'novalidate') {
-							validatableElements.each(function() {
-								$(this).setCustomValidity(customValidity, '');
-							});
-						}
+						validatableElements.each(function() {
+							$(this).setCustomValidity(customValidity, '');
+						});
 //# FORM
 					}
 				}

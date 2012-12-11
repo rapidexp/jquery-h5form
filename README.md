@@ -30,7 +30,12 @@ And if you wish, you can get a smaller size javascript by removing unnecessary f
 
 ## History
 
-### Version 2.7.1 (2012-11-04)
+### Version 2.7.2 (2012-12-11)
+
+* Fixed the formnovalidate attribute.
+* Close balloon when click the owner control.
+
+### Version 2.7.1 (2012-11-14)
 
 * Japanese and English version were not in sync.
 

@@ -32,7 +32,7 @@
 			emptyMessage: 'Please enter this field.',
 			unselectedMessage: 'Please select an item in the list.',
 //# PATTERN
-			patternMessage: 'Does not match the requierd pattern.',
+			patternMessage: 'Does not match the required pattern.',
 //# EMAILURL
 			emailMessage: 'E-mail address is not correct.',
 			urlMessage: 'URL is not correct.',

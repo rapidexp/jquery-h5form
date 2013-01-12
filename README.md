@@ -2,7 +2,7 @@
 
 Author: by Yoshiyuki Mikomde [http://www.rapidexp.com/h5form](http://www.rapidexp.com/h5form)
 
-Copyright (c) 2012 [Yoshiyuki Mikome](http://www.rapidexp.com)
+Copyright (c) 2012 - 2013 [Yoshiyuki Mikome](http://www.rapidexp.com)
 Dual licensed under the MIT (MIT-LICENSE.txt)
 and GPL (GPL-LICENSE.txt) licenses.
 
@@ -29,6 +29,16 @@ And if you wish, you can get a smaller size javascript by removing unnecessary f
 
 
 ## History
+
+### Version 2.8.0 (2013-01-12)
+
+* Removed support of time state from Chrome 23.
+* Fixed determination of number and rang on FireFox 17.
+* Close balloon when also click itself.
+* Disabled spin button of Number and time in default.
+* Typo of the message in English.
+* Stored customValidity in .data() on IE.
+
 
 ### Version 2.7.2 (2012-12-11)
 

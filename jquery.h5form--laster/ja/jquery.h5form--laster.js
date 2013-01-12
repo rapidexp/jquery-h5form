@@ -45,6 +45,7 @@
 			minMessage: '最小値にとどきません。',
 			maxMessage: '最大値をこえています。',
 //# NUMBER
+			addSpin: false,
 			classSpinNumber: 'h5form-spinNumber',
 			classRange: 'h5form-range',
 //# DATETIME
@@ -59,6 +60,7 @@
 		// Test browser
 		var ua = window.navigator.userAgent.toLowerCase(),
 			version = parseInt($.browser.version),
+			chrome = parseInt(ua.replace(/.*chrome\/(\d+).*/, "$1")),
 			isAndroid = (navigator.userAgent.search(/Android/) != -1),
 			test1 = $('<input>').hide().appendTo($('body')).get(0),
 			test2 = $('textarea:first').get(0) || new Object(),
@@ -76,12 +78,11 @@
 			hasPlaceholder = ('placeholder' in test1),
 //# NUMBER
 			hasNumber = hasSpin = hasRange =
-				('step' in test1) && ('min' in test1) && !isAndroid,
+				('step' in test1) && ('min' in test1) && !isAndroid && !$.browser.mozilla,
 //# DATETIME
 			hasDateTime = (!!$.browser.opera && version > 9) && !isAndroid,
-			hasDate = hasDateTime ||
-				(ua.indexOf('chrome') != -1 && version > 536) && !isAndroid,
-			hasTime = hasDateTime,
+			hasDate = hasDateTime || chrome > 21,
+			hasTime = hasDateTime || chrome > 22,
 //# MAXLENGTH
 			hasMaxlength = ('maxLength' in test2),
 //# FORM
@@ -103,6 +104,9 @@
 			$(this).siblings(opts.exprResponse).remove();
 			$(opts.exprBehind).removeAttr('disabled');
 		});
+		$(opts.exprResponse).live('click', function() {
+			$(this).remove();
+		});
 //#
 
 		// for each form
@@ -115,7 +119,6 @@
 //# PLACEHOLDER
 				elmPlaceholder = new Array(),
 //#
-				customValidity = new Object(),
 				validatableElements = form.find(validatable),
 				novalidate = !!form.outerHTML().match(/^[^>]+ novalidate/);
 				// form.attr('novalidate') result undefined,
@@ -127,7 +130,7 @@
 			 * @param {string} message -- message.
 			 * @return {object} -- this.
 			 */
-			$.fn.setCustomValidity = function(customValidity, message) {
+			$.fn.setCustomValidity = function(message) {
 				if (novalidate) message = null;
 				var ui = $(this);
 				if (ui.is(validatable)) {
@@ -139,13 +142,12 @@
 					if (hasCustomValidity) {
 						ui.get(0).setCustomValidity(message);
 					} else {
-						var i = validatableElements.index(ui);
 						if (message) {
-							customValidity[i] = new Array(ui, message.replace(/\n/, '<br />'));
-							ui.css('backgroundColor', opts.colorErr);
+							ui.data('customValidity', message.replace(/\n/, '<br />'))
+							  .css('backgroundColor', opts.colorErr);
 						} else {
-							customValidity[i] = null;
-							ui.css('backgroundColor', '');
+							ui.removeData('customValidity')
+							  .css('backgroundColor', '');
 						}
 					}
 				}
@@ -251,16 +253,19 @@
 							if (($.inArray(cc, allow) >= 0) || (cc >= 48 && cc <= 57)) return true;
 							return false;
 						});
-						ui.unbind('keydown', evKeydown).keydown(evKeydown)
-						.after('<span class="' + className + '">' +
-							   '<button type="button">&and;</button>' +
-							   '<button type="button">&or;</button></span>');
+						ui.unbind('keydown', evKeydown).keydown(evKeydown);
 
-						// Click button
-						ui.next().children().click(function() {
-							ui.spin(ui.next().children().index($(this))).change();
-							// change for Chrome
-						});
+						if (opts.addSpin) {
+							ui.after('<span class="' + className + '">' +
+									 '<button type="button">&and;</button>' +
+									 '<button type="button">&or;</button></span>');
+
+							// Click button
+							ui.next().children().click(function() {
+								ui.spin(ui.next().children().index($(this))).change();
+								// change for Chrome
+							});
+						}
 					}
 
 //# DATETIME
@@ -361,7 +366,7 @@
 
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 						// clear validity first
-						ui.setCustomValidity(customValidity, null);
+						ui.setCustomValidity(null);
 //#
 						if (hasBugEnter && !ui.is('select, textarea, button')) {
 							// Keypress event attach
@@ -381,7 +386,7 @@
 						if (!hasRequired && ui.getAttr('required')) {
 							isNecessary = true;
 							if (isEmpty) {
-								ui.setCustomValidity(customValidity, (ui.is('select')) ?
+								ui.setCustomValidity((ui.is('select')) ?
 									opts.unselectedMessage : opts.emptyMessage);
 								return true;
 							}
@@ -392,7 +397,7 @@
 							isNecessary = true;
 							if (!isEmpty &&
 								validateRe(ui, '^(' + pattern.replace(/^\^?(.*)\$?$/, '$1') + ')$')) {
-								ui.setCustomValidity(customValidity, opts.patternMessage);
+								ui.setCustomValidity(opts.patternMessage);
 								return true;
 							}
 						}
@@ -402,7 +407,7 @@
 							isNecessary = true;
 							if (!isEmpty && validateRe(ui,
 							   '[\\w-\\.]{3,}@([\\w-]{2,}\\.)*([\\w-]{2,}\\.)[\\w-]{2,4}', 'i')) {
-								ui.setCustomValidity(customValidity, opts.emailMessage);
+								ui.setCustomValidity(opts.emailMessage);
 								return true;
 							}
 						}
@@ -413,7 +418,7 @@
 							if (!isEmpty && validateRe(ui,
 							   '[\\w-\\.]{3,}:\\/\\/([\\w-]{2,}\\.)*([\\w-]{2,}\\.)[\\w-]{2,4}',
 							   'i')) {
-								ui.setCustomValidity(customValidity, opts.urlMessage);
+								ui.setCustomValidity(opts.urlMessage);
 								return true;
 							}
 						}
@@ -423,8 +428,7 @@
 						if (!hasMaxlength && ui.is('textarea') && ui.getAttr('maxlength')) {
 							isNecessary = true;
 							if (over = validateMaxlength(ui)) {
-								ui.setCustomValidity(customValidity,
-													 opts.maxlengthMessage.replace(/#/, over));
+								ui.setCustomValidity(opts.maxlengthMessage.replace(/#/, over));
 								return true;
 							}
 						}
@@ -449,7 +453,7 @@
 								type0 = ui0.getAttr('type').toLowerCase();	// datetime or datetime-local
 
 								ui2 = ui.parent().children('input');	// a set of date & time
-								ui2.setCustomValidity(customValidity, '');
+								ui2.setCustomValidity('');
 								var i = ui2.index(ui), date = ui2.eq(0).val(), time = ui2.eq(1).val();
 								if (date != '' || time != '') {
 									// Complement the other control if empty
@@ -502,17 +506,15 @@
 //# NUMBER|DATETIME
 							// Perform validtions
 							if (validateRe(ui0, pattern) || (validateStep(ui0, min, step))) {
-								ui2.setCustomValidity(customValidity, opts.invalidMessage);
+								ui2.setCustomValidity(opts.invalidMessage);
 								return true;
 							}
 							if (validateMin(ui0)) {
-								ui2.setCustomValidity(customValidity,
-													  opts.minMessage.replace(/#/, ui0.getAttr('min')));
+								ui2.setCustomValidity(opts.minMessage.replace(/#/, ui0.getAttr('min')));
 								return true;
 							}
 							if (validateMax(ui0)) {
-								ui2.setCustomValidity(customValidity,
-													  opts.maxMessage.replace(/#/, ui0.getAttr('max')));
+								ui2.setCustomValidity(opts.maxMessage.replace(/#/, ui0.getAttr('max')));
 								return true;
 							}
 						}
@@ -565,7 +567,7 @@
 						form.attr('novalidate', 'novalidate');
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 						validatableElements.each(function() {
-							$(this).setCustomValidity(customValidity, '');
+							$(this).setCustomValidity('');
 						});
 //# FORM
 					}
@@ -577,26 +579,23 @@
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 				// Show balloons message
 				if (!hasCustomValidity) {
-					var i;
-					for (var j in customValidity) {
-						if (customValidity[j] && (i == null || i > j)) i = j;
-					}
-					if (i != null) {
-						var err = customValidity[i][0],
-							message = customValidity[i][1];
-						err = err.eq(0);
-
-						if (!err.prev().is(opts.exprResponse)) {
-							var m = opts.exprResponse.match(/^\.([^, ]+),? *\.?([^, ]*)/),
-								name = ($(window).width() - err.offset().left < 300 && !!m[2]) ?
-									m[2] : m[1];
-							err.before('<span class="' + name + '"></span>');
-							$(opts.exprBehind).attr('disabled', 'disabled');
+					var result = true;
+					validatableElements.each(function() {
+						if (message = $(this).data('customValidity')) {
+						err = $(this);
+							if (!err.prev().is(opts.exprResponse)) {
+								var m = opts.exprResponse.match(/^\.([^, ]+),? *\.?([^, ]*)/),
+									name = ($(window).width() - err.offset().left < 300 && !!m[2]) ?
+										m[2] : m[1];
+								err.before('<span class="' + name + '"></span>');
+								$(opts.exprBehind).attr('disabled', 'disabled');
+							}
+							err.prev().html('<p>' + message.replace(/\n/, '<br/>') + '</p>');
+							err.focus().select();	// focus only does not work in IE
+							return (result = false);
 						}
-						err.prev().html('<p>' + message.replace(/\n/, '<br/>') + '</p>');
-						err.focus().select();	// focus only does not work in IE
-						return false;
-					}
+					});
+					return result;
 				}
 //#
 				// Submit if no error

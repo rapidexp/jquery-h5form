@@ -1,8 +1,9 @@
 # jQuery.h5form - HTML Forms Plugin
 
-Author: by Yoshiyuki Mikomde [http://www.rapidexp.com/h5form](http://www.rapidexp.com/h5form)
+Author: by Yoshiyuki Mikome [http://www.rapidexp.com/h5form](http://www.rapidexp.com/h5form)
 
 Copyright (c) 2012 - 2013 [Yoshiyuki Mikome](http://www.rapidexp.com)
+
 Dual licensed under the MIT (MIT-LICENSE.txt)
 and GPL (GPL-LICENSE.txt) licenses.
 
@@ -29,6 +30,12 @@ And if you wish, you can get a smaller size javascript by removing unnecessary f
 
 
 ## History
+
+yo### Version 2.8.1 (2013-01-28)
+
+* Added support Autocomplete.
+* Fixed enbug of 2.8.0 about button on IE 7.
+
 
 ### Version 2.8.0 (2013-01-12)
 

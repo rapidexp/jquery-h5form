@@ -87,8 +87,10 @@
 			hasMaxlength = ('maxLength' in test2),
 //# FORM
 			hasFormAttr = ('form' in test1) && ('formAction' in test1) && !isAndroid,
+//# AUTOCOMPLETE
+			hasDatalist = ('autocomplete' in test1) && ('list' in test1),
 //#
-			hasBugButton = ($.browser.msie && version < 9);
+			hasBugButton = ($.browser.msie && version < 8);
 			hasBugEnter = ($.browser.msie && version < 9) || isAndroid;
 
 		for (i in opts.hasOptions) {
@@ -349,6 +351,29 @@
 //# DATETIME
 						}
 					}
+//# AUTOCOMPLETE
+					if ((!hasDatalist) &&
+						(list = ui.getAttr('list')) &&
+						('autocomplete' in ui))
+					{
+						var arr = new Array();
+						$('datalist#'+list).children('option').each(function () {
+							arr.push($(this).val());
+						});
+						ui.autocomplete({
+							source: arr,
+							// under imput method
+							search: function(ev, ui) {
+								if (ev.keyCode == 229) return false;
+								return true;
+							}
+
+						})
+						.keyup(function(ev) {
+							// output imput method
+							if (ev.keyCode == 13) $(this).autocomplete('search');
+						});
+					}
 //#
 
 					/**
@@ -595,7 +620,7 @@
 							return (result = false);
 						}
 					});
-					return result;
+					if (!result) return false;
 				}
 //#
 				// Submit if no error

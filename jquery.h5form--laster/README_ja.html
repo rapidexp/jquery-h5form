@@ -130,7 +130,7 @@
 		  </tr>
 
 		  <tr>
-			<th rowspan="17">input 要素</th>
+			<th rowspan="18">input 要素</th>
 			<th>+ autofocus 属性</th>
 			<td>E</td>
 			<td>E</td>
@@ -187,10 +187,24 @@
 		  </tr>
 
 		  <tr>
-			<th>- autocomplete 属性</th>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
+			<th>+ autocomplete 属性</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>?</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>S</td>
+			<td>-</td>
+		  </tr>
+
+		  <tr>
+			<th>+ list 属性 (datalist 要素)<sup>*10</sup></th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
 			<td>x</td>
 			<td>?</td>
 			<td>S</td>
@@ -506,7 +520,7 @@
 
 	  <dl class="note">
 		<dt>*1</dt>
-		<dd>IE6 ではフキダシが select 要素の背後に隠れます。</dd>
+		<dd>IE 6 ではフキダシが select 要素の背後に隠れます。</dd>
 
 		<dt>*2</dt>
 		<dd>グローバルの日付の仕様は W3C のドラフトの準拠しました。
@@ -539,6 +553,8 @@
 		</dd>
 		<dt>*9</dt>
 		<dd>プラグインは min や max step 属性のバリデーションのみを提供し、スピンボタンなどインターフェースは追加しません。</dd>
+		<dt>*10</dt>
+		<dd>IE 9 は Datalist 要素の Option 子要素を DOM に読み込みません。IE 9でも動作するようにするには、メタタグ X-UA-Compatible で IE=8 を指定しなければなりません。</dd>
 	  </dl>
 
 	</section>
@@ -573,6 +589,7 @@
 		  <label><input type="checkbox" name="necessary[]" value="NUMBER" checked> Number と range 状態</label>
 		  <label><input type="checkbox" name="necessary[]" value="DATETIME" checked> Date と time 状態</label>
 		  <label><input type="checkbox" name="necessary[]" value="FORM" checked> Form 属性</label>
+		  <label><input type="checkbox" name="necessary[]" value="AUTOCOMPLETE" checked> Autocomplete 属性</label>
 		</p>
 		<p>
 		  <input type="submit" value="ダウンロード">
@@ -613,7 +630,7 @@ $(<span class="name">function</span>() {
 
 	  <h3>jQuery UI</h3>
 
-	  <p>Date や Number 状態にユーザインタフェースが必要なら jQeury UI をインストールしてください。</p>
+	  <p>Date や Number 状態のユーザインタフェース及び Autocomplete が必要なら jQeury UI をインストールしてください。</p>
 
 <pre class="source">
 <span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span>
@@ -682,12 +699,19 @@ $(<span class="str">'form'</span>).h5form({ exprBehide: <span class="str">'.h5fo
 	  <h3>Version -laster		(-today)</h3>
 
 	  <ul>
+		<li>Autocomplete属性のサポートを追加</li>
+		<li>IE 7 の button について 2.8.0 のエンバグを修正</li>
+	  </ul>
+
+	  <h3>Version 2.8.0	(2013-01-12)</h3>
+
+	  <ul>
 		<li>Chrome 23 から Time 状態のサポートを削除</li>
 		<li>FireFox 17のNumberとRange 属性判定を補正</li>
 		<li>フキダシをクリックしたときも閉じる</li>
 		<li>NumberとTime属性のスピンボタンをデフォルト無効に</li>
 		<li>英語メッセージのタイポ</li>
-		<li>IEのcustomValidityの格納を.data()に修正</li>
+		<li>IE のcustomValidityの格納を.data()に修正</li>
 	  </ul>
 
 	  <h3>Version 2.7.2 (2012-12-11)</h3>

@@ -31,7 +31,7 @@ And if you wish, you can get a smaller size javascript by removing unnecessary f
 
 ## History
 
-yo### Version 2.8.1 (2013-01-28)
+### Version 2.8.1 (2013-01-28)
 
 * Added support Autocomplete.
 * Fixed enbug of 2.8.0 about button on IE 7.

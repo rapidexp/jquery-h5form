@@ -126,6 +126,30 @@
 				// form.attr('novalidate') result undefined,
 				// when from has simply "novalidate" rather than "novalidate='novalidate'"
 
+			/**
+			 * Change Type
+			 * @param {string} type -- type.
+			 * @return {object} -- this.
+			 */
+			$.fn.type = function(type) {
+				var ui = $(this),
+					at = ui.get(0).attributes,
+					st = ui.get(0).style,
+					ui2 = $('<input type="'+type+'">');
+
+				for(i in at) {
+					name = at[i].nodeName;
+					value = at[i].nodeValue;
+					if (name && name == 'type') {
+						type = value;
+					} else {
+						ui2.attr(name, value);
+					}
+					ui2.addClass('h5form-'+type);
+				}
+				return ui2.replaceAll(ui);
+			};
+
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 			/**
 			 * Set a custom Validity to the elements
@@ -233,6 +257,7 @@
 //# NUMBER|DATETIME
 						false) {
 						var className, allow;
+						ui = ui.type('text');
 						switch (type) {
 //# NUMBER
 						case 'number':
@@ -276,7 +301,7 @@
 						var option = { dateFormat: 'yy-mm-dd' };
 						option.minDate = ui.getAttr('min');
 						option.maxDate = ui.getAttr('max');
-						ui.datepicker(option);
+						ui.type('text').datepicker(option);
 					}
 
 //# NUMBER

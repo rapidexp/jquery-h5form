@@ -15,6 +15,8 @@
 	  table.sample th { width: 50%; text-align: left; }
 	  input[type="number"] { width: 4em; }
 	  input[type="date"], input[type="time"] { width: 6em; }
+	  .h5form-number { width: 4em; }
+	  .h5form-date, .h5form-time { width: 6em; }
 	  .source { position:absolute; display: none; border: 2px solid orange; padding: 5px 10px; color: dimgray; background-color: white; border-radius: 8px; box-shadow: 3px 3px 6px gainsboro; z-index: 3; /*width:400px;*/ }
 	  .source strong { color: firebrick; font-weight: normal; }
 	  h3 sup { font-size: 10px; color: red; }
@@ -386,8 +388,8 @@ foreach ($_POST as $name => $value):
 		<tr>
 		  <td>
 			<form action="#test-7" method="post">
-			  <input type="Number" name="input-7-num" min="12" max="30" step="0.5" title="From 12 to 30 step 0.5"><br>
-			  <input type="Range" name="input-7-ran" step="10">
+			  <input type="number" name="input-7-num" min="12" max="30" step="0.5" title="From 12 to 30 step 0.5"><br>
+			  <input type="range" name="input-7-ran" step="10">
 			  <input type="submit" name="test-7" value="submit">
 			</form>
 <pre class="source" style="display:none">
@@ -401,13 +403,13 @@ foreach ($_POST as $name => $value):
 		  </td>
 		  <td>
 			<form action="#test-7" method="post" class="h5form">
-			  <input type="Number" name="input-7-num" min="12" max="30" step="0.5" title="From 12 to 30 step 0.5"><br>
-			  <input type="Range" name="input-7-ran" step="10">
+			  <input type="number" name="input-7-num" min="12" max="30" step="0.5" title="From 12 to 30 step 0.5"><br>
+			  <input type="range" name="input-7-ran" step="10">
 			  <input type="submit" name="test-7" value="submit">
 			</form>
 <pre class="source" style="display:none">
 &lt;form action="#test-7" method="post" class="h5form"&gt;
-  &lt;input <strong>type="Number"</strong> name="input-7-num"
+  &lt;input <strong>type="number"</strong> name="input-7-num"
     <strong>min="12" max="30" step="0.5"</strong> title="From 12 to 30 step 0.5"&gt;&lt;br&gt;
   &lt;input <strong>type="range"</strong> name="input-7-ran" <strong>step="10"</strong>&gt;
   &lt;input type="submit" name="test-7" value="submit"&gt;

@@ -211,7 +211,7 @@ foreach ($_POST as $name => $value):
 
 
 	<section>
-	  <h2>HTML5 Vlidateions</h2>
+	  <h2>HTML5 Validations</h2>
 
 	  <h3>Test-4. <a id="test-4">The required attribute and etc.</a> <sup>[IE 9-]</sup></h3>
 

@@ -145,8 +145,9 @@
 					} else {
 						ui2.attr(name, value);
 					}
-					ui2.addClass('h5form-'+type);
 				}
+				ui2.addClass('h5form-'+type);
+
 				return ui2.replaceAll(ui);
 			};
 
@@ -301,7 +302,7 @@
 						var option = { dateFormat: 'yy-mm-dd' };
 						option.minDate = ui.getAttr('min');
 						option.maxDate = ui.getAttr('max');
-						ui.type('text').datepicker(option);
+						ui = ui.type('text').datepicker(option);
 					}
 
 //# NUMBER
@@ -385,6 +386,9 @@
 						$('datalist#'+list).children('option').each(function () {
 							arr.push($(this).val());
 						});
+						// Avoid conflicts with the browser
+						ui.removeAttr('list');
+
 						ui.autocomplete({
 							source: arr,
 							// under imput method
@@ -591,7 +595,6 @@
 			//
 			// When submit
 			//
-
 
 			form.find('input:submit, input:image, input:button, button:submit')
 				.click(function(ev) {

@@ -1,6 +1,6 @@
 # jQuery.h5form - HTML Forms Plugin
 
-Author: by Yoshiyuki Mikome [http://www.rapidexp.com/h5form](http://www.rapidexp.com/h5form) 
+Author: by Yoshiyuki Mikome [http://www.rapidexp.com/h5form](http://www.rapidexp.com/h5form)<br>
 Copyright (c) 2012 - 2013 [Yoshiyuki Mikome](http://www.rapidexp.com)
 
 Dual licensed under the MIT (MIT-LICENSE.txt)
@@ -17,14 +17,14 @@ These enhancements are determined in the presence or absence of the object in a 
 Therefore it will be able to support nearly maintenance-free for the other versions of browsers.
 
 Some of the features like Date state uses to determine the type and version of the browser.
-Even if the browser improvements, it uses the extension of the plugin (2.9.0). 
+Even if the browser improvements, it uses the extension of the plugin (2.9.0).<br>
 Because, it is in order to avoid the maintenance support
 by fixing the state it was in when you install the plugin to the site.
 
 And this will also fix several bugs of the Internet Explorer on submit, and will allow you to use the button element.
 
 This has the large file size for multi-function.
-However, it binds only the features that are needed by the browser to the element of the page, and It will work lightly. 
+However, it binds only the features that are needed by the browser to the element of the page, and It will work lightly.<br>
 If you wish, you can get a smaller size javascript by removing unnecessary features.
 
 __More information about the support of each browser, [please see here...](http://www.rapidexp.com/h5form)__

@@ -56,11 +56,24 @@
 	  <p>This plugin gives all browsers the HTML5 forms like the Opera.</p>
 
 	  <p>
-		Whether these enhancements are determined in the presence or absence of the object in a input element.<br>
-		For the other versions of browsers, it will be able to support nearly maintenance-free ... maybe.
+		These enhancements are determined in the presence or absence of the object in a input element.
+		Therefore it will be able to support nearly maintenance-free for the other versions of browsers.
+	  </p>
+
+	  <p>
+		Some of the features like Date state uses to determine the type and version of the browser.
+		Even if the browser improvements, it uses the extension of the plugin (2.9.0).<br>
+		Because, it is in order to avoid the maintenance support
+		by fixing the state it was in when you install the plugin to the site.
 	  </p>
 
 	  <p>And this will also fix several bugs of the Internet Explorer on submit, and will allow you to use the button element.</p>
+
+	  <p>
+		This has the large file size for multi-function.
+		However, it binds only the features that are needed by the browser to the element of the page, and It will work lightly.<br>
+		If you wish, you can get a smaller size javascript by removing unnecessary features.
+	  </p>
 
 	  <ul id="lang">
 		<li><a href="./README_ja.html">日本語</a></li>
@@ -667,12 +680,13 @@ $(<span class="name">function</span>() {
 $(<span class="str">'form'</span>).h5form({ dynamicHtml: <span class="str">'.h5form-dynamic'</span> });	// default
 </pre>
 
-	  <p>Disabled spin button of Number and time in default. Please add following option if you wish.<br>
-		This is because the design is not to collapse even duplicate the functionality of the browser by halfway version. </p>
+	  <p><del>Disabled spin button of Number and time in default. Please add following option if you wish.<br>
+		This is because the design is not to collapse even duplicate the functionality of the browser by halfway version.
+	  </del></p>
 
 
 <pre class="source">
-$(<span class="str">'form'</span>).h5form({ addSpin: true });
+<del>$(<span class="str">'form'</span>).h5form({ addSpin: true });</del>
 </pre>
 
 

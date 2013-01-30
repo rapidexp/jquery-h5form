@@ -1,7 +1,6 @@
 # jQuery.h5form - HTML Forms Plugin
 
-Author: by Yoshiyuki Mikome [http://www.rapidexp.com/h5form](http://www.rapidexp.com/h5form)
-
+Author: by Yoshiyuki Mikome [http://www.rapidexp.com/h5form](http://www.rapidexp.com/h5form) 
 Copyright (c) 2012 - 2013 [Yoshiyuki Mikome](http://www.rapidexp.com)
 
 Dual licensed under the MIT (MIT-LICENSE.txt)
@@ -14,22 +13,33 @@ Built for [jQuery](http://jquery.com)
 
 This plugin gives all browsers the HTML5 forms like the Opera.
 
-Whether these enhancements are determined in the presence or absence of the object in a input element.
-For the other versions of browsers, it will be able to support nearly maintenance-free ... maybe.
+These enhancements are determined in the presence or absence of the object in a input element.
+Therefore it will be able to support nearly maintenance-free for the other versions of browsers.
+
+Some of the features like Date state uses to determine the type and version of the browser.
+Even if the browser improvements, it uses the extension of the plugin (2.9.0). 
+Because, it is in order to avoid the maintenance support
+by fixing the state it was in when you install the plugin to the site.
 
 And this will also fix several bugs of the Internet Explorer on submit, and will allow you to use the button element.
 
-
+This has the large file size for multi-function.
+However, it binds only the features that are needed by the browser to the element of the page, and It will work lightly. 
+If you wish, you can get a smaller size javascript by removing unnecessary features.
 
 __More information about the support of each browser, [please see here...](http://www.rapidexp.com/h5form)__
-
-And if you wish, you can get a smaller size javascript by removing unnecessary features.
-
-
 
 
 
 ## History
+
+### Version 2.9.0 (2013-xx-xx)
+
+* Display number, date and time state as type=text.
+* Remove list for conflicts with the autocomplete of browser.
+* Default of addSpin is now true.
+* Tested with IE 10.
+* Shut all hooks to the Opera.
 
 ### Version 2.8.1 (2013-01-28)
 

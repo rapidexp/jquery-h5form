@@ -88,19 +88,19 @@
 			<th>IE 7</th>
 			<th>IE 8</th>
 			<th>IE 9</th>
-			<th>IE10<sup>*7</sup></th>
+			<th>IE10<sup></sup></th>
 			<th>Firefox</th>
 			<th>Chrome</th>
 			<th>Safari</th>
 			<th>Opeara</th>
-			<th>Android<sup>*8</sup></th>
+			<th>Android<sup>*7</sup></th>
 		  </tr>
 		</thead>
 
 		<tbody>
 
 		  <tr>
-			<th>すべての要素</th>
+			<th rowspan="2">すべての要素</th>
 			<th>* フキダシメッセージ</th>
 			<td>*1</td>
 			<td>E</td>
@@ -115,13 +115,27 @@
 		  </tr>
 
 		  <tr>
+			<th>* メッセージにTitleを含む</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>S</td>
+			<td>E</td>
+			<td>S</td>
+			<td>E</td>
+			<td>S</td>
+			<td>E</td>
+		  </tr>
+
+		  <tr>
 			<th>form 要素</th>
 			<th>* novaidate 属性</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -136,7 +150,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -192,7 +206,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -201,12 +215,12 @@
 		  </tr>
 
 		  <tr>
-			<th>+ list 属性 (datalist 要素)<sup>*10</sup></th>
+			<th>+ list 属性 (datalist 要素)<sup>*9</sup></th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
 			<td>x</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -248,12 +262,12 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>E</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
-			<td>*9</td>
+			<td>*8</td>
 		  </tr>
 
 		  <tr>
@@ -262,7 +276,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>E</td>
 			<td>S</td>
 			<td>S</td>
@@ -362,7 +376,7 @@
 			<td>x</td>
 			<td>x</td>
 			<td>x</td>
-			<td>x</td>
+			<td>S</td>
 			<td>x</td>
 			<td>S</td>
 			<td>x</td>
@@ -389,7 +403,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -407,7 +421,7 @@
 			<td>x</td>
 			<td>x</td>
 			<td>x</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -421,7 +435,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -435,7 +449,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -449,7 +463,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -463,7 +477,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -477,7 +491,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -524,7 +538,7 @@
 
 		<dt>*2</dt>
 		<dd>グローバルの日付の仕様は W3C のドラフトの準拠しました。
-		  このため、Opera とは異なる <a href="testing.php#test-8">ユーザインタフェース</a> となってしまいました。</dd>
+		  このため、Opera とは異なる <a href="testing.php#test-9">ユーザインタフェース</a> となってしまいました。</dd>
 
 		<dt>*3</dt>
 		<dd>jQuery UI を使えば対応は難しくありません。これらの状態も必要ですか？</dd>
@@ -542,18 +556,13 @@
 		<dd>この問題を javascript で解決するのは不可能なようです。</dd>
 
 		<dt>*7</dt>
-		<dd>IE 10 では HTML5 フォームがサポートそうです。
-		  しかし、どうやらそれはバリデーションだけの実装であるようです。<br>
-		  もしそうなら、プラグインは修正なしで number その他の属性のインターフェースを提供することはできません。</dd>
-
-		<dt>*8</dt>
 		<dd>Android ブラウザは HTML5 の属性をオブジェクトに持っていながら、その機能は実装されていません。
 		  HTML5 フォーム解説サイトの多くは間違った情報を流してるので注意してください。<br>
 		  私は自分の Android 2.3.4 スマートフォンでこれを確認しました。他のバージョンや iPhone についての情報があればお知らせください。
 		</dd>
-		<dt>*9</dt>
+		<dt>*8</dt>
 		<dd>プラグインは min や max step 属性のバリデーションのみを提供し、スピンボタンなどインターフェースは追加しません。</dd>
-		<dt>*10</dt>
+		<dt>*9</dt>
 		<dd>IE 9 は Datalist 要素の Option 子要素を DOM に読み込みません。IE 9でも動作するようにするには、メタタグ X-UA-Compatible で IE=8 を指定しなければなりません。</dd>
 	  </dl>
 
@@ -702,6 +711,8 @@ $(<span class="str">'form'</span>).h5form({ exprBehide: <span class="str">'.h5fo
 		<li>Number, Date, Time状態の表示をtype=textに</li>
 		<li>自動補完ブラウザと重ならないようlistを削除</li>
 		<li>スピンボタンを表示をデフォルトに戻した</li>
+		<li>IE 10 RC で動作を確認</li>
+		<li>Operaへのフックはすべて停止した</li>
 	  </ul>
 
 	  <h3>Version 2.8.1	(2013-01-28)</h3>

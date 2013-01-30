@@ -90,19 +90,19 @@
 			<th>IE 7</th>
 			<th>IE 8</th>
 			<th>IE 9</th>
-			<th>IE10<sup>*7</sup></th>
+			<th>IE10<sup></sup></th>
 			<th>Firefox</th>
 			<th>Chrome</th>
 			<th>Safari</th>
 			<th>Opeara</th>
-			<th>Android<sup>*8</sup></th>
+			<th>Android<sup>*7</sup></th>
 		  </tr>
 		</thead>
 
 		<tbody>
 
 		  <tr>
-			<th>All elements</th>
+			<th rowspan="2">All elements</th>
 			<th>* The balloon message</th>
 			<td>*1</td>
 			<td>E</td>
@@ -117,13 +117,27 @@
 		  </tr>
 
 		  <tr>
+			<th>* message included title</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>S</td>
+			<td>E</td>
+			<td>S</td>
+			<td>E</td>
+			<td>S</td>
+			<td>E</td>
+		  </tr>
+
+		  <tr>
 			<th>The form element</th>
 			<th>* The novaidate attribute</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -138,7 +152,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -194,7 +208,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>?</td>
@@ -203,12 +217,12 @@
 		  </tr>
 
 		  <tr>
-			<th>+ The list attribute (The datalist element)<sup>*10</sup></th>
+			<th>+ The list attribute (The datalist element)<sup>*9</sup></th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
 			<td>x</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>?</td>
@@ -250,12 +264,12 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>E</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
-			<td>*9</td>
+			<td>*8</td>
 		  </tr>
 
 		  <tr>
@@ -264,7 +278,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>E</td>
 			<td>S</td>
 			<td>S</td>
@@ -364,7 +378,7 @@
 			<td>x</td>
 			<td>x</td>
 			<td>x</td>
-			<td>x</td>
+			<td>S</td>
 			<td>x</td>
 			<td>S</td>
 			<td>x</td>
@@ -391,7 +405,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -409,7 +423,7 @@
 			<td>x</td>
 			<td>x</td>
 			<td>x</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -423,7 +437,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -437,7 +451,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -451,7 +465,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -465,7 +479,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -479,7 +493,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
-			<td>?</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -526,7 +540,7 @@
 
 		<dt>*2</dt>
 		<dd>On the specification of the global date and time, I have strict Interpreted the W3C draft.
-		  Oops, <a href="testing.php#test-8">the user interface</a> has been unlike the Opera.</dd>
+		  Oops, <a href="testing.php#test-9">the user interface</a> has been unlike the Opera.</dd>
 
 		<dt>*3</dt>
 		<dd>It is not difficult to support using jQuery UI. Do you want these states?</dd>
@@ -544,19 +558,14 @@
 		<dd>Sorry, to solve this problem using the javascript does not seem possible.</dd>
 
 		<dt>*7</dt>
-		<dd>It seems to support to the HTML5 forms on IE 10.
-		  However, it might be the only implementation of validation, phew.<br>
-		  if so, the plugin may not be given the user interface to the number or ohter attribute with no improvement.</dd>
-
-		<dt>*8</dt>
 		<dd>Android browser even if it has attributes of html5, does not have the function. You must know many sites for HTML5 Forms are posted incorrect information.<br>
 		  I tried test on my phone of Android 2.3.4. Please contact me if you have information about other versions or iphone.
 		</dd>
 
-		<dt>*9</dt>
+		<dt>*8</dt>
 		<dd>The plugin give the attributes of min, max and step except the user interface of spin.</dd>
 
-		<dt>*10</dt>
+		<dt>*9</dt>
 		<dd>IE 9 doesn't read childen of the datalist to DOM. You should set IE=8 to X-UA-Compatible of meta tag, if you need.</dd>
 	  </dl>
 
@@ -708,6 +717,8 @@ $(<span class="str">'form'</span>).h5form({ exprBehide: <span class="str">'.h5fo
 		<li>Display number, date and time state as type=text.</li>
 		<li>Remove list for conflicts with the autocomplete of browser.</li>
 		<li>Default of addSpin is now true.</li>
+		<li>Tested with IE 10.</li>
+		<li>Shut all hooks to the Opera.</li>
 	  </ul>
 
 	  <h3>Version 2.8.1	(2013-01-28)</h3>

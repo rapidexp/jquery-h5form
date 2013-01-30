@@ -59,7 +59,7 @@ foreach ($_POST as $name => $value):
 		}
 	);
 
-	$('.delete :input').attr('disabled', 'disabled');
+//	$('.delete :input').attr('disabled', 'disabled');
 
 });
 </script>
@@ -363,7 +363,7 @@ foreach ($_POST as $name => $value):
 			  <input type="submit" name="test-6" value="submit">
 			</form>
 <pre class="source" style="display:none">
-&lt;form action="#test-6" method="post" class="h5form"&gt;
+&lt;form action="#test-6" method="post" <strong>class="h5form"</strong>&gt;
   &lt;input <strong>type="email"</strong> name="input-6-url"&gt;&lt;br&gt;
   &lt;input <strong>type="url"</strong> name="input-6-eml" placeholder="http://"&gt;
   &lt;input type="submit" name="test-6" value="submit"&gt;
@@ -408,7 +408,7 @@ foreach ($_POST as $name => $value):
 			  <input type="submit" name="test-7" value="submit">
 			</form>
 <pre class="source" style="display:none">
-&lt;form action="#test-7" method="post" class="h5form"&gt;
+&lt;form action="#test-7" method="post" <strong>class="h5form"</strong>&gt;
   &lt;input <strong>type="number"</strong> name="input-7-num"
     <strong>min="12" max="30" step="0.5"</strong> title="From 12 to 30 step 0.5"&gt;&lt;br&gt;
   &lt;input <strong>type="range"</strong> name="input-7-ran" <strong>step="10"</strong>&gt;
@@ -419,7 +419,7 @@ foreach ($_POST as $name => $value):
 		</tr>
 	  </table>
 
-	  <h3>Test-8. <a id="test-8">The date state and the time state</a> <sup>[IE 9-] [Firefox] [Safari]</sup></h3>
+	  <h3>Test-8. <a id="test-8">The date state and the time state</a> <sup>[IE 10-] [Firefox] [Safari]</sup></h3>
 
 	  <p>Even with the date state, the plugin is achieved with the help of jQuery UI on Internet Explorer, Firefox, Chrome and Safari.</p>
 
@@ -453,7 +453,7 @@ foreach ($_POST as $name => $value):
 			  <input type="submit" name="test-8" value="submit">
 			</form>
 <pre class="source" style="display:none">
-&lt;form action="#test-8" method="post" class="h5form"&gt;
+&lt;form action="#test-8" method="post" <strong>class="h5form</strong>"&gt;
   &lt;input <strong>type="date"</strong> name="input-8-date" <strong>min="<?php echo date('Y-m-d');?>"</strong>
     <strong>max="<?php echo date('Y-m-d', strtotime('+1 week'));?>"</strong> title="One week from today"&gt;&lt;br&gt;
   &lt;input <strong>type="time"</strong> name="input-8-time" <strong>min="7:00" max="18:00"</strong>
@@ -466,7 +466,7 @@ foreach ($_POST as $name => $value):
 	  </table>
 
 
-	  <h3>Test-9. <a id="test-9">The date and time state</a> <sup>[IE 9-] [Firefox] [Chrome] [Safari]</sup></h3>
+	  <h3>Test-9. <a id="test-9">The date and time state</a> <sup>[IE 10-] [Firefox] [Chrome] [Safari]</sup></h3>
 
 	  <p>In the global date and time state, you can set and get the time as a forced-UTC global data and time string.
 		And your user set and view the time in their own time zone.<br>
@@ -487,7 +487,7 @@ foreach ($_POST as $name => $value):
 			  <input type="submit" name="test-9" value="submit">
 			</form>
 <pre class="source" style="display:none">
-&lt;form action="#test-9" method="post" class="h5form"&gt;
+&lt;form action="#test-9" method="post"&gt;
   &lt;input <strong>type="datetime"</strong> name="input-9-gm"
     <strong>min="<?php echo gmdate('Y-m-d\TH:i:s', ceil(time()/1800)*1800).'Z';?>" step="1800"</strong>
     title="Every 30 minutes from now."&gt;&lt;br&gt;
@@ -505,7 +505,7 @@ foreach ($_POST as $name => $value):
 			  <input type="submit" name="test-9" value="submit">
 			</form>
 <pre class="source" style="display:none">
-&lt;form action="#test-9" method="post"&gt;
+&lt;form action="#test-9" method="post" <strong>class="h5form"</strong>&gt;
   &lt;input <strong>type="datetime"</strong> name="input-9-gm"
     <strong>min="<?php echo gmdate('Y-m-d\TH:i:s', ceil(time()/1800)*1800).'Z';?>" step="1800"</strong>
     title="Every 30 minutes from now."&gt;&lt;br&gt;
@@ -520,7 +520,54 @@ foreach ($_POST as $name => $value):
 	  </table>
 
 
-	  <h3>Test-10. <a id="test-10">Auto complate off</a></h3>
+	  <h3>Test-10. <a id="test-10">The other state</a> </h3>
+
+	  <p>This plugin does not give anything for the month, week and color state.</p>
+
+	  <table class="sample">
+		<tr>
+		  <th>Naked</th>
+		  <th>bind h5form</th>
+		</tr>
+
+		<tr>
+		  <td>
+			<form action="#test-10" method="post">
+			  <input type="month" name="input-10-m"><br>
+			  <input type="week" name="input-10-w"><br>
+			  <input type="color" name="input-10-c">
+			  <input type="submit" name="test-10" value="submit">
+			</form>
+<pre class="source" style="display:none">
+&lt;form action="#test-10" method="post"&gt;
+  &lt;input <strong>type="month"</strong> name="input-10-m"&gt;&lt;br&gt;
+  &lt;input <strong>type="week"</strong> name="input-10-w"&gt;&lt;br&gt;
+  &lt;input <strong>type="color"</strong> name="input-10-c"&gt;
+  &lt;input type="submit" name="test-10" value="submit"&gt;
+&lt;/form&gt;
+</pre>
+		  </td>
+		  <td>
+			<form action="#test-10" method="post" class="h5form">
+			  <input type="month" name="input-10-m"><br>
+			  <input type="week" name="input-10-w"><br>
+			  <input type="color" name="input-10-c">
+			  <input type="submit" name="test-10" value="submit">
+			</form>
+<pre class="source" style="display:none">
+&lt;form action="#test-10" method="post" <strong>class="h5form"</strong>&gt;
+  &lt;input <strong>type="month"</strong> name="input-10-m"&gt;&lt;br&gt;
+  &lt;input <strong>type="week"</strong> name="input-10-w"&gt;&lt;br&gt;
+  &lt;input <strong>type="color"</strong> name="input-10-c"&gt;
+  &lt;input type="submit" name="test-10" value="submit"&gt;
+&lt;/form&gt;
+</pre>
+		  </td>
+		</tr>
+	  </table>
+
+
+	  <h3>Test-11. <a id="test-11">Auto complate off</a></h3>
 
 	  <p>IE has no feature of the auto complete, so this plugin does not give anything.</p>
 
@@ -532,35 +579,35 @@ foreach ($_POST as $name => $value):
 
 		<tr>
 		  <td>
-			<form action="#test-10" method="post">
+			<form action="#test-11" method="post">
 			  <input type="text" name="name" value="" autocomplete="off">
-			  <button type="submit" name="test-10" value="submit">button</button>
+			  <button type="submit" name="test-11" value="submit">button</button>
 			</form>
 <pre class="source" style="display:none">
-&lt;form action="#test-10" method="post"&gt;
+&lt;form action="#test-11" method="post"&gt;
   &lt;input type="text" name="name" value="" <strong>autocomplete="off"</strong>&gt;
-  &lt;button type="submit" name="test-10" value="submit"&gt;button&lt;/button&gt;
+  &lt;button type="submit" name="test-11" value="submit"&gt;button&lt;/button&gt;
 &lt;/form&gt;
 </pre>
 		  </td>
 
 
 		  <td>
-			<form action="#test-10" method="post" class="h5form">
+			<form action="#test-11" method="post" class="h5form">
 			  <input type="text" name="name" value="" autocomplete="off">
-			  <button type="submit" name="test-10" value="submit">button</button>
+			  <button type="submit" name="test-11" value="submit">button</button>
 			</form>
 <pre class="source" style="display:none">
-&lt;form action="#test-10" method="post" <strong>class="h5form"</strong>&gt;
+&lt;form action="#test-11" method="post" <strong>class="h5form"</strong>&gt;
   &lt;input type="text" name="name" value="" <strong>autocomplete="off"</strong>&gt;
-  &lt;button type="submit" name="test-10" value="submit"&gt;button&lt;/button&gt;
+  &lt;button type="submit" name="test-11" value="submit"&gt;button&lt;/button&gt;
 &lt;/form&gt;
 </pre>
 		  </td>
 		</tr>
 	  </table>
 
-	  <h3>Test-11. <a id="test-11">Auto complete width Datalist</a> <sup>[IE 8-] <del>[IE 9]</del></sup></h3>
+	  <h3>Test-12. <a id="test-12">Auto complete width Datalist</a> <sup>[IE 8-] <del>[IE 9]</del></sup></h3>
 
 	  <p>
 		Even with the plugin, this feature is not available in IE 9. Because it doesn't read childen of the datalist to DOM.<br>
@@ -578,10 +625,10 @@ foreach ($_POST as $name => $value):
 
 		<tr>
 		  <td>
-			<form action="#test-11" method="post">
-			  <input type="text" name="name" value="" autocomplete="off" list="list-11a">
-			  <button type="submit" name="test-11" value="submit">button</button>
-			  <datalist id="list-11a">
+			<form action="#test-12" method="post">
+			  <input type="text" name="name" value="" autocomplete="off" list="list-12a">
+			  <button type="submit" name="test-12" value="submit">button</button>
+			  <datalist id="list-12a">
 				<option value="Apple"></option>
 				<option value="Avocado"></option>
 				<option value="Lemon"></option>
@@ -590,10 +637,10 @@ foreach ($_POST as $name => $value):
 			  </datalist>
 			</form>
 <pre class="source" style="display:none">
-&lt;form action="#test-11" method="post"&gt;
-  &lt;input type="text" name="name" value="" <strong>autocomplete="off" list="list-11"</strong>&gt;
-  &lt;button type="submit" name="test-11" value="submit"&gt;button&lt;/button&gt;
-  <strong>&lt;datalist id="list-11"&gt;</strong>
+&lt;form action="#test-12" method="post"&gt;
+  &lt;input type="text" name="name" value="" <strong>autocomplete="off" list="list-12"</strong>&gt;
+  &lt;button type="submit" name="test-12" value="submit"&gt;button&lt;/button&gt;
+  <strong>&lt;datalist id="list-12"&gt;</strong>
 	&lt;option value="Apple"&gt;&lt;/option&gt;
 	&lt;option value="Avocado"&gt;&lt;/option&gt;
 	&lt;option value="Lemon"&gt;&lt;/option&gt;
@@ -606,10 +653,10 @@ foreach ($_POST as $name => $value):
 
 
 		  <td>
-			<form action="#test-11" method="post" class="h5form">
-			  <input type="text" name="name" value="" autocomplete="off" list="list-11b">
-			  <button type="submit" name="test-11" value="submit">button</button>
-			  <datalist id="list-11b">
+			<form action="#test-12" method="post" class="h5form">
+			  <input type="text" name="name" value="" autocomplete="off" list="list-12b">
+			  <button type="submit" name="test-12" value="submit">button</button>
+			  <datalist id="list-12b">
 				<option value="Apple"></option>
 				<option value="Avocado"></option>
 				<option value="Lemon"></option>
@@ -618,10 +665,10 @@ foreach ($_POST as $name => $value):
 			  </datalist>
 			</form>
 <pre class="source" style="display:none">
-&lt;form action="#test-11" method="post" <strong>class="h5form"</strong>&gt;
-  &lt;input type="text" name="name" value="" <strong>autocomplete="off" list="list-11"</strong>&gt;
-  &lt;button type="submit" name="test-11" value="submit"&gt;button&lt;/button&gt;
-  <strong>&lt;datalist id="list-11"&gt;</strong>
+&lt;form action="#test-12" method="post" <strong>class="h5form"</strong>&gt;
+  &lt;input type="text" name="name" value="" <strong>autocomplete="off" list="list-12"</strong>&gt;
+  &lt;button type="submit" name="test-12" value="submit"&gt;button&lt;/button&gt;
+  <strong>&lt;datalist id="list-12"&gt;</strong>
 	&lt;option value="Apple"&gt;&lt;/option&gt;
 	&lt;option value="Avocado"&gt;&lt;/option&gt;
 	&lt;option value="Lemon"&gt;&lt;/option&gt;
@@ -642,7 +689,7 @@ foreach ($_POST as $name => $value):
 	  <h2>Button Attributes</h2>
 
 <div class="delete">
-	  <h3>Test-12. <a id="test-12">The form attribute</a> <sup>[IE 9-]</sup></h3>
+	  <h3>Test-13. <a id="test-13">The form attribute</a> <sup>[IE 9-]</sup></h3>
 
 	  <p>The following buttons have a form attribute associated with the other form.<br>
 		If you click the button, the text of the other form will be send with the value of the cliked button.</p>
@@ -656,27 +703,27 @@ foreach ($_POST as $name => $value):
 
 		<tr>
 		  <td>
-			<form id="form-a" action="#test-12" method="post" class="h5form">
-			  <input type="text" name="input-12" value="This is Form A" required>
-			  <input type="submit" name="test-12" value="input" form="form-b">
+			<form id="form-a" action="#test-13" method="post" class="h5form">
+			  <input type="text" name="input-13" value="This is Form A" required>
+			  <input type="submit" name="test-13" value="input" form="form-b">
 			</form>
 <pre class="source" style="display:none">
-&lt;form <strong>id="form-a"</strong> action="#test-12" method="post" class="h5form"&gt;
-  &lt;input type="text" name="input-12" value="This is From A" required&gt;
-  &lt;input type="submit" name="test-12" value="input"
+&lt;form <strong>id="form-a"</strong> action="#test-13" method="post" class="h5form"&gt;
+  &lt;input type="text" name="input-13" value="This is From A" required&gt;
+  &lt;input type="submit" name="test-13" value="input"
    <strong>form="form-b"</strong>&gt;
 &lt;/form&gt;
 </pre>
 		  </td>
 		  <td>
-			<form id="form-b" action="#test-12" method="post" class="h5form">
-			  <input type="test" name="input-12" value="This is Form B" required>
-			  <button type="submit" name="test-12" value="This is Button B" form="form-a">button</button>
+			<form id="form-b" action="#test-13" method="post" class="h5form">
+			  <input type="test" name="input-13" value="This is Form B" required>
+			  <button type="submit" name="test-13" value="This is Button B" form="form-a">button</button>
 			</form>
 <pre class="source" style="display:none">
-&lt;form <strong>id="form-b"</strong> action="#test-12" method="post" class="h5form"&gt;
-  &lt;input type="test" name="input-12" value="This is Form B" required&gt;
-  &lt;button type="submit" name="test-12" value="This is Button B"
+&lt;form <strong>id="form-b"</strong> action="#test-13" method="post" class="h5form"&gt;
+  &lt;input type="test" name="input-13" value="This is Form B" required&gt;
+  &lt;button type="submit" name="test-13" value="This is Button B"
    <strong>form="form-a"</strong>&gt;button&lt;/button&gt;
 &lt;/form&gt;
 </pre>
@@ -689,7 +736,7 @@ foreach ($_POST as $name => $value):
 	  </p>
 
 
-	  <h3>Test-13. <a id="test-13">The formaction attribute and etc.</a> <sup>[IE 9-]</sup></h3>
+	  <h3>Test-14. <a id="test-14">The formaction attribute and etc.</a> <sup>[IE 9-]</sup></h3>
 
 	  <p>The right button of each form has the form-attributes.
 		Please think what happens when you click each button.</p>
@@ -702,15 +749,15 @@ foreach ($_POST as $name => $value):
 
 		<tr>
 		  <td>
-			<form action="#test-13" method="post" class="h5form">
+			<form action="#test-14" method="post" class="h5form">
 			  <input type="text" name="q" value="h5form"><br>
-			  <button type="submit" name="test-13" value="submit">button</button>
+			  <button type="submit" name="test-14" value="submit">button</button>
 			  <button type="submit" formmethod="get" formaction="http://www.google.com/search" formtarget="_blank">button</button>
 			</form>
 <pre class="source" style="display:none">
-&lt;form action="#test-13" method="post" class="h5form"&gt;
+&lt;form action="#test-14" method="post" class="h5form"&gt;
   &lt;input type="text" name="q" value="h5form"&gt;&lt;br&gt;
-  &lt;button type="submit" name="test-13" value="submit"&gt;button&lt;/button&gt;
+  &lt;button type="submit" name="test-14" value="submit"&gt;button&lt;/button&gt;
   &lt;button type="submit" <strong>formmethod="get"</strong>
     <strong>formaction="http://www.google.com/search"</strong>
     <strong>formtarget="_blank"</strong>&gt;button&lt;/button&gt;
@@ -720,16 +767,16 @@ foreach ($_POST as $name => $value):
 
 
 		  <td>
-			<form action="#test-13" method="post" class="h5form">
+			<form action="#test-14" method="post" class="h5form">
 			  <input type="text" name="input" required pattern="\d{4}-\d{3}"><br>
-			  <button type="submit" name="test-13" value="validate">button</button>
-			  <button type="submit" name="test-13" value="novalidate" formnovalidate="novalidate">button</button>
+			  <button type="submit" name="test-14" value="validate">button</button>
+			  <button type="submit" name="test-14" value="novalidate" formnovalidate="novalidate">button</button>
 			</form>
 <pre class="source" style="display:none">
-&lt;form action="#test-13" method="post" class="h5form"&gt;
+&lt;form action="#test-14" method="post" class="h5form"&gt;
   &lt;input type="text" name="input" <strong>required pattern="\d{4}-\d{3}"</strong>&gt;&lt;br&gt;
-  &lt;button type="submit" name="test-13" value="validate"&gt;button&lt;/button&gt;
-  &lt;button type="submit" name="test-13" value="novalidate"
+  &lt;button type="submit" name="test-14" value="validate"&gt;button&lt;/button&gt;
+  &lt;button type="submit" name="test-14" value="novalidate"
     <strong>formnovalidate="novalidate"</strong>&gt;button&lt;/button&gt;
 &lt;/form&gt;
 </pre>

@@ -15,6 +15,14 @@
 (function($) {
 
 	$.fn.h5form = function(options) {
+		// Check UA
+		var ua = window.navigator.userAgent.toLowerCase(),
+			version = parseInt($.browser.version),
+			msie = version * $.browser.msie,
+			chrome = parseInt(ua.replace(/.*chrome\/(\d+).*/, "$1")),
+			android = (navigator.userAgent.search(/Android/) != -1);
+
+		if (!!$.browser.opera && version > 9) return;
 
 		$.fn.outerHTML = function() {
 			// Firefox 10 or earlier does not have outerHTML
@@ -58,40 +66,36 @@
 		var opts = $.extend({}, defaults, options);
 
 		// Test browser
-		var ua = window.navigator.userAgent.toLowerCase(),
-			version = parseInt($.browser.version),
-			chrome = parseInt(ua.replace(/.*chrome\/(\d+).*/, "$1")),
-			isAndroid = (navigator.userAgent.search(/Android/) != -1),
-			test1 = $('<input>').hide().appendTo($('body')).get(0),
+		var test1 = $('<input>').hide().appendTo($('body')).get(0),
 			test2 = $('textarea:first').get(0) || new Object(),
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
-			hasCustomValidity = ('setCustomValidity' in test1) && !isAndroid,
-			hasAppendTitle = (!!$.browser.webkit && version >= 533) && !isAndroid,
+			hasCustomValidity = ('setCustomValidity' in test1) && !android,
+			hasAppendTitle = chrome || (msie > 9),
 //# AUTOFOCUS
 			hasAutofocus = ('autofocus' in test1),
 //# REQUIRED
-			hasRequired = ('required' in test1) && !isAndroid,
-			hasPattern = ('pattern' in test1) && !isAndroid,
+			hasRequired = ('required' in test1) && !android,
+			hasPattern = ('pattern' in test1) && !android,
 //# EMAILURL
-			hasEmail = hasUrl = hasCustomValidity && hasPattern && !isAndroid, // maybe
+			hasEmail = hasUrl = hasCustomValidity && hasPattern && !android, // maybe
 //# PLACEHOLDER
 			hasPlaceholder = ('placeholder' in test1),
 //# NUMBER
 			hasNumber = hasSpin = hasRange =
-				('step' in test1) && ('min' in test1) && !isAndroid && !$.browser.mozilla,
+				('step' in test1) && ('min' in test1) && !android && !$.browser.mozilla,
 //# DATETIME
-			hasDateTime = (!!$.browser.opera && version > 9) && !isAndroid,
+			hasDateTime = false,
 			hasDate = hasDateTime || chrome > 21,
 			hasTime = hasDateTime || chrome > 22,
 //# MAXLENGTH
 			hasMaxlength = ('maxLength' in test2),
 //# FORM
-			hasFormAttr = ('form' in test1) && ('formAction' in test1) && !isAndroid,
+			hasFormAttr = ('form' in test1) && ('formAction' in test1) && !android,
 //# AUTOCOMPLETE
 			hasDatalist = ('autocomplete' in test1) && ('list' in test1),
 //#
-			hasBugButton = ($.browser.msie && version < 8);
-			hasBugEnter = ($.browser.msie && version < 9) || isAndroid;
+			hasBugButton = (msie && msie < 8);
+			hasBugEnter = (msie && msie < 9) || android;
 
 		for (i in opts.hasOptions) {
 			eval(opts.hasOptions[i] + '=true;');

@@ -229,32 +229,38 @@ foreach ($_POST as $name => $value):
 		<tr>
 		  <td>
 			<form action="#test-4" method="post">
-			  <input type="text" name="input-4" placeholder="xxxx-xxx" pattern="\d{4}-\d{3}" title="Enter such as 1234-567." required>
+			  <input type="text" name="input-4a" required><br>
+			  <input type="text" name="input-4b" placeholder="xxxx-xxx" pattern="\d{4}-\d{3}" title="Enter such as 1234-567." required>
 			  <input type="submit" name="test-4" value="submit">
 			</form>
 <pre class="source" style="display:none">
 &lt;form action="#test-4" method="post"&gt;
   &lt;input type="text" name="input-4" <strong>placeholder="xxxx-xxx" required</strong>
   <strong>pattern="\d{4}-\d{3}"</strong> title="Enter such as 1234-567." &gt;
+  &lt;br&gt;
  &lt;input type="submit" name="test-4" value="submit"&gt;
 &lt;/form&gt;
 </pre>
 		  </td>
 		  <td>
 			<form action="#test-4" method="post" class="h5form">
-			  <input type="text" name="input-4" placeholder="xxxx-xxx" pattern="\d{4}-\d{3}" title="Enter such as 1234-567." required>
+			  <input type="text" name="input-4a" required><br>
+			  <input type="text" name="input-4b" placeholder="xxxx-xxx" pattern="\d{4}-\d{3}" title="Enter such as 1234-567." required>
 			  <input type="submit" name="test-4" value="submit">
 			</form>
 <pre class="source" style="display:none">
 &lt;form action="#test-4" method="post" <strong>class="h5form"</strong>&gt;
   &lt;input type="text" name="input-4" <strong>placeholder="xxxx-xxx" required</strong>
   <strong>pattern="\d{4}-\d{3}"</strong> title="Enter such as 1234-567." &gt;
+  &lt;br&gt;
  &lt;input type="submit" name="test-4" value="submit"&gt;
 &lt;/form&gt;
 </pre>
 		  </td>
 		</tr>
+	  </table>
 
+	  <table class="sample">
 		<tr>
 		  <td>
 			<form action="#test-4.5" method="post">

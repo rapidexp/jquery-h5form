@@ -4,7 +4,7 @@
  *
  *	Author: by Yoshiyuki Mikomde http://www.rapidexp.com/h5form
  *
- *	Copyright (c) 2012 Yoshiyuki Mikome (http://www.rapidexp.com)
+ *	Copyright (c) 2012 - 2013 Yoshiyuki Mikome (http://www.rapidexp.com)
  *	Dual licensed under the MIT (MIT-LICENSE.txt)
  *	and GPL (GPL-LICENSE.txt) licenses.
  *
@@ -35,7 +35,7 @@
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 			exprResponse: '.h5form-response, .h5form-reversed',
 			exprBehind: '.h5fom-behind',
-			colorErr: 'mistyrose',
+			styleErr: { backgroundColor: 'mistyrose' },
 //# REQUIRED
 			emptyMessage: 'Please enter this field.',
 			unselectedMessage: 'Please select an item in the list.',
@@ -120,7 +120,7 @@
 
 			//Private properties
 			var form = $(this),
-				colorErr = '',	// does not color when loading
+				firstTime = true,
 //# AUTOFOCUS
 				elmAutofocus,
 //# PLACEHOLDER
@@ -175,11 +175,19 @@
 						ui.get(0).setCustomValidity(message);
 					} else {
 						if (message) {
-							ui.data('customValidity', message.replace(/\n/, '<br />'))
-							  .css('backgroundColor', colorErr);
+							ui.data('customValidity', message.replace(/\n/, '<br />'));
 						} else {
-							ui.removeData('customValidity')
-							  .css('backgroundColor', '');
+							ui.removeData('customValidity');
+						}
+
+						if (!firstTime && opts.styleErr) {
+							if (message) {
+								ui.css(opts.styleErr);
+							} else {
+								for (key in opts.styleErr) {
+									ui.css(key, '');
+								}
+							}
 						}
 					}
 				}
@@ -590,7 +598,7 @@
 				});
 			};
 			validatableElements.initControl();
-			colorErr = opts.colorErr;
+			firstTime = false;
 
 //# AUTOFOCUS
 			if (elmAutofocus) {
@@ -641,17 +649,20 @@
 					var result = true;
 					validatableElements.each(function() {
 						if (message = $(this).data('customValidity')) {
-						err = $(this);
-							if (!err.prev().is(opts.exprResponse)) {
-								var m = opts.exprResponse.match(/^\.([^, ]+),? *\.?([^, ]*)/),
+							err = $(this);
+							if (opts.styleErr) err.css(opts.styleErr);
+							if (result) {
+								if (!err.prev().is(opts.exprResponse)) {
+									var m = opts.exprResponse.match(/^\.([^, ]+),? *\.?([^, ]*)/),
 									name = ($(window).width() - err.offset().left < 300 && !!m[2]) ?
 										m[2] : m[1];
-								err.before('<span class="' + name + '"></span>');
-								$(opts.exprBehind).attr('disabled', 'disabled');
+									err.before('<span class="' + name + '"></span>');
+									$(opts.exprBehind).attr('disabled', 'disabled');
+								}
+								err.prev().html('<p>' + message.replace(/\n/, '<br/>') + '</p>');
+								err.focus().select();	// focus only does not work in IE
+								result = false;
 							}
-							err.prev().html('<p>' + message.replace(/\n/, '<br/>') + '</p>');
-							err.focus().select();	// focus only does not work in IE
-							return (result = false);
 						}
 					});
 					if (!result) return false;

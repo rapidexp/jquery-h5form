@@ -120,6 +120,7 @@
 
 			//Private properties
 			var form = $(this),
+				colorErr = '',	// does not color when loading
 //# AUTOFOCUS
 				elmAutofocus,
 //# PLACEHOLDER
@@ -175,7 +176,7 @@
 					} else {
 						if (message) {
 							ui.data('customValidity', message.replace(/\n/, '<br />'))
-							  .css('backgroundColor', opts.colorErr);
+							  .css('backgroundColor', colorErr);
 						} else {
 							ui.removeData('customValidity')
 							  .css('backgroundColor', '');
@@ -589,6 +590,7 @@
 				});
 			};
 			validatableElements.initControl();
+			colorErr = opts.colorErr;
 
 //# AUTOFOCUS
 			if (elmAutofocus) {

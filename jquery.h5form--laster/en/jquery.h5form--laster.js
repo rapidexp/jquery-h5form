@@ -97,7 +97,7 @@
 			hasBugButton = (msie && msie < 8);
 			hasBugEnter = (msie && msie < 9) || android;
 
-		for (i in opts.hasOptions) {
+		for (i = opts.hasOptions.length-1; i >= 0; i--) {
 			eval(opts.hasOptions[i] + '=true;');
 		}
 
@@ -141,7 +141,7 @@
 					st = ui.get(0).style,
 					ui2 = $('<input type="'+type+'">');
 
-				for(i in at) {
+				for(i = at.length-1; i>=0; i--) {
 					name = at[i].nodeName;
 					value = at[i].nodeValue;
 					if (name && name == 'type') {
@@ -660,7 +660,7 @@
 //# PLACEHOLDER
 				// Clear Placeholder
 				if (!hasPlaceholder) {
-					for (var i in elmPlaceholder) {
+					for (i = elmPlaceholder.length-1; i>=0; i--) {
 						if (i != undefined) {
 							var elm = elmPlaceholder[i];
 							if (elm.val() == elm.getAttr('placeholder')) {

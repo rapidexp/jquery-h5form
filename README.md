@@ -40,6 +40,7 @@ __More information about the support of each browser, [please see here...](http:
 * Default of addSpin is now true.
 * Tested with IE 10.
 * Shut all hooks to the Opera.
+* Correct the syntax of the array.
 
 ### Version 2.8.1 (2013-01-28)
 

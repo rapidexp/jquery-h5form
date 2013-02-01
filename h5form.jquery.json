@@ -1,6 +1,6 @@
 {
     "name": "h5form",
-    "version": "2.8.1",
+    "version": "2.9.0",
     "title": "jQuery.h5form - HTML5 Forms Plugin",
     "author": {
         "name": "Yoshiyuki Mikome",
@@ -11,7 +11,7 @@
     },
     "licenses": [{"type": "MIT", "url": "http://opensource.org/licenses/mit-license.php"}, {"type": "GPL", "url": "http://www.gnu.org/licenses/gpl-3.0.txt"}],
     "files": ["jquery.h5form--laster/en/jquery.h5form--laster.js"],
-    "description": "This plugin gives all browsers the HTML5 forms like the Opera. And this will also fix several bugs of the Internet Explorer on submit, and will allow you to use the button element.",
+    "description": "This plugin gives all browsers the HTML5 forms like the Opera. And this will also fix several bugs of the Internet Explorer on submit, and will allow you to use the button element. This has the large file size for multi-function. However, it binds only the features that are needed by the browser to the element of the page, and it will work lightly.",
     "keywords": ["h5fom","form","HTML5","validation","IE"],
     "homepage": "http://www.rapidexp.com/h5form",
     "docs": "http://www.rapidexp.com/h5form/README.html"

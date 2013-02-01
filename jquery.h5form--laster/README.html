@@ -34,6 +34,10 @@
 	  #download form { border: 1px solid dimgray; padding: 1em; margin: 1em;  }
 	  label { white-space: nowrap; }
 	  ins { font-style: italic; text-decoration: none; }
+
+	  table.source { border-collapse: collapse;  border: 2px solid gray;  margin: 1em 0; }
+	  table.source th { border: 1px solid silver; width:33%; }
+	  table.source td { border: 1px solid silver; padding: 1em; vertical-align: top; }
 	</style>
 
 	<script type="text/javascript">
@@ -61,7 +65,7 @@
 	  </p>
 
 	  <p>
-		Some of the features like Date state uses to determine the type and version of the browser.
+		Some of the features like the date state uses to determine the type and version of the browser.
 		Even if the browser improvements, it uses the extension of the plugin (2.9.0).<br>
 		Because, it is in order to avoid the maintenance support
 		by fixing the state it was in when you install the plugin to the site.
@@ -71,7 +75,7 @@
 
 	  <p>
 		This has the large file size for multi-function.
-		However, it binds only the features that are needed by the browser to the element of the page, and It will work lightly.<br>
+		However, it binds only the features that are needed by the browser to the element of the page, and it will work lightly.<br>
 		If you wish, you can get a smaller size javascript by removing unnecessary features.
 	  </p>
 
@@ -93,7 +97,10 @@
 		and the plus sign refers to the customized configuration. See the section of <a href="#download">the download</a>.
 	  </p>
 
-	  <p><a href="./testing.php" target="_blank">Demo and testing form is here!</a></p>
+	  <p style="margin-left: 2em;">
+		&gt;&gt; <a style="font-size: larger; font-weight: bolder;" href="./testing.php" target="_blank">Demo and testing form is here!</a>
+		<img src="balloon-1.png" alt="" style="vertical-align: top;">
+	  </p>
 
 	  <table class="solid support">
 		<thead>
@@ -588,7 +595,13 @@
 	  <h2>Download</h2>
 
 	  <p>
-		You can download the archive and the source of this plugin from the GitHub.
+		Please download
+		<a href="../archives/jquery.h5form--laster.zip" target="_blank">jquery.h5form--laster.zip</a>
+	  </p>
+
+
+	  <p>
+		Or you can fork from the GitHub.
 	  </p>
 
 
@@ -672,21 +685,23 @@ $(<span class="name">function</span>() {
 
 	  <h3>Options</h3>
 
+	  <p>
+		You can change the style of validation errors by option "styleErr".
+		It does nothing if you set false.
+	  </p>
+
+
+<pre class="source">
+$(<span class="str">'form'</span>).h5form({ styleErr: { backgroundColor: <span class="str">'mistyrose'</span> }});	// default
+</pre>
+
+
 	  <p>If you have a dynamic html element that requires a validation, please add the selector
 		to the option "dynamicHtml".</p>
 
 
 <pre class="source">
 $(<span class="str">'form'</span>).h5form({ dynamicHtml: <span class="str">'.h5form-dynamic'</span> });	// default
-</pre>
-
-	  <p><del>Disabled spin button of Number and time in default. Please add following option if you wish.<br>
-		This is because the design is not to collapse even duplicate the functionality of the browser by halfway version.
-	  </del></p>
-
-
-<pre class="source">
-<del>$(<span class="str">'form'</span>).h5form({ addSpin: true });</del>
 </pre>
 
 
@@ -701,9 +716,83 @@ $(<span class="str">'form'</span>).h5form({ exprBehide: <span class="str">'.h5fo
 </pre>
 
 
+	  <h3>CSS</h3>
 
+	  <p>
+		If you have styles that specified by type of the number, date or time , please add class name "h5form-<i>typename</i>".<br>
+		The elements that have been extended by the plugin  is corrected type and  added the class instead.
+	  </p>
+
+<pre class="source">
+[type="number"], <span style="color: red;">.h5form-number</span> {
+	font-weight: bold;
+}
+</pre>
 
 	</section>
+
+	<section>
+	  <h2>Balloon messages</h2>
+
+	  <p>
+		The balloon message is simply inserted just before each element.<br>
+		Then relative to the display position of the each element, it place shift the container and inner, and expresses the beard.<br>
+	  </p>
+
+	  <p>
+		Also, the error message on the server side after submit transition, you can get the balloon message by the same output format.
+	  </p>
+
+
+	  <table class="source">
+		<tr>
+		  <th>View</th>
+		  <th>DOM</th>
+		  <th>CSS</th>
+		</tr>
+		<tr>
+		  <td>
+			<img src="balloon-1.png" alt="fig. The required message"><br>
+			border and margin of span<br>
+			<img src="balloon-2.png" alt="fig. The required message 2"><br>
+		  </td>
+
+		  <td>
+			<div style="color:red">
+			  &lt;span class="h5form-response"&gt;<br>
+			&nbsp;&nbsp;&lt;p&gt;Please input this field.&lt;/p&gt;<br>
+			  &lt;/span&gt;
+			</div>
+			&lt;input type="text" name="company" required&gt;<br>
+
+			<p>NOTE: Span as container is for IE 6.</p>
+		  </td>
+
+		  <td style="white-space:pre; font-size: smaller;">.h5form-response {
+	position: absolute;
+	margin: 1.6em 0 0 24px;
+	border-left: 10px solid gray;
+	border-top: 10px solid transparent;
+	z-index: 1000;
+	-border-top-color: white; /* for IE6 */
+}
+.h5form-response p {
+	float:left;
+	text-align: left;
+	margin: 0 0 0 -40px;
+	background: white;
+	color: black;
+	padding: 10px;
+	border: 2px solid gray;
+	border-radius: 8px;
+	box-shadow: 3px 3px 6px gainsboro;
+	-position: relative; /* for IE6 */
+}</td>
+
+		</tr>
+	  </table>
+	</section>
+
 
 	<section id="thanks">
 	  <h2>Thanks</h2>
@@ -728,12 +817,19 @@ $(<span class="str">'form'</span>).h5form({ exprBehide: <span class="str">'.h5fo
 	  <h3>Version -laster		(-today)</h3>
 
 	  <ul>
+		<li></li>
+	  </ul>
+
+	  <h3>Version 2.9.0	(2013-02-01)</h3>
+
+	  <ul>
 		<li>Display number, date and time state as type=text.</li>
 		<li>Remove list for conflicts with the autocomplete of browser.</li>
 		<li>Default of addSpin is now true.</li>
-		<li>Tested with IE 10.</li>
+		<li>Tested with IE 10 RC.</li>
 		<li>Shut all hooks to the Opera.</li>
-		<li>Correct the syntax of the array.</li>
+		<li>Corrected the syntax of the array.</li>
+		<li>Add styleErr and remove colorErr in options.</li>
 	  </ul>
 
 	  <h3>Version 2.8.1	(2013-01-28)</h3>

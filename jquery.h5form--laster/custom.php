@@ -35,6 +35,13 @@ file_put_contents($input, $code);
 exec("yui-compressor --type js  --charset utf8 $input > $output");
 
 $result = "// jQuery.h5form -laster by Author: Yoshiyuki Mikome http://www.rapidexp.com/h5form\n";
+
+if (count($necessary) < 9)
+{
+	$result .= '// Selected options: '. join(', ', $necessary) . "\n";
+}
+
+
 $result .= file_get_contents($output);
 
 unlink($input);

@@ -24,7 +24,7 @@ by fixing the state it was in when you install the plugin to the site.
 And this will also fix several bugs of the Internet Explorer on submit, and will allow you to use the button element.
 
 This has the large file size for multi-function.
-However, it binds only the features that are needed by the browser to the element of the page, and It will work lightly.<br>
+However, it binds only the features that are needed by the browser to the element of the page, and it will work lightly.<br>
 If you wish, you can get a smaller size javascript by removing unnecessary features.
 
 __More information about the support of each browser, [please see here...](http://www.rapidexp.com/h5form)__
@@ -33,14 +33,15 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
-### Version 2.9.0 (2013-xx-xx)
+### Version 2.9.0 (2013-02-01)
 
 * Display number, date and time state as type=text.
 * Remove list for conflicts with the autocomplete of browser.
 * Default of addSpin is now true.
-* Tested with IE 10.
+* Tested with IE 10 RC.
 * Shut all hooks to the Opera.
-* Correct the syntax of the array.
+* Corrected the syntax of the array.
+* Add styleErr and remove colorErr in options.
 
 ### Version 2.8.1 (2013-01-28)
 

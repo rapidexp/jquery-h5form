@@ -57,30 +57,31 @@
 	<header>
 	  <h1>jQuery.h5form - HTML5 Forms Plugin</h1>
 
-	  <p>すべてのブラウザに Opera のような HTML5 フォーム機能を提供するプラグインです。</p>
+	  <p>This plugin gives all browsers the HTML5 forms like the Opera.</p>
 
 	  <p>
-		これらの拡張は input 要素がオブジェクトを持っているかどうかで判定しており、
-		ブラウザの機能アップに対してメンテナンスフリーで対応します。
+		These enhancements are determined in the presence or absence of the object in a input element.
+		Therefore it will be able to support nearly maintenance-free for the other versions of browsers.
 	  </p>
 
 	  <p>
-		一部の Date 状態等にはブラウザとそのバージョンを判定しています。
-		この部分ではブラウザが機能アップしても強制的にプラグイン側の拡張を使います（2.9.0）<br>
-		これは、プラグインをサイトに設置した時点の状態を固定し、メンテナンス即応を回避するためです。
+		Some of the features like the date state uses to determine the type and version of the browser.
+		Even if the browser improvements, it uses the extension of the plugin (2.9.0).<br>
+		Because, it is in order to avoid the maintenance support
+		by fixing the state it was in when you install the plugin to the site.
 	  </p>
 
-	  <p>また Internet Explorer のバグ仕様も改善しましたので、button 要素が気兼ねなく利用できるようになります。</p>
+	  <p>And this will also fix several bugs of the Internet Explorer on submit, and will allow you to use the button element.</p>
 
 	  <p>
-		多機能のためファイルサイズは大きいですが、
-		そのページのその要素にそのブラウザで必要な機能だけをバインドするようにし、軽い動作を目指しています。<br>
-		なお、不要な機能を削除した小さなサイズのスクリプトをダウンロードすることも可能です。
+		This has the large file size for multi-function.
+		However, it binds only the features that are needed by the browser to the element of the page, and it will work lightly.<br>
+		If you wish, you can get a smaller size javascript by removing unnecessary features.
 	  </p>
 
 	  <ul id="lang">
-		<li>日本語</li>
-		<li><a href="./README.html">English</a></li>
+		<li><a href="./README_ja.html">日本語</a></li>
+		<li>English</li>
 	  </ul>
 
 	</header>
@@ -90,12 +91,14 @@
 	  <h2>Supported Forms</h2>
 
 	  <p>
-		次の表の「S」はブラウザ自身の機能を、「E」はこのプラグインによる拡張を表しています。<br>
-		  項目名先頭の「*」は基本設定を、「+」はカスタマイズ設定を表しています。詳細は <a href="#download">download を参照</a> してください。
+		In the following table the feature by the browser itself is marked as "S",
+		and the enhancement by this plugin is marked as "E".<br>
+		The asterisk sign on the item name refers to the basic configuration
+		and the plus sign refers to the customized configuration. See the section of <a href="#download">the download</a>.
 	  </p>
 
 	  <p style="margin-left: 2em;">
-		&gt;&gt; <a style="font-size: larger; font-weight: bolder;" href="./testing.php" target="_blank">デモとテストフォームはこちら！</a>
+		&gt;&gt; <a style="font-size: larger; font-weight: bolder;" href="./testing.php" target="_blank">Demo and testing form is here!</a>
 		<img src="balloon-1.png" alt="" style="vertical-align: top;">
 	  </p>
 
@@ -119,8 +122,8 @@
 		<tbody>
 
 		  <tr>
-			<th rowspan="2">すべての要素</th>
-			<th>* フキダシメッセージ</th>
+			<th rowspan="2">All elements</th>
+			<th>* The balloon message</th>
 			<td>*1</td>
 			<td>E</td>
 			<td>E</td>
@@ -134,7 +137,7 @@
 		  </tr>
 
 		  <tr>
-			<th>* メッセージにTitleを含む</th>
+			<th>* message included title</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -148,8 +151,8 @@
 		  </tr>
 
 		  <tr>
-			<th>form 要素</th>
-			<th>* novaidate 属性</th>
+			<th>The form element</th>
+			<th>* The novaidate attribute</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -163,8 +166,8 @@
 		  </tr>
 
 		  <tr>
-			<th rowspan="18">input 要素</th>
-			<th>+ autofocus 属性</th>
+			<th rowspan="18">The input element</th>
+			<th>+ The autofocus attribute</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -178,7 +181,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ required 属性</th>
+			<th>+ The required attribute</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -192,7 +195,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ pattern 属性</th>
+			<th>+ The pattern attribute</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -206,7 +209,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ placeholder 属性</th>
+			<th>+ The placeholder attribute</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -220,7 +223,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ autocomplete 属性</th>
+			<th>+ The autocomplete attribute</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -228,13 +231,13 @@
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
-			<td>S</td>
+			<td>?</td>
 			<td>S</td>
 			<td>-</td>
 		  </tr>
 
 		  <tr>
-			<th>+ list 属性 (datalist 要素)<sup>*9</sup></th>
+			<th>+ The list attribute (The datalist element)<sup>*9</sup></th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -242,13 +245,13 @@
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
-			<td>S</td>
+			<td>?</td>
 			<td>S</td>
 			<td>-</td>
 		  </tr>
 
 		  <tr>
-			<th>+ URL 状態</th>
+			<th>+ URL state</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -262,7 +265,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ E-mail 状態</th>
+			<th>+ E-mail state</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -276,7 +279,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ Number 状態</th>
+			<th>+ Number state</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -290,7 +293,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ Range 状態</th>
+			<th>+ Range state</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -304,7 +307,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ Date 状態</th>
+			<th>+ Date state</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -318,7 +321,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ Time 状態</th>
+			<th>+ Time state</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -332,7 +335,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ Date と Time 状態<sup>*2</sup></th>
+			<th>+ Date and Time state<sup>*2</sup></th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -346,7 +349,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ ローカルの Date と Time 状態</th>
+			<th>+ Local Date and Time state</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -360,7 +363,7 @@
 		  </tr>
 
 		  <tr>
-			<th>- Month 状態<sup>*3</sup></th>
+			<th>- Month state<sup>*3</sup></th>
 			<td>x</td>
 			<td>x</td>
 			<td>x</td>
@@ -374,7 +377,7 @@
 		  </tr>
 
 		  <tr>
-			<th>- Week 状態<sup>*3</sup></th>
+			<th>- Week state<sup>*3</sup></th>
 			<td>x</td>
 			<td>x</td>
 			<td>x</td>
@@ -388,7 +391,7 @@
 		  </tr>
 
 		  <tr>
-			<th>- Color 状態<sup>*4</sup></th>
+			<th>- Color state<sup>*4</sup></th>
 			<td>x</td>
 			<td>x</td>
 			<td>x</td>
@@ -402,7 +405,7 @@
 		  </tr>
 
 		  <tr>
-			<th>* Enterキーを押したときのバグフィックス</th>
+			<th>* Fixed bug on press enter</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -416,8 +419,8 @@
 		  </tr>
 
 		  <tr>
-			<th rowspan="1">textarea 要素</th>
-			<th>+ maxlength 属性</th>
+			<th rowspan="1">The textarea element</th>
+			<th>+ The maxlength attribute</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -432,10 +435,10 @@
 
 		  <tr>
 			<th rowspan="8">
-			  サブミットボタン状態の<br>
-			  input と button 要素
+			  The input and button element<br>
+			  in the submit button state
 			</th>
-			<th>- form 属性<sup>*5</sup></th>
+			<th>- The form attribute<sup>*5</sup></th>
 			<td>x</td>
 			<td>x</td>
 			<td>x</td>
@@ -449,7 +452,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ formaction 属性</th>
+			<th>+ The formaction attribute</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -463,7 +466,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ formenctype 属性</th>
+			<th>+ The formenctype attribute</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -477,7 +480,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ formmethod 属性</th>
+			<th>+ The formmethod attribute</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -491,7 +494,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ formnovalidate 属性</th>
+			<th>+ The formnovalidate attribute</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -505,7 +508,7 @@
 		  </tr>
 
 		  <tr>
-			<th>+ formtarget 属性</th>
+			<th>+ The formtarget attribute</th>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
@@ -519,7 +522,7 @@
 		  </tr>
 
 		  <tr>
-			<th>* サブミットのバグフィックス</th>
+			<th>* Fixed bug on submit</th>
 			<td>E</td>
 			<td>E</td>
 			<td>-</td>
@@ -533,7 +536,7 @@
 		  </tr>
 
 		  <tr>
-			<th>- デフォルトのバグフィックス<sup>*6</sup></th>
+			<th>- Fixed bug of default<sup>*6</sup></th>
 			<td>x</td>
 			<td>x</td>
 			<td>-</td>
@@ -553,36 +556,37 @@
 
 	  <dl class="note">
 		<dt>*1</dt>
-		<dd>IE 6 ではフキダシが select 要素の背後に隠れます。</dd>
+		<dd>The balloon message is disappeared behind a select element on IE 6.</dd>
 
 		<dt>*2</dt>
-		<dd>グローバルの日付の仕様は W3C のドラフトの準拠しました。
-		  このため、Opera とは異なる <a href="testing.php#test-9">ユーザインタフェース</a> となってしまいました。</dd>
+		<dd>On the specification of the global date and time, I have strict Interpreted the W3C draft.
+		  Oops, <a href="testing.php#test-9">the user interface</a> has been unlike the Opera.</dd>
 
 		<dt>*3</dt>
-		<dd>jQuery UI を使えば対応は難しくありません。これらの状態も必要ですか？</dd>
+		<dd>It is not difficult to support using jQuery UI. Do you want these states?</dd>
 
 		<dt>*4</dt>
-		<dd>jQuery UI にはカラーウィジットがなく、標準と呼べるプラグインがありません。</dd>
+		<dd>The jQuery UI does not have a color widget, so that I can not adopt any plugin as the standard.</dd>
 
 		<dt>*5</dt>
 		<dd>
-		  <del>HTML5 ではフォーム関連の要素はすべて form 属性を持っていますが、このプラグインはサブミットボタンのみサポートします。</del><br>
-		  <ins>仕様書通りの働きにはならず、また他の機能のバグの温床になるため、この機能は削除しました。</ins>
+		  <del>All of form-associated element have a form attribute in HTML5, but the plugin only support it on the submit button.</del><br>
+		  <ins>Sorry, this attribute have been removed because it was not work as strict specifications and it was also a breeding ground for bugs for other features. </ins>
 		</dd>
 
 		<dt>*6</dt>
-		<dd>この問題を javascript で解決するのは不可能なようです。</dd>
+		<dd>Sorry, to solve this problem using the javascript does not seem possible.</dd>
 
 		<dt>*7</dt>
-		<dd>Android ブラウザは HTML5 の属性をオブジェクトに持っていながら、その機能は実装されていません。
-		  HTML5 フォーム解説サイトの多くは間違った情報を流してるので注意してください。<br>
-		  私は自分の Android 2.3.4 スマートフォンでこれを確認しました。他のバージョンや iPhone についての情報があればお知らせください。
+		<dd>Android browser even if it has attributes of html5, does not have the function. You must know many sites for HTML5 Forms are posted incorrect information.<br>
+		  I tried test on my phone of Android 2.3.4. Please contact me if you have information about other versions or iphone.
 		</dd>
+
 		<dt>*8</dt>
-		<dd>プラグインは min や max step 属性のバリデーションのみを提供し、スピンボタンなどインターフェースは追加しません。</dd>
+		<dd>The plugin give the attributes of min, max and step except the user interface of spin.</dd>
+
 		<dt>*9</dt>
-		<dd>IE 9 は Datalist 要素の Option 子要素を DOM に読み込みません。IE 9でも動作するようにするには、メタタグ X-UA-Compatible で IE=8 を指定しなければなりません。</dd>
+		<dd>IE 9 doesn't read childen of the datalist to DOM. You should set IE=8 to X-UA-Compatible of meta tag, if you need.</dd>
 	  </dl>
 
 	</section>
@@ -591,12 +595,13 @@
 	  <h2>Download</h2>
 
 	  <p>
-		<a href="../archives/jquery.h5form--laster.zip" target="_blank">jquery.h5form--laster.zip</a>
-		をダウンロードしてください。
+		Please download
+		<a href="../archives/jquery.h5form-2.9.0.zip" target="_blank">jquery.h5form-2.9.0.zip</a>
 	  </p>
 
+
 	  <p>
-		または GitHub からフォークしてください。
+		Or you can fork from the GitHub.
 	  </p>
 
 
@@ -606,28 +611,28 @@
 
 
 	  <p>
-		不要な機能を省いたより小さな javascript もダウンロードできます。
-		不要な機能のチェックを外してから ダウンロード ボタンをクリックしてください。<br>
-		この他にアーカイブに含まれる <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form--laster/css/jquery.h5form--laster.css" target="_blank">スタイルシート</a> は別途のダウンロードが必要です。
+		And if you wish, you can get a smaller size javascript by removing unnecessary features.
+		Please uncheck the unnecessary features and click the download button.
+		Oh yes, you must have a <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.9.0/css/jquery.h5form-2.9.0.css" target="_blank">style sheet</a> included in the archive above to the other.
 	  </p>
 
 
 	  <form action="./custom.php" method="post">
 		<p>
-		  <label><input type="checkbox" name="necessary[]" value="AUTOFOCUS" checked> Autofocus 属性</label>
-		  <label><input type="checkbox" name="necessary[]" value="REQUIRED" checked> Required と Pattern 属性</label>
-		  <label><input type="checkbox" name="necessary[]" value="PLACEHOLDER" checked> Placeholder 属性</label>
-		  <label><input type="checkbox" name="necessary[]" value="MAXLENGTH" checked> Maxlength 属性</label>
-		  <label><input type="checkbox" name="necessary[]" value="EMAILURL" checked> Email と URL 状態</label>
-		  <label><input type="checkbox" name="necessary[]" value="NUMBER" checked> Number と range 状態</label>
-		  <label><input type="checkbox" name="necessary[]" value="DATETIME" checked> Date と time 状態</label>
-		  <label><input type="checkbox" name="necessary[]" value="FORM" checked> Form 属性</label>
-		  <label><input type="checkbox" name="necessary[]" value="AUTOCOMPLETE" checked> Autocomplete 属性</label>
+		  <label><input type="checkbox" name="necessary[]" value="AUTOFOCUS" checked> Autofocus attribute</label>
+		  <label><input type="checkbox" name="necessary[]" value="REQUIRED" checked> Required and Pattern attribute</label>
+		  <label><input type="checkbox" name="necessary[]" value="PLACEHOLDER" checked> Placeholder attribute</label>
+		  <label><input type="checkbox" name="necessary[]" value="MAXLENGTH" checked> Maxlength attribute</label>
+		  <label><input type="checkbox" name="necessary[]" value="EMAILURL" checked> Email and URL states</label>
+		  <label><input type="checkbox" name="necessary[]" value="NUMBER" checked> Number and range states</label>
+		  <label><input type="checkbox" name="necessary[]" value="DATETIME" checked> Date and time states</label>
+		  <label><input type="checkbox" name="necessary[]" value="FORM" checked> Form attributes</label>
+		  <label><input type="checkbox" name="necessary[]" value="AUTOCOMPLETE" checked> Autocomplete attributes</label>
 		</p>
 		<p>
-		  <input type="submit" value="ダウンロード">
-		  <label><input type="radio" name="lang" value="en" checked>英語</label>
-		  <label><input type="radio" name="lang" value="ja">日本語</label>
+		  <input type="submit" value="Download">
+		  <label><input type="radio" name="lang" value="en" checked>English</label>
+		  <label><input type="radio" name="lang" value="ja">Japanese</label>
 		</p>
 	  </form>
 
@@ -639,16 +644,16 @@
 	  <h2>Installation</h2>
 
 	  <p>
-		次のコードを HTML ヘッダに加えるだけです。<br>
-		URL パスは適時読み替えてください。
+		You may only append to your HTML header the following code.<br>
+		Please rewrite the URL path as appropriate.
 	  </p>
 
  <pre class="source">
-<span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span> href=<span class="str">"css/jquery.h5form--laster.css"</span> /&gt;</span>
+<span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span> href=<span class="str">"css/jquery.h5form-2.9.0.css"</span> /&gt;</span>
 <span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
   src=<span class="str">"https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"</span>&gt;&lt;/script&gt;</span>
 <span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
-  src=<span class="str">"jquery.h5form--laster.min.js"</span>&gt;&lt;/script&gt;</span>
+  src=<span class="str">"jquery.h5form-2.9.0.min.js"</span>&gt;&lt;/script&gt;</span>
 
 <span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>&gt;</span>
 $(<span class="name">function</span>() {
@@ -663,7 +668,7 @@ $(<span class="name">function</span>() {
 
 	  <h3>jQuery UI</h3>
 
-	  <p>Date や Number 状態のユーザインタフェース及び Autocomplete が必要なら jQeury UI をインストールしてください。</p>
+	  <p>If you wisth, please install the jQeury UI for the date and range state and autocomplete.</p>
 
 <pre class="source">
 <span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span>
@@ -672,15 +677,17 @@ $(<span class="name">function</span>() {
   src=<span class="str">"https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"</span>&gt;&lt;/script&gt;</span>
 </pre>
 
-	  <p>Date や Range 状態の要素には、カレンダーやスライダーが自動的にハンドルされます。<br>
-		jQury UI がインストールされているかどうかで判断されるので、他に必要な追加設定はありません。</p>
+	  <p>On the element of the date or range state, the datepicker or the slider will be
+		automatically handle.<br>
+		Because the judgment the existence of the jQury UI, you do not need to enter
+		additional settings.</p>
 
 
 	  <h3>Options</h3>
 
 	  <p>
-		バリデーションエラーのスタイルはオプション "styleErr" で変更できます。
-		false を指定すると何もしません。
+		You can change the style of validation errors by option "styleErr".
+		It does nothing if you set false.
 	  </p>
 
 
@@ -688,7 +695,9 @@ $(<span class="name">function</span>() {
 $(<span class="str">'form'</span>).h5form({ styleErr: { backgroundColor: <span class="str">'mistyrose'</span> }});	// default
 </pre>
 
-	  <p>Required 属性が動的に変化がするエレメントがある場合には、dynamicHtml オプションでそれらの要素のセレクターを指定してください。</p>
+
+	  <p>If you have a dynamic html element that requires a validation, please add the selector
+		to the option "dynamicHtml".</p>
 
 
 <pre class="source">
@@ -696,10 +705,9 @@ $(<span class="str">'form'</span>).h5form({ dynamicHtml: <span class="str">'.h5f
 </pre>
 
 
-
-	  <p>Android には Z-index にバグがあります。
-		フキダシが他の要素の背後に隠れてしまう場合は、このオプションを設定してください。<br>
-		ここで指定したセレクターの要素は、フキダシが表示されている間、disabled 状態になるように制御されます。
+	  <p>There is a bug in the Z-index of Android.<br>
+		If you have a hidden balloon behind other element, you may set this option.
+		This optional element is in a disabled state while displayed the balloon.
 	  </p>
 
 
@@ -707,12 +715,12 @@ $(<span class="str">'form'</span>).h5form({ dynamicHtml: <span class="str">'.h5f
 $(<span class="str">'form'</span>).h5form({ exprBehide: <span class="str">'.h5form-behind'</span> });	// default
 </pre>
 
+
 	  <h3>CSS</h3>
 
 	  <p>
-		Number、Date、Time 状態に対して Type 値でスタイル指定している場合は、
-		クラス名 "h5form-<i>typename</i>" を追加してください。<br>
-		プラグインによる拡張があると、要素は text タイプに補正される代わりにクラス名が追加されます。
+		If you have styles that specified by type of the number, date or time , please add class name "h5form-<i>typename</i>".<br>
+		The elements that have been extended by the plugin  is corrected type and  added the class instead.
 	  </p>
 
 <pre class="source">
@@ -727,25 +735,25 @@ $(<span class="str">'form'</span>).h5form({ exprBehide: <span class="str">'.h5fo
 	  <h2>Balloon messages</h2>
 
 	  <p>
-		フキダシメッセージはそれぞれの要素の直前に単純に挿入されます。<br>
-		そして、フォーム要素の表示位置を基準に、コンテナとインナーの配置をシフトすることでヒゲを表現しています。<br>
+		The balloon message is simply inserted just before each element.<br>
+		Then relative to the display position of the each element, it place shift the container and inner, and expresses the beard.<br>
 	  </p>
 
 	  <p>
-		また、サブミット遷移後のサーバーサイドのエラーメッセージも、同じ出力書式にすることでフキダシ化できます。
+		Also, the error message on the server side after submit transition, you can get the balloon message by the same output format.
 	  </p>
 
 
 	  <table class="source">
 		<tr>
-		  <th>表示</th>
+		  <th>View</th>
 		  <th>DOM</th>
 		  <th>CSS</th>
 		</tr>
 		<tr>
 		  <td>
 			<img src="balloon-1.png" alt="fig. The required message"><br>
-			span要素のマージンとボーダー<br>
+			border and margin of span<br>
 			<img src="balloon-2.png" alt="fig. The required message 2"><br>
 		  </td>
 
@@ -757,7 +765,7 @@ $(<span class="str">'form'</span>).h5form({ exprBehide: <span class="str">'.h5fo
 			</div>
 			&lt;input type="text" name="company" required&gt;<br>
 
-			<p>※ コンテナがspanなのは IE 6 対策です。</p>
+			<p>NOTE: Span as container is for IE 6.</p>
 		  </td>
 
 		  <td style="white-space:pre; font-size: smaller;">.h5form-response {
@@ -783,20 +791,18 @@ $(<span class="str">'form'</span>).h5form({ exprBehide: <span class="str">'.h5fo
 
 		</tr>
 	  </table>
-
-
 	</section>
-
 
 
 	<section id="thanks">
 	  <h2>Thanks</h2>
 
-	  <p>このプラグインはjquery.html5form-1.5.js から派生しました。
-		しかし、改変のコンセプトは最初からオリジナルとは違う方向を目指していましたし、
-		バージョン２にて設計方針の大幅な転換を加えました。<br>
-		明らかに別コードになったと判断して、バージョン２からは単独著作のヘッダ表記とさせていただきました。
-		ただし、変数名や構造には html5form の名残がまだ残っているかもしれません。</p>
+	  <p>This plugin was derived from jquery.html5form-1.5.js.
+		But the first concept of modification was already different from the original
+		direction. And I had to make significant changes to policy design in version 2.<br>
+		Therefore I determined that the project became apparent to another code, I was
+		allowed to change to a single copyright in the header from version 2.<br>
+		Some Variable names and structure may still have left a remnant of html5form.</p>
 
 
 	  <p>Based project: jquery.html5form-1.5.js<br>
@@ -808,164 +814,158 @@ $(<span class="str">'form'</span>).h5form({ exprBehide: <span class="str">'.h5fo
 	<section id="history">
 	  <h2>History</h2>
 
-	  <h3>Version -laster		(-today)</h3>
+	  <h3>Version 2.9.0		(2013-02-01)</h3>
 
 	  <ul>
-		<li></li>
-	  </ul>
-
-	  <h3>Version 2.9.0	(2013-02-01)</h3>
-
-	  <ul>
-		<li>Number, Date, Time状態の表示をtype=textに</li>
-		<li>自動補完ブラウザと重ならないようlistを削除</li>
-		<li>スピンボタンを表示をデフォルトに戻した</li>
-		<li>IE 10 RC で動作を確認</li>
-		<li>Operaへのフックはすべて停止した</li>
-		<li>配列のfor構文を修正</li>
-		<li>オプション colorErr を削除して styleErr を追加</li>
+		<li>Display number, date and time state as type=text.</li>
+		<li>Remove list for conflicts with the autocomplete of browser.</li>
+		<li>Default of addSpin is now true.</li>
+		<li>Tested with IE 10 RC.</li>
+		<li>Shut all hooks to the Opera.</li>
+		<li>Corrected the syntax of the array.</li>
+		<li>Add styleErr and remove colorErr in options.</li>
 	  </ul>
 
 	  <h3>Version 2.8.1	(2013-01-28)</h3>
 
 	  <ul>
-		<li>Autocomplete属性のサポートを追加</li>
-		<li>IE 7 の button について 2.8.0 のエンバグを修正</li>
+		<li>Added support Autocomplete.</li>
+		<li>Fixed enbug of 2.8.0 about button on IE 7.</li>
 	  </ul>
 
 	  <h3>Version 2.8.0	(2013-01-12)</h3>
 
 	  <ul>
-		<li>Chrome 23 から Time 状態のサポートを削除</li>
-		<li>FireFox 17のNumberとRange 属性判定を補正</li>
-		<li>フキダシをクリックしたときも閉じる</li>
-		<li>NumberとTime状態のスピンボタンをデフォルト無効に</li>
-		<li>英語メッセージのタイポ</li>
-		<li>IE のcustomValidityの格納を.data()に修正</li>
+		<li>Removed support of time state from Chrome 23.</li>
+		<li>Fixed determination of number and rang on FireFox 17.</li>
+		<li>Close balloon when also click itself.</li>
+		<li>Disabled spin button of Number and time in default.</li>
+		<li>Typo of the message in English.</li>
+		<li>Stored customValidity in .data() on IE.</li>
 	  </ul>
 
 	  <h3>Version 2.7.2 (2012-12-11)</h3>
 
 	  <ul>
-		<li>formnovalidate属性を修正</li>
-		<li>エラーのコントロールをクリックしたときにフキダシを閉じる</li>
+		<li>Fixed the formnovalidate attribute.</li>
+		<li>Close balloon when click the owner control.</li>
 	  </ul>
-
 
 	  <h3>Version 2.7.1 (2012-11-14)</h3>
 
 	  <ul>
-		<li>日本語版と英語版がシンクロしてなかった</li>
+		<li>Japanese and English version were not in sync.</li>
 	  </ul>
+
 
 	  <h3>Version 2.7.0 (2012-10-16)</h3>
 
 	  <ul>
-		<li>右マージンが少ないとき、フキダシを反転</li>
-		<li>反転フキダシのための CSS 更新</li>
-		<li>Android でサブミットがbuttonのとき、テキストボックスのEnter押しによるrequiredに対応</li>
-		<li>IE のテキストボックスのEnter押しでも、requiredが働いていなかった</li>
+		<li>Invert the balloon that has small right margin.</li>
+		<li>Updated css for inverted balloon.</li>
+		<li>Added support required when press the Enter on a text box with submission button in Android.</li>
+		<li>The required attribute was not working when press the Enter on a text box in IE.</li>
 	  </ul>
 
 	  <h3>Version 2.6.1 (2012-09-29)</h3>
 
 	  <ul>
-		<li>イージーミスを修正</li>
+		<li>Fixed a easy bug.</li>
 	  </ul>
 
 
 	  <h3>Version 2.6.0 (2012-09-29)</h3>
 
 	  <ul>
-		<li>Chrome 22 から Date 状態のサポートを削除</li>
-		<li>フキダシを閉じるのは Body ではなく自身のクリックに</li>
-		<li>オプション exprResponse の追加</li>
-		<li>オプション exprBehide の追加</li>
-		<li>オプション classResponse の削除</li>
+		<li>Removed support of date state from Chrome 22.</li>
+		<li>Close balloon when click itself instead of body.</li>
+		<li>Added exprResponse in options.</li>
+		<li>Added exprBehide in options.</li>
+		<li>Removed classResponse in options.</li>
 	  </ul>
 
 	  <h3>Version 2.5.0	(2012-09-04)</h3>
 
 	  <ul>
-		<li>Android をサポート</li>
-		<li>オプション hasOptions の追加</li>
+		<li>Added support Android.</li>
+		<li>Added hasOptions in options.</li>
 	  </ul>
 
 	  <h3>Version 2.4.4 (2012-07-13)</h3>
 
 
 	  <ul>
-		<li>サブミットの修正!!! orz orz</li>
+		<li>Fixed on submit!!! orz orz</li>
 	  </ul>
 
 
 	  <h3>Version 2.4.4		(2012-07-10)</h3>
 
 	  <ul>
-		<li>エラーを修正!! orz</li>
+		<li>Fixed en error!! orz</li>
 	  </ul>
 
 
 	  <h3>Version 2.4.3		(2012-07-09)</h3>
 
 	  <ul>
-		<li>属性が undefined のときの Datetime 状態を修正</li>
-		<li>Required 属性を持つ Datetime 状態を修正</li>
-		<li>直前ハンドラのキャンセルでサブミットしない</li>
+		<li>Fixed the datetime state that attribue is set to undefined.</li>
+		<li>Fixed the datetime state that has the requed attribute.</li>
+		<li>Does not submit if canceled in a previous handler.</li>
 	  </ul>
 
 	  <h3>Version 2.4.2		(2012-06-30)</h3>
 
 	  <ul>
-		<li>form 属性と、サブミット時の Button 要素のバグ修正の対応を取りやめ</li>
-		<li>位置取得に uniqueNumber を用いてフキダシの位置を修正</li>
+		<li>Removed support the form attribute and fixed the button element on submit.</li>
+		<li>Fixed the position of the active balloon using the uniqueNumber for get the position.</li>
 	  </ul>
 
 	  <h3>Version 2.4.1		(2012-06-26)</h3>
 
 	  <ul>
-		<li>カスタムダウンロードに対応</li>
+		<li>Added the custom download.</li>
 	  </ul>
 
 
 	  <h3>Version 2.4		(2012-06-22)</h3>
 
 	  <ul>
-		<li>form サブミット時の各種属性に対応</li>
+		<li>Added support the attributes for form submission.</li>
 	  </ul>
 
 
 	  <h3>Version 2.3		(2012-06-18)</h3>
 
 	  <ul>
-		<li>form 要素の novalidate に対応</li>
+		<li>Added support novalidate of form elemnt.</li>
 	  </ul>
 
 	  <h3>Version 2.2		(2012-06-15)</h3>
 
 	  <ul>
-		<li>form が input 要素を持たないときのエラーを修正</li>
-		<li>IE のサブミット時のバグ改善に対応</li>
+		<li>Fixed an error in the form that does not have any input element.</li>
+		<li>Added support for bugs in IE on submit.</li>
 	  </ul>
 
 	  <h3>Version 2.1		(2012-06-12)</h3>
 
 	  <ul>
-		<li>jQuery UI の判定が 2.0 で消えていた</li>
-		<li>textarea の Maxlength 制御が 2.0 で消えていた</li>
-		<li>typeの値に大文字を許可</li>
+		<li>Judgment of jQuery UI was missing from 2,0.</li>
+		<li>Maxlength control was missing from 2.0 in the textarea.</li>
+		<li>Allowed the capitalization of the value of the type.</li>
 	  </ul>
 
 	  <h3>Version 2.0		(2012-06-10)</h3>
 
 	  <ul>
-		<li>サポートするプラウザでは、各コントールの編集で発生したエラーを CustomValidity にセット</li>
-		<li>サポートしないブラウザで、CustomValidity をシミュレート</li>
-		<li>ロード時にコントロールを判定し、必要なコントールにだけイベントをアタッチ</li>
-		<li>サブミット時のエラーを事前判定して表示</li>
-		<li>サブミット前のダイナミック HTML 再スキャンをオプションにした</li>
-		<li>一部の機能を除いてブラウザやバージョンの判定を不要にした</li>
-		<li>オプション allBrowsers の削除</li>
+		<li>Set to CustomValidity an error during the editing of each control in supported browsers.</li>
+		<li>Simulate artificially the CustomValidity in browsers that do not support.</li>
+		<li>Judge controls in loading and attach events to only the necessary controls.</li>
+		<li>Only display an pre-judgment error when submitting.</li>
+		<li>Rescan before submitting for dynamic HTML is now optional.</li>
+		<li>Judgment the browser and version is no longer needed except for some functions.</li>
+		<li>Removed allBrowsers in options.</li>
 	  </ul>
 
 <!--
@@ -1027,7 +1027,8 @@ $(<span class="str">'form'</span>).h5form({ exprBehide: <span class="str">'.h5fo
 
 	  <p>Built for <a href="http://jquery.com">jQuery</a></p>
 
-	  <p>英語で書いたドキュメントを日本語に翻訳し直すという馬鹿なことをしてるので、なんだか日本語が変でふ・・・(´・ω・｀)</p>
+	  <p>I wrote this document  under the guidance of English teacher Google.
+		I'm sorry if there is a cryptic sentence. ;-)</p>
 
 	</footer>
 

@@ -37,21 +37,22 @@
 			exprBehind: '.h5fom-behind',
 			styleErr: { backgroundColor: 'mistyrose' },
 //# REQUIRED
-			emptyMessage: 'このフィールドを入力してください。',
-			unselectedMessage: 'リスト内の項目を選択してください。',
+			msgEmpty: 'このフィールドを入力してください。',
+			msgUnselct: 'いずれかのオプションを選択してください。',
+			msgUncheck: 'チェックボックスをチェックしてください。',
 //# PATTERN
-			patternMessage: '必用なパターンに一致していません。',
+			msgPattern: '必用なパターンに一致していません。',
 //# EMAILURL
-			emailMessage: 'メールアドレスが正しくありません。',
-			urlMessage: 'URLが正しくありません。',
+			msgEmail: 'メールアドレスが正しくありません。',
+			msgUrl: 'URLが正しくありません。',
 //# PLACEHOLDER
 			colorOff: '#a1a1a1',
 //# MAXLENGTH
-			maxlengthMessage: '指定の文字数上限より # 文字多いです。',
+			msgMaxlen: '指定の文字数上限より # 文字多いです。',
 //# NUMBER|DATETIME
-			invalidMessage: '値が無効です。',
-			minMessage: '最小値にとどきません。',
-			maxMessage: '最大値をこえています。',
+			msgInvalid: '値が無効です。',
+			msgMin: '最小値にとどきません。',
+			msgMax: '最大値をこえています。',
 //# NUMBER
 			addSpin: true,
 			classSpinNumber: 'h5form-spinNumber',
@@ -103,7 +104,7 @@
 
 		$('input:last').remove();
 
-		var validatable = ':input:enabled:not(:button, :submit, :radio, :checkbox)';
+		var validatable = ':input:enabled:not(:button, :submit)';
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 		// clear balloons
 		$(validatable).click(function() {
@@ -425,7 +426,10 @@
 					var evChange = (function() {
 
 						var isNecessary = false,
+							name = ui.attr('name'),
+							isChecked = $('[name="'+name+'"]:checked').length,
 							isEmpty = ((ui.val() == '') ||
+									   (ui.is(':checkbox, :radio') && !isChecked) ||
 //# PLACEHOLDER
 									   (placeholder && ui.val() == placeholder) ||
 //#
@@ -433,7 +437,7 @@
 
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 						// clear validity first
-						ui.setCustomValidity(null);
+						$('[name="'+name+'"]').setCustomValidity(null);
 //#
 						if (hasBugEnter && !ui.is('select, textarea, button')) {
 							// Keypress event attach
@@ -453,8 +457,10 @@
 						if (!hasRequired && ui.getAttr('required')) {
 							isNecessary = true;
 							if (isEmpty) {
-								ui.setCustomValidity((ui.is('select')) ?
-									opts.unselectedMessage : opts.emptyMessage);
+								var msg = opts.msgEmpty;
+								if (ui.is('select, :radio')) msg = opts.msgUnselct;
+								if (ui.is(':checkbox')) msg = opts.msgUncheck;
+								ui.setCustomValidity(msg);
 								return true;
 							}
 						}
@@ -464,7 +470,7 @@
 							isNecessary = true;
 							if (!isEmpty &&
 								validateRe(ui, '^(' + pattern.replace(/^\^?(.*)\$?$/, '$1') + ')$')) {
-								ui.setCustomValidity(opts.patternMessage);
+								ui.setCustomValidity(opts.msgPattern);
 								return true;
 							}
 						}
@@ -474,7 +480,7 @@
 							isNecessary = true;
 							if (!isEmpty && validateRe(ui,
 							   '[\\w-\\.]{3,}@([\\w-]{2,}\\.)*([\\w-]{2,}\\.)[\\w-]{2,4}', 'i')) {
-								ui.setCustomValidity(opts.emailMessage);
+								ui.setCustomValidity(opts.msgEmail);
 								return true;
 							}
 						}
@@ -485,7 +491,7 @@
 							if (!isEmpty && validateRe(ui,
 							   '[\\w-\\.]{3,}:\\/\\/([\\w-]{2,}\\.)*([\\w-]{2,}\\.)[\\w-]{2,4}',
 							   'i')) {
-								ui.setCustomValidity(opts.urlMessage);
+								ui.setCustomValidity(opts.msgUrl);
 								return true;
 							}
 						}
@@ -495,7 +501,7 @@
 						if (!hasMaxlength && ui.is('textarea') && ui.getAttr('maxlength')) {
 							isNecessary = true;
 							if (over = validateMaxlength(ui)) {
-								ui.setCustomValidity(opts.maxlengthMessage.replace(/#/, over));
+								ui.setCustomValidity(opts.msgMaxlen.replace(/#/, over));
 								return true;
 							}
 						}
@@ -573,15 +579,15 @@
 //# NUMBER|DATETIME
 							// Perform validtions
 							if (validateRe(ui0, pattern) || (validateStep(ui0, min, step))) {
-								ui2.setCustomValidity(opts.invalidMessage);
+								ui2.setCustomValidity(opts.msgInvalid);
 								return true;
 							}
 							if (validateMin(ui0)) {
-								ui2.setCustomValidity(opts.minMessage.replace(/#/, ui0.getAttr('min')));
+								ui2.setCustomValidity(opts.msgMin.replace(/#/, ui0.getAttr('min')));
 								return true;
 							}
 							if (validateMax(ui0)) {
-								ui2.setCustomValidity(opts.maxMessage.replace(/#/, ui0.getAttr('max')));
+								ui2.setCustomValidity(opts.msgMax.replace(/#/, ui0.getAttr('max')));
 								return true;
 							}
 						}

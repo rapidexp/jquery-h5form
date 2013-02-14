@@ -244,14 +244,21 @@ foreach ($_POST as $name => $value):
 		  <td>
 			<form action="#test-4" method="post">
 			  <input type="text" name="input-4a" required><br>
-			  <input type="text" name="input-4b" placeholder="xxxx-xxx" pattern="\d{4}-\d{3}" title="Enter such as 1234-567." required>
+			  <input type="text" name="input-4b" placeholder="xxxx-xxx" pattern="\d{4}-\d{3}" title="Enter such as 1234-567." required><br>
+			  <input type="checkbox" name="input-4c" value="Y" required title="You must agree."> I agreee
+
+			  <input type="radio" name="input-4d" value="apple" required> Apple
+			  <input type="radio" name="input-4d" value="orange" required> Orange
+
 			  <input type="submit" name="test-4" value="submit">
 			</form>
 <pre class="source" style="display:none">
 &lt;form action="#test-4" method="post"&gt;
   &lt;input type="text" name="input-4a" <strong>required</strong>&gt;&lt;br&gt;
   &lt;input type="text" name="input-4b" <strong>placeholder="xxxx-xxx"</strong>
-  <strong>pattern="\d{4}-\d{3}"</strong> title="Enter such as 1234-567." <strong>required</strong>&gt;
+  <strong>pattern="\d{4}-\d{3}"</strong> title="Enter such as 1234-567." <strong>required</strong>&gt;&lt;br&gt;
+  &lt;input type="checkbox" name="input-4c" value="Y"
+  <strong>required title="You must agree."</strong>&gt; I agreee
   &lt;input type="submit" name="test-4" value="submit"&gt;
 &lt;/form&gt;
 </pre>
@@ -259,14 +266,21 @@ foreach ($_POST as $name => $value):
 		  <td>
 			<form action="#test-4" method="post" class="h5form">
 			  <input type="text" name="input-4a" required><br>
-			  <input type="text" name="input-4b" placeholder="xxxx-xxx" pattern="\d{4}-\d{3}" title="Enter such as 1234-567." required>
+			  <input type="text" name="input-4b" placeholder="xxxx-xxx" pattern="\d{4}-\d{3}" title="Enter such as 1234-567." required><br>
+			  <input type="checkbox" name="input-4c" value="Y"  required title="You must agree."> I agreee
+
+			  <input type="radio" name="input-4d" value="apple" required> Apple
+			  <input type="radio" name="input-4d" value="orange" required> Orange
+
 			  <input type="submit" name="test-4" value="submit">
 			</form>
 <pre class="source" style="display:none">
 &lt;form action="#test-4" method="post" <strong>class="h5form"</strong>&gt;
   &lt;input type="text" name="input-4a" <strong>required</strong>&gt;&lt;br&gt;
   &lt;input type="text" name="input-4b" <strong>placeholder="xxxx-xxx"</strong>
-  <strong>pattern="\d{4}-\d{3}"</strong> title="Enter such as 1234-567." <strong>required</strong>&gt;
+  <strong>pattern="\d{4}-\d{3}"</strong> title="Enter such as 1234-567." <strong>required</strong>&gt;&lt;br&gt;
+  &lt;input type="checkbox" name="input-4c" value="Y"
+  <strong>required title="You must agree."</strong>&gt; I agreee
   &lt;input type="submit" name="test-4" value="submit"&gt;
 &lt;/form&gt;
 </pre>
@@ -810,10 +824,6 @@ foreach ($_POST as $name => $value):
 		</tr>
 	  </table>
 	</section>
-
-
-
-
 
 	<footer>
 	  <p>Author: by Yoshiyuki Mikome <a href="http://www.rapidexp.com/h5form">http://www.rapidexp.com/h5form</a><br>

@@ -16,7 +16,7 @@ This plugin gives all browsers the HTML5 forms like the Opera.
 These enhancements are determined in the presence or absence of the object in a input element.
 Therefore it will be able to support nearly maintenance-free for the other versions of browsers.
 
-Some of the features like the date state uses to determine the type and version of the browser.
+Some of the features like the date state use to determine the type and version of the browser.
 Even if the browser improvements, it uses the extension of the plugin (2.9.0).<br>
 Because, it is in order to avoid the maintenance support
 by fixing the state it was in when you install the plugin to the site.

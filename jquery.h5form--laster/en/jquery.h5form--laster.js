@@ -17,12 +17,13 @@
 	$.fn.h5form = function(options) {
 		// Check UA
 		var ua = window.navigator.userAgent.toLowerCase(),
-			version = parseInt($.browser.version),
-			msie = version * $.browser.msie,
+			msie = parseInt(ua.replace(/.*msie (\d+).*/, "$1")),
+			firefox = parseInt(ua.replace(/.*firefox\/(\d+).*/, "$1")),
 			chrome = parseInt(ua.replace(/.*chrome\/(\d+).*/, "$1")),
+			opera = parseInt(ua.replace(/.*opera\/(\d+).*/, "$1")),
 			android = (navigator.userAgent.search(/Android/) != -1);
 
-		if (!!$.browser.opera && version > 9) return;
+		if (opera > 9) return;
 
 		$.fn.outerHTML = function() {
 			// Firefox 10 or earlier does not have outerHTML
@@ -83,7 +84,7 @@
 			hasPlaceholder = ('placeholder' in test1),
 //# NUMBER
 			hasNumber = hasSpin = hasRange =
-				('step' in test1) && ('min' in test1) && !android && !$.browser.mozilla,
+				('step' in test1) && ('min' in test1) && !android && !firefox,
 //# DATETIME
 			hasDateTime = false,
 			hasDate = hasDateTime || chrome > 21,
@@ -111,7 +112,7 @@
 			$(this).siblings(opts.exprResponse).remove();
 			$(opts.exprBehind).removeAttr('disabled');
 		});
-		$(opts.exprResponse).live('click', function() {
+		$(document).on('click', opts.exprResponse, function() {
 			$(this).remove();
 		});
 //#
@@ -140,16 +141,17 @@
 			$.fn.type = function(type) {
 				var ui = $(this),
 					at = ui.get(0).attributes,
-					st = ui.get(0).style,
 					ui2 = $('<input type="'+type+'">');
 
 				for(i = at.length-1; i>=0; i--) {
 					name = at[i].nodeName;
 					value = at[i].nodeValue;
-					if (name && name == 'type') {
-						type = value;
-					} else {
-						ui2.attr(name, value);
+					if (name && value) {
+						if (name == 'type') {
+							type = value;
+						} else {
+							ui2.attr(name, value);
+						}
 					}
 				}
 				ui2.addClass('h5form-'+type);

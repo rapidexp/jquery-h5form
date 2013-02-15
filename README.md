@@ -24,7 +24,7 @@ by fixing the state it was in when you install the plugin to the site.
 And this will also fix several bugs of the Internet Explorer on submit, and will allow you to use the button element.
 
 This has the large file size for multi-function.
-However, it binds only the features that are needed by the browser to the element of the page, and it will work lightly.<br>
+However, it binds only the features that are needed by the browser for the element of the page, and it will work lightly.<br>
 If you wish, you can get a smaller size javascript by removing unnecessary features.
 
 __More information about the support of each browser, [please see here...](http://www.rapidexp.com/h5form)__

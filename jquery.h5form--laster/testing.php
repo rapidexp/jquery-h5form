@@ -32,16 +32,14 @@
 	  .explanation { color: gray; font-style: italic;  }
 	</style>
 
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="en/jquery.h5form--laster.js"></script>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 
 <script type="text/javascript">
 $(function() {
-	$('body').append('<datalist></datalist>');
 	$('form.h5form').h5form({ addSpin: true });
-
 <?php
 foreach ($_POST as $name => $value):
 	if (preg_match('/test-/', $name)):

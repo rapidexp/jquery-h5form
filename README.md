@@ -33,6 +33,13 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.9.1 (2013-02-24)
+
+* Added support required for checkbox and radio
+* Support jQuery 1.9 (exclude 1.6 or earlier)
+* Fixed error in IE 7 with the number, date and time state.
+* Added datapicker in options.
+
 ### Version 2.9.0 (2013-02-01)
 
 * Display number, date and time state as type=text.
@@ -41,7 +48,7 @@ __More information about the support of each browser, [please see here...](http:
 * Tested with IE 10 RC.
 * Shut all hooks to the Opera.
 * Corrected the syntax of the array.
-* Add styleErr and remove colorErr in options.
+* Added styleErr and remove colorErr in options.
 
 ### Version 2.8.1 (2013-01-28)
 

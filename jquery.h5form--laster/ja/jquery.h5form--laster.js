@@ -20,7 +20,8 @@
 			msie = parseInt(ua.replace(/.*msie (\d+).*/, "$1")),
 			firefox = parseInt(ua.replace(/.*firefox\/(\d+).*/, "$1")),
 			chrome = parseInt(ua.replace(/.*chrome\/(\d+).*/, "$1")),
-			opera = parseInt(ua.replace(/.*opera\/(\d+).*/, "$1")),
+			opera = parseInt(ua.replace(/.*opera[\/ ](\d+).*/, "$1")),	// "opara/9.80" or "opera 10.10"
+			safari = parseInt(ua.replace(/.*version\/(\d+).*safari.*/, "$1")),	// "Version/5.0 Safari/533.16"
 			android = (navigator.userAgent.search(/Android/) != -1);
 
 		if (opera > 9) return;
@@ -52,8 +53,8 @@
 			msgMaxlen: '指定の文字数上限より # 文字多いです。',
 //# NUMBER|DATETIME
 			msgInvalid: '値が無効です。',
-			msgMin: '最小値にとどきません。',
-			msgMax: '最大値をこえています。',
+			msgMin: '# 以上で指定してください。',
+			msgMax: '# 以下で指定してください。',
 //# NUMBER
 			addSpin: true,
 			classSpinNumber: 'h5form-spinNumber',
@@ -61,6 +62,7 @@
 //# DATETIME
 			classSpinTime: 'h5form-spinTime',
 			classDatetime: 'h5form-datetime',
+			datepicker: { },
 //#
 			hasOptions: [],
 			dynamicHtml: '.h5form-dynamic'
@@ -138,7 +140,7 @@
 			 * @param {string} type -- type.
 			 * @return {object} -- this.
 			 */
-			$.fn.type = function(type) {
+			$.fn.typeTo = function(type) {
 				var ui = $(this),
 					at = ui.get(0).attributes,
 					ui2 = $('<input type="'+type+'">');
@@ -148,7 +150,7 @@
 					value = at[i].nodeValue;
 					if (name && value) {
 						if (name == 'type') {
-							type = value;
+							type = value;	// original type for additional class
 						} else {
 							ui2.attr(name, value);
 						}
@@ -274,7 +276,7 @@
 //# NUMBER|DATETIME
 						false) {
 						var className, allow;
-						ui = ui.type('text');
+						ui = ui.typeTo('text');
 						switch (type) {
 //# NUMBER
 						case 'number':
@@ -315,10 +317,11 @@
 //# DATETIME
 					// Datepicker
 					if (!hasDate && (type == 'date') && ('datepicker' in ui)) {
-						var option = { dateFormat: 'yy-mm-dd' };
+						var option = opts.datepicker;
+						option.dateFormat = 'yy-mm-dd';
 						option.minDate = ui.getAttr('min');
 						option.maxDate = ui.getAttr('max');
-						ui = ui.type('text').datepicker(option);
+						ui = ui.typeTo('text').datepicker(option);
 					}
 
 //# NUMBER

@@ -33,7 +33,7 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
-### Version 2.9.1 (2013-02-17)
+### Version 2.9.1 (2013-02-16)
 
 * Added support required for checkbox and radio
 * Support jQuery 1.9 (exclude 1.6 or earlier)

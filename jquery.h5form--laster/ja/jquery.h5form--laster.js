@@ -24,11 +24,9 @@
 			safari = parseInt(ua.replace(/.*version\/(\d+).*safari.*/, "$1")),	// "Version/5.0 Safari/533.16"
 			android = (navigator.userAgent.search(/Android/) != -1);
 
-		if (opera > 9) return;
-
-		$.fn.outerHTML = function() {
+		var outerHTML = function(ui) {
 			// Firefox 10 or earlier does not have outerHTML
-			var obj = $(this).get(0);
+			var obj = ui.get(0);
 			return obj.outerHTML || new XMLSerializer().serializeToString(obj);
 		};
 
@@ -88,7 +86,7 @@
 			hasNumber = hasSpin = hasRange =
 				('step' in test1) && ('min' in test1) && !android && !firefox,
 //# DATETIME
-			hasDateTime = false,
+			hasDateTime = (opera>=9),
 			hasDate = hasDateTime || chrome > 21,
 			hasTime = hasDateTime || chrome > 22,
 //# MAXLENGTH
@@ -118,96 +116,113 @@
 			$(this).remove();
 		});
 //#
+		var getAttr = function (ui, name) {
+			var attr = ui.attr(name);
+			return (attr == undefined) ? '' : attr;
+		};
 
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
+		/**
+		 * Change Type
+		 * @param {string} type -- type.
+		 * @return {object} -- this.
+		 */
+		var typeTo = function(ui, type) {
+			var	at = ui.get(0).attributes,
+			ui2 = $('<input type="'+type+'">');
+
+			for(i = at.length-1; i>=0; i--) {
+				name = at[i].nodeName;
+				value = at[i].nodeValue;
+				if (name && value) {
+					if (name == 'type') {
+						type = value;	// original type for additional class
+					} else {
+						ui2.attr(name, value);
+					}
+				}
+			}
+			ui2.addClass('h5form-'+type);
+
+			return ui2.replaceAll(ui);
+		};
+
+		/**
+		 * Check validity of the element
+		 * @param {object} ui -- element
+		 * @return {bool} -- valid
+		 */
+		$.fn.h5form.checkValidity = function(ui) {
+			if (hasCustomValidity) {
+				return ui.get(0).checkValidity();
+			} else {
+				return (!ui.data('customValidity'));
+			}
+		};
+
+		/**
+		 * Set a custom validity to the elements
+		 * @param {string} message -- message.
+		 * @return {object} -- this.
+		 */
+		var $firstTime = true;
+		var $novalidate = false;
+		$.fn.h5form.setCustomValidity = function(ui, message) {
+			if ($novalidate) message = '';	// null is invalid in opera
+			if (ui.is(validatable)) {
+				// Add a title to the message
+				if (!hasAppendTitle && message && (title = getAttr(ui, 'title'))) {
+					message += '\n' + title;
+				}
+				// Set a custon validity
+				if (hasCustomValidity) {
+					ui.get(0).setCustomValidity(message);
+				} else {
+					if (message) {
+						ui.data('customValidity', message.replace(/\n/, '<br />'));
+					} else {
+						ui.removeData('customValidity');
+					}
+
+					if (!$firstTime && opts.styleErr) {
+						if (message) {
+							ui.css(opts.styleErr);
+						} else {
+							for (key in opts.styleErr) {
+								ui.css(key, '');
+							}
+						}
+					}
+				}
+			}
+			return ui;
+		};
+
+//#
 		// for each form
-		return this.each(function() {
+		return $(this).each(function() {
 
 			//Private properties
 			var form = $(this),
-				firstTime = true,
 //# AUTOFOCUS
 				elmAutofocus,
 //# PLACEHOLDER
 				elmPlaceholder = new Array(),
 //#
-				validatableElements = form.find(validatable),
-				novalidate = !!form.outerHTML().match(/^[^>]+ novalidate/);
-				// form.attr('novalidate') result undefined,
-				// when from has simply "novalidate" rather than "novalidate='novalidate'"
+				validatableElements = form.find(validatable);
 
-			/**
-			 * Change Type
-			 * @param {string} type -- type.
-			 * @return {object} -- this.
-			 */
-			$.fn.typeTo = function(type) {
-				var ui = $(this),
-					at = ui.get(0).attributes,
-					ui2 = $('<input type="'+type+'">');
-
-				for(i = at.length-1; i>=0; i--) {
-					name = at[i].nodeName;
-					value = at[i].nodeValue;
-					if (name && value) {
-						if (name == 'type') {
-							type = value;	// original type for additional class
-						} else {
-							ui2.attr(name, value);
-						}
-					}
-				}
-				ui2.addClass('h5form-'+type);
-
-				return ui2.replaceAll(ui);
-			};
-
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
-			/**
-			 * Set a custom Validity to the elements
-			 * @param {string} message -- message.
-			 * @return {object} -- this.
-			 */
-			$.fn.setCustomValidity = function(message) {
-				if (novalidate) message = null;
-				var ui = $(this);
-				if (ui.is(validatable)) {
-					// Add a title to the message
-					if (!hasAppendTitle && message && (title = ui.getAttr('title'))) {
-						message += '\n' + title;
-					}
-					// Set a custon validity
-					if (hasCustomValidity) {
-						ui.get(0).setCustomValidity(message);
-					} else {
-						if (message) {
-							ui.data('customValidity', message.replace(/\n/, '<br />'));
-						} else {
-							ui.removeData('customValidity');
-						}
-
-						if (!firstTime && opts.styleErr) {
-							if (message) {
-								ui.css(opts.styleErr);
-							} else {
-								for (key in opts.styleErr) {
-									ui.css(key, '');
-								}
-							}
-						}
-					}
-				}
-				return ui;
-			};
+			// form.attr('novalidate') result undefined,
+			// when from has simply "novalidate" rather than "novalidate='novalidate'"
+			$novalidate = !!outerHTML(form).match(/^[^>]+ novalidate/);
 
 //# NUMBER|DATETIME
 			/**
 			 * Spin number or time
-			 * @param {bool} isDown -- isDown.
+			 * @param {bool} -- isDown.
 			 * @return {object} -- this.
 			 */
-			$.fn.spin = function(isDown) {
-				var ui = $(this),
-					isNumber = (ui.getAttr('type').toLowerCase() == 'number'),
+			var spin = function(ui, isDown) {
+				var	isNumber = (ui.hasClass('h5form-number')),
 					min = attr2num(ui, 'min', (isNumber) ? '' : 0),
 					max = attr2num(ui, 'max', (isNumber) ? '' : 86400),
 					step = attr2num(ui, 'step', (isNumber) ? 1 : 60),
@@ -224,29 +239,26 @@
 			};
 //#
 
-			$.fn.getAttr = function(name) {
-				var attr = $(this).attr(name);
-				return (attr == undefined) ? '' : attr;
-			};
-
 			/**
 			 * For each control function
 			 * @return {object} -- this.
 			 */
-			$.fn.initControl = function() {
-				return this.each(function() {
+			var initControl = function(elm, firstTime) {
+				$firstTime = firstTime;
+
+				return elm.each(function() {
 
 					var ui = $(this),
-						type = ui.getAttr('type').toLowerCase();
+						type = getAttr(ui, 'type').toLowerCase();
 
 //# AUTOFOCUS
 					// Is autofoucs
-					if (!hasAutofocus && !elmAutofocus && ui.getAttr('autofocus')) {
+					if (!hasAutofocus && !elmAutofocus && getAttr(ui, 'autofocus')) {
 						elmAutofocus = ui;
 					}
 //# PLACEHOLDER
 					// Focus and blur attach for Placeholder
-					var placeholder = ui.getAttr('placeholder');
+					var placeholder = getAttr(ui, 'placeholder');
 
 					if (!hasPlaceholder && placeholder && type != 'password') {
 						elmPlaceholder.push(ui);
@@ -276,7 +288,7 @@
 //# NUMBER|DATETIME
 						false) {
 						var className, allow;
-						ui = ui.typeTo('text');
+						ui = typeTo(ui, 'text');
 						switch (type) {
 //# NUMBER
 						case 'number':
@@ -294,8 +306,8 @@
 						// Keydown event attach
 						var evKeydown = (function(ev) {
 							var cc = ev.charCode || ev.keyCode;
-							if (cc == 38) ui.spin(0);
-							if (cc == 40) ui.spin(1);
+							if (cc == 38) spin(ui, 0);
+							if (cc == 40) spin(ui, 1);
 							if (($.inArray(cc, allow) >= 0) || (cc >= 48 && cc <= 57)) return true;
 							return false;
 						});
@@ -308,7 +320,7 @@
 
 							// Click button
 							ui.next().children().click(function() {
-								ui.spin(ui.next().children().index($(this))).change();
+								spin(ui, ui.next().children().index($(this))).change();
 								// change for Chrome
 							});
 						}
@@ -319,9 +331,9 @@
 					if (!hasDate && (type == 'date') && ('datepicker' in ui)) {
 						var option = opts.datepicker;
 						option.dateFormat = 'yy-mm-dd';
-						option.minDate = ui.getAttr('min');
-						option.maxDate = ui.getAttr('max');
-						ui = ui.typeTo('text').datepicker(option);
+						option.minDate = getAttr(ui, 'min');
+						option.maxDate = getAttr(ui, 'max');
+						ui = typeTo(ui, 'text').datepicker(option);
 					}
 
 //# NUMBER
@@ -345,7 +357,7 @@
 //# MAXLENGTH
 					// Maxlength
 					if (!hasMaxlength && ui.is('textarea') &&
-						(maxlength = ui.getAttr('maxlength'))) {
+						(maxlength = getAttr(ui, 'maxlength'))) {
 						// Keypress event attach
 						var evKeypress = (function(ev) {
 							var cc = ev.charCode || ev.keyCode;
@@ -363,8 +375,8 @@
 					if (!hasDateTime && (type == 'datetime' || type == 'datetime-local')) {
 						if (!ui.next().hasClass(opts.classDatetime)) {
 							var val = getLocalDatetime(ui.val()),
-								min = getLocalDatetime(ui.getAttr('min')),
-								max = getLocalDatetime(ui.getAttr('max')),
+								min = getLocalDatetime(getAttr(ui, 'min')),
+								max = getLocalDatetime(getAttr(ui, 'max')),
 								tz = (type == 'datetime') ?
 									'<span class="h5form-timezone">' + getTZ() + '</span>' : '';
 
@@ -373,24 +385,24 @@
 
 								'<input type="date" value="' + val[0] + '"' +
 								' min="' + min[0] + '" max="' + max[0] + '"' +
-								' size="' + ui.getAttr('size') + '"' +
-								' class="' + ui.getAttr('class') + '"' +
-								' title="' + ui.getAttr('title') + '">' +
+								' size="' + getAttr(ui, 'size') + '"' +
+								' class="' + getAttr(ui, 'class') + '"' +
+								' title="' + getAttr(ui, 'title') + '">' +
 
 								'<input type="time" value="' + val[1] + '"' +
 								' step="' + attr2num(ui, 'step', 60) + '"' +
-								' size="' + ui.getAttr('size') + '"' +
-								' class="' + ui.getAttr('class') + '"' +
-								' title="' + ui.getAttr('title') + '">' +
+								' size="' + getAttr(ui, 'size') + '"' +
+								' class="' + getAttr(ui, 'class') + '"' +
+								' title="' + getAttr(ui, 'title') + '">' +
 								tz +
 								'</span>');
 //# REQUIRED|DATETIME
-							if (ui.getAttr('required')) {
+							if (getAttr(ui, 'required')) {
 								ui.removeAttr('required');
-								ui.next().children().attr('required', 'required').initControl();
+								initControl(ui.next().children().attr('required', 'required'));
 							} else {
 //# DATETIME
-								ui.next().children().initControl();
+								initControl(ui.next().children());
 //# REQUIRED|DATETIME
 							}
 //# DATETIME
@@ -398,7 +410,7 @@
 					}
 //# AUTOCOMPLETE
 					if ((!hasDatalist) &&
-						(list = ui.getAttr('list')) &&
+						(list = getAttr(ui, 'list')) &&
 						('autocomplete' in ui))
 					{
 						var arr = new Array();
@@ -442,7 +454,7 @@
 
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 						// clear validity first
-						$('[name="'+name+'"]').setCustomValidity(null);
+						$.fn.h5form.setCustomValidity($('[name="'+name+'"]'), '');	// null is invalid in opera
 //#
 						if (hasBugEnter && !ui.is('select, textarea, button')) {
 							// Keypress event attach
@@ -459,23 +471,23 @@
 						}
 //# REQUIRED
 						// Required
-						if (!hasRequired && ui.getAttr('required')) {
+						if (!hasRequired && getAttr(ui, 'required')) {
 							isNecessary = true;
 							if (isEmpty) {
 								var msg = opts.msgEmpty;
 								if (ui.is('select, :radio')) msg = opts.msgUnselct;
 								if (ui.is(':checkbox')) msg = opts.msgUncheck;
-								ui.setCustomValidity(msg);
+								$.fn.h5form.setCustomValidity(ui, msg);
 								return true;
 							}
 						}
 //# PATTERN
 						// Pattern
-						if (!hasPattern && (pattern = ui.getAttr('pattern'))) {
+						if (!hasPattern && (pattern = getAttr(ui, 'pattern'))) {
 							isNecessary = true;
 							if (!isEmpty &&
 								validateRe(ui, '^(' + pattern.replace(/^\^?(.*)\$?$/, '$1') + ')$')) {
-								ui.setCustomValidity(opts.msgPattern);
+								$.fn.h5form.setCustomValidity(ui, opts.msgPattern);
 								return true;
 							}
 						}
@@ -485,7 +497,7 @@
 							isNecessary = true;
 							if (!isEmpty && validateRe(ui,
 							   '[\\w-\\.]{3,}@([\\w-]{2,}\\.)*([\\w-]{2,}\\.)[\\w-]{2,4}', 'i')) {
-								ui.setCustomValidity(opts.msgEmail);
+								$.fn.h5form.setCustomValidity(ui, opts.msgEmail);
 								return true;
 							}
 						}
@@ -496,17 +508,17 @@
 							if (!isEmpty && validateRe(ui,
 							   '[\\w-\\.]{3,}:\\/\\/([\\w-]{2,}\\.)*([\\w-]{2,}\\.)[\\w-]{2,4}',
 							   'i')) {
-								ui.setCustomValidity(opts.msgUrl);
+								$.fn.h5form.setCustomValidity(ui, opts.msgUrl);
 								return true;
 							}
 						}
 
 //# MAXLENGTH
 						// Maxlength
-						if (!hasMaxlength && ui.is('textarea') && ui.getAttr('maxlength')) {
+						if (!hasMaxlength && ui.is('textarea') && getAttr(ui, 'maxlength')) {
 							isNecessary = true;
 							if (over = validateMaxlength(ui)) {
-								ui.setCustomValidity(opts.msgMaxlen.replace(/#/, over));
+								$.fn.h5form.setCustomValidity(ui, opts.msgMaxlen.replace(/#/, over));
 								return true;
 							}
 						}
@@ -528,15 +540,15 @@
 							// Is this control within datetime?
 							if (ui.parent().hasClass(opts.classDatetime)) {
 								ui0 = ui.parent().prev();	// hidden datetime control
-								type0 = ui0.getAttr('type').toLowerCase();	// datetime or datetime-local
+								type0 = getAttr(ui0, 'type').toLowerCase();	// datetime or datetime-local
 
 								ui2 = ui.parent().children('input');	// a set of date & time
-								ui2.setCustomValidity('');
+								$.fn.h5form.setCustomValidity(ui2, '');
 								var i = ui2.index(ui), date = ui2.eq(0).val(), time = ui2.eq(1).val();
 								if (date != '' || time != '') {
 									// Complement the other control if empty
 									if (date == '' || time == '') {
-										var min = getLocalDatetime(ui0.getAttr('min'), true);	// use min value
+										var min = getLocalDatetime(getAttr(ui0, 'min'), true);	// use min value
 										if (i == 0 && date != '' && time == '') { ui2.eq(1).val(min[1]); }
 										if (i == 1 && time != '' && date == '') { ui2.eq(0).val(min[0]); }
 										date = ui2.eq(0).val(), time = ui2.eq(1).val();
@@ -584,15 +596,15 @@
 //# NUMBER|DATETIME
 							// Perform validtions
 							if (validateRe(ui0, pattern) || (validateStep(ui0, min, step))) {
-								ui2.setCustomValidity(opts.msgInvalid);
+								$.fn.h5form.setCustomValidity(ui2, opts.msgInvalid);
 								return true;
 							}
 							if (validateMin(ui0)) {
-								ui2.setCustomValidity(opts.msgMin.replace(/#/, ui0.getAttr('min')));
+								$.fn.h5form.setCustomValidity(ui2, opts.msgMin.replace(/#/, getAttr(ui0, 'min')));
 								return true;
 							}
 							if (validateMax(ui0)) {
-								ui2.setCustomValidity(opts.msgMax.replace(/#/, ui0.getAttr('max')));
+								$.fn.h5form.setCustomValidity(ui2, opts.msgMax.replace(/#/, getAttr(ui0, 'max')));
 								return true;
 							}
 						}
@@ -608,8 +620,7 @@
 
 				});
 			};
-			validatableElements.initControl();
-			firstTime = false;
+			initControl(validatableElements, true);
 
 //# AUTOFOCUS
 			if (elmAutofocus) {
@@ -621,38 +632,39 @@
 			// When submit
 			//
 
-			form.find('input:submit, input:image, input:button, button:submit')
+			form.find('input:submit, input:image, button:submit')
 				.click(function(ev) {
 
 				if (ev.result == false) return false;	// Canceled in the previous handler
 
-				var ui = $(this);
+				var ui = $(this),
+					validatableElements = form.find(validatable);	// Rescan becase for typeTo
 //# FORM
 				if (!hasFormAttr) {
-					if (attr = ui.getAttr('formaction')) {
+					if (attr = getAttr(ui, 'formaction')) {
 						form.attr('action', attr);
 					}
-					if (attr = ui.getAttr('formeenctype')) {
+					if (attr = getAttr(ui, 'formeenctype')) {
 						form.attr('enctype', attr);
 					}
-					if (attr = ui.getAttr('formmethod')) {
+					if (attr = getAttr(ui, 'formmethod')) {
 						form.attr('method', attr);
 					}
-					if (attr = ui.getAttr('formtarget')) {
+					if (attr = getAttr(ui, 'formtarget')) {
 						form.attr('target', attr);
 					}
 					if (null != ui.attr('formnovalidate')) {
 						form.attr('novalidate', 'novalidate');
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 						validatableElements.each(function() {
-							$(this).setCustomValidity('');
+							$.fn.h5form.setCustomValidity($(this), '');
 						});
 //# FORM
 					}
 				}
 //#
 				// Re-scan for dinamic controls
-				form.find(opts.dynamicHtml).initControl();
+				initControl(form.find(opts.dynamicHtml));
 
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 				// Show balloons message
@@ -687,7 +699,7 @@
 					for (i = elmPlaceholder.length-1; i>=0; i--) {
 						if (i != undefined) {
 							var elm = elmPlaceholder[i];
-							if (elm.val() == elm.getAttr('placeholder')) {
+							if (elm.val() == getAttr(elm, 'placeholder')) {
 								elm.val('');
 							}
 						}
@@ -698,7 +710,7 @@
 				if (hasBugButton)
 				{
 					// Set a value of button:submit you clicked to input:hidden.
-					$('<input type="hidden" name="' + ui.getAttr('name') +
+					$('<input type="hidden" name="' + getAttr(ui, 'name') +
 					  '" value="' + ui.val() + '">').appendTo(form);
 
 					form.find('button, input:submit').attr('name', '');
@@ -729,7 +741,7 @@
 		}
 //# NUMBER|DATETIME
 		function validateStep(item, min, step) {
-			min = (item.getAttr('type').toLowerCase().indexOf('datetime')) ?
+			min = (getAttr(item, 'type').toLowerCase().indexOf('datetime')) ?
 				attr2num(item, 'min', min) : attr2num(item, '', min);
 			step = attr2num(item, 'step', step);
 			var val = attr2num(item, 'val', '');
@@ -749,7 +761,7 @@
 		// functions of datetime
 
 		function attr2num(item, name, def) {
-			var val = (name) ? ((name == 'val') ? item.val() : item.getAttr(name)) : def;
+			var val = (name) ? ((name == 'val') ? item.val() : getAttr(item, name)) : def;
 			if (val == undefined || val == '') val = '' + def;
 //# DATETIME
 			// Result seconds on unix time if the type is time
@@ -815,6 +827,5 @@
 		}
 //#
 	};
-
 
 })(jQuery);

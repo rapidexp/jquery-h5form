@@ -16,14 +16,14 @@ This plugin gives all browsers the HTML5 forms like the Opera.
 These enhancements are determined in the presence or absence of the object in a input element.
 Therefore it will be able to support nearly maintenance-free for the other versions of browsers.
 
-Some of the features like the date state use to determine the type and version of the browser.
-Even if the browser improvements, it uses the extension of the plugin (2.9.0).<br>
-Because, it is in order to avoid the maintenance support
-by fixing the state it was in when you install the plugin to the site.
+Some of the features like the date state use to determine the type and version of browser.
+Even if the browser improvements, it uses the extension of the plugin.<br>
+Because, it is in order to avoid maintenance support
+by fixing the state it was in when you install the plugin to your site.
 
 And this will also fix several bugs of the Internet Explorer on submit, and will allow you to use the button element.
 
-This has the large file size for multi-function.
+This has a large file size for multi-function.
 However, it binds only the features that are needed by the browser for the element of the page, and it will work lightly.<br>
 If you wish, you can get a smaller size javascript by removing unnecessary features.
 

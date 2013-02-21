@@ -68,16 +68,16 @@
 	  </p>
 
 	  <p>
-		Some of the features like the date state use to determine the type and version of the browser.
-		Even if the browser improvements, it uses the extension of the plugin (2.9.0).<br>
-		Because, it is in order to avoid the maintenance support
-		by fixing the state it was in when you install the plugin to the site.
+		Some of the features like the date state use to determine the type and version of browser.
+		Even if the browser improvements, it uses the extension of the plugin.<br>
+		Because, it is in order to avoid maintenance support
+		by fixing the state it was in when you install the plugin to your site.
 	  </p>
 
 	  <p>And this will also fix several bugs of the Internet Explorer on submit, and will allow you to use the button element.</p>
 
 	  <p>
-		This has the large file size for multi-function.
+		This has a large file size for multi-function.
 		However, it binds only the features that are needed by the browser for the element of the page, and it will work lightly.<br>
 		If you wish, you can get a smaller size javascript by removing unnecessary features.
 	  </p>
@@ -94,10 +94,10 @@
 	  <h2>Supported Forms</h2>
 
 	  <p>
-		In the following table the feature by the browser itself is marked as "S",
+		In the following table the feature by browser itself is marked as "S",
 		and the enhancement by this plugin is marked as "E".<br>
-		The asterisk sign on the item name refers to the basic configuration
-		and the plus sign refers to the customized configuration. See the section of <a href="#download">the download</a>.
+		The asterisk sign on the item name refers to basic configurations
+		and the plus sign refers to customized configurations. See the section of <a href="#download">the download</a>.
 	  </p>
 
 	  <p style="margin-left: 2em;">
@@ -125,7 +125,7 @@
 		<tbody>
 
 		  <tr>
-			<th rowspan="2">All elements</th>
+			<th rowspan="4">All elements</th>
 			<th>* The balloon message</th>
 			<td>*1</td>
 			<td>E</td>
@@ -152,6 +152,35 @@
 			<td>S</td>
 			<td>E</td>
 		  </tr>
+
+		  <tr>
+			<th>+ $.fn.h5form.setCustomValidity</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+		  </tr>
+
+		  <tr>
+			<th>+ $.fn.h5form.checkValidity</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+		  </tr>
+
 
 		  <tr>
 			<th>The form element</th>
@@ -843,6 +872,45 @@ $(<span class="str">'form'</span>).h5form({
 
 	</section>
 
+	<section>
+	  <h2>Utilities</h2>
+
+	  <p>
+		The plugin provides an available method of HTML5 by the old browser.<br>
+		The messages are stored in the custom validity of the element with the modern browser, and in jQuery.data('CustomValidity') with the old browser.
+	  </p>
+
+
+	  <table class="solid options">
+		<thead>
+		  <tr>
+			<th width="40%">メソッド</th>
+			<th width="60%">説明</th>
+		  </tr>
+		</thead>
+
+		<tbody>
+		  <tr>
+			<td>$.fn.h5form.checkValidity( selector )</td>
+			<td>
+			  It returns a validation state of the designated element.<br>
+			  If a validation error is stored, It returns TRUE.
+			</td>
+		  </tr>
+
+		  <tr>
+			<td>$.fn.h5form.setCustomValidity( selector, message )</td>
+			<td>
+			  It stores a validation message in the designated element.<br>
+			  The stored message is displayed  when a user pushed the submitt button.<br>
+			  To delete message please give empty character string, rather than null that does not work in Opera.
+			</td>
+		  </tr>
+
+		</tbody>
+	  </table>
+
+	</section>
 
 
 	<section>
@@ -931,7 +999,13 @@ $(<span class="str">'form'</span>).h5form({
 	  <h3>Version -laster		(-today)</h3>
 
 	  <ul>
-		<li></li>
+		<li>Draw the line between public and private methods.</li>
+		<li>Added $.fn.checkValidity(element).</li>
+		<li>Added $.fn.setCustomValidity(element, message).</li>
+		<li>Hook again to Opera for checkValidity.</li>
+		<li>Unnecessary validation in input type="button".</li>
+		<li>Spin of number state was as time.</li>
+		<li>Error of number, data and time state slipped at submit.</li>
 	  </ul>
 
 	  <h3>Version 2.9.1	(2013-02-16)</h3>

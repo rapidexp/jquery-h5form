@@ -17,11 +17,13 @@
 	$.fn.h5form = function(options) {
 		// Check UA
 		var ua = window.navigator.userAgent.toLowerCase(),
-			msie = parseInt(ua.replace(/.*msie (\d+).*/, "$1")),
-			firefox = parseInt(ua.replace(/.*firefox\/(\d+).*/, "$1")),
-			chrome = parseInt(ua.replace(/.*chrome\/(\d+).*/, "$1")),
-			opera = parseInt(ua.replace(/.*opera[\/ ](\d+).*/, "$1")),	// "opara/9.80" or "opera 10.10"
-			safari = parseInt(ua.replace(/.*version\/(\d+).*safari.*/, "$1")),	// "Version/5.0 Safari/533.16"
+			msie = parseInt(ua.replace(/.*msie (\d+).*/, '$1')),
+			firefox = parseInt(ua.replace(/.*firefox\/(\d+).*/, '$1')),
+			chrome = parseInt(ua.replace(/.*chrome\/(\d+).*/, '$1')),
+			// "opara/9.80" or "opera 10.10"
+			opera = parseInt(ua.replace(/.*opera[\/ ](\d+).*/, '$1')),
+			// "Version/5.0 Safari/533.16"
+			safari = parseInt(ua.replace(/.*version\/(\d+).*safari.*/, '$1')),
 			android = (navigator.userAgent.search(/Android/) != -1);
 
 		var outerHTML = function(ui) {
@@ -86,7 +88,7 @@
 			hasNumber = hasSpin = hasRange =
 				('step' in test1) && ('min' in test1) && !android && !firefox,
 //# DATETIME
-			hasDateTime = (opera>=9),
+			hasDateTime = (opera >= 9),
 			hasDate = hasDateTime || chrome > 21,
 			hasTime = hasDateTime || chrome > 22,
 //# MAXLENGTH
@@ -99,7 +101,7 @@
 			hasBugButton = (msie && msie < 8);
 			hasBugEnter = (msie && msie < 9) || android;
 
-		for (i = opts.hasOptions.length-1; i >= 0; i--) {
+		for (i = opts.hasOptions.length - 1; i >= 0; i--) {
 			eval(opts.hasOptions[i] + '=true;');
 		}
 
@@ -116,7 +118,7 @@
 			$(this).remove();
 		});
 //#
-		var getAttr = function (ui, name) {
+		var getAttr = function(ui, name) {
 			var attr = ui.attr(name);
 			return (attr == undefined) ? '' : attr;
 		};
@@ -129,9 +131,9 @@
 		 */
 		var typeTo = function(ui, type) {
 			var	at = ui.get(0).attributes,
-			ui2 = $('<input type="'+type+'">');
+			ui2 = $('<input type="' + type + '">');
 
-			for(i = at.length-1; i>=0; i--) {
+			for (i = at.length - 1; i >= 0; i--) {
 				name = at[i].nodeName;
 				value = at[i].nodeValue;
 				if (name && value) {
@@ -142,22 +144,9 @@
 					}
 				}
 			}
-			ui2.addClass('h5form-'+type);
+			ui2.addClass('h5form-' + type);
 
 			return ui2.replaceAll(ui);
-		};
-
-		/**
-		 * Check validity of the element
-		 * @param {object} ui -- element
-		 * @return {bool} -- valid
-		 */
-		$.fn.h5form.checkValidity = function(ui) {
-			if (hasCustomValidity) {
-				return ui.get(0).checkValidity();
-			} else {
-				return (!ui.data('customValidity'));
-			}
 		};
 
 		/**
@@ -165,9 +154,9 @@
 		 * @param {string} message -- message.
 		 * @return {object} -- this.
 		 */
-		var $firstTime = true;
-		var $novalidate = false;
-		$.fn.h5form.setCustomValidity = function(ui, message) {
+		var $firstTime = true,
+			$novalidate = false,
+			setCustomValidity = function(ui, message) {
 			if ($novalidate) message = '';	// null is invalid in opera
 			if (ui.is(validatable)) {
 				// Add a title to the message
@@ -197,6 +186,28 @@
 			}
 			return ui;
 		};
+		$.fn.h5form.setCustomValidity = setCustomValidity;
+
+		/**
+		 * Check validity of the element
+		 * @param {object} ui		-- element.
+		 * @return {bool}			-- valid.
+		 */
+		$.fn.h5form.checkValidity = function(ui) {
+			var result = true;
+			ui.each(function() {
+				if (hasCustomValidity) {
+					if (!$(this).get(0).checkValidity()) {
+						return (result = false);
+					}
+				} else {
+					if ($(this).data('customValidity')) {
+						return (result = false);
+					}
+				}
+			});
+			return result;
+		};
 
 //#
 		// for each form
@@ -218,8 +229,9 @@
 //# NUMBER|DATETIME
 			/**
 			 * Spin number or time
-			 * @param {bool} -- isDown.
-			 * @return {object} -- this.
+			 * @param {object} ui	- ui.
+			 * @param {bool} isDown	- isDown.
+			 * @return {object}		-- this.
 			 */
 			var spin = function(ui, isDown) {
 				var	isNumber = (ui.hasClass('h5form-number')),
@@ -414,7 +426,7 @@
 						('autocomplete' in ui))
 					{
 						var arr = new Array();
-						$('datalist#'+list).children('option').each(function () {
+						$('datalist#' + list).children('option').each(function() {
 							arr.push($(this).val());
 						});
 						// Avoid conflicts with the browser
@@ -444,7 +456,7 @@
 
 						var isNecessary = false,
 							name = ui.attr('name'),
-							isChecked = $('[name="'+name+'"]:checked').length,
+							isChecked = $('[name="' + name + '"]:checked').length,
 							isEmpty = ((ui.val() == '') ||
 									   (ui.is(':checkbox, :radio') && !isChecked) ||
 //# PLACEHOLDER
@@ -454,7 +466,8 @@
 
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 						// clear validity first
-						$.fn.h5form.setCustomValidity($('[name="'+name+'"]'), '');	// null is invalid in opera
+						// NOTE: null is invalid in opera
+						setCustomValidity($('[name="' + name + '"]'), '');
 //#
 						if (hasBugEnter && !ui.is('select, textarea, button')) {
 							// Keypress event attach
@@ -477,7 +490,7 @@
 								var msg = opts.msgEmpty;
 								if (ui.is('select, :radio')) msg = opts.msgUnselct;
 								if (ui.is(':checkbox')) msg = opts.msgUncheck;
-								$.fn.h5form.setCustomValidity(ui, msg);
+								setCustomValidity(ui, msg);
 								return true;
 							}
 						}
@@ -487,7 +500,7 @@
 							isNecessary = true;
 							if (!isEmpty &&
 								validateRe(ui, '^(' + pattern.replace(/^\^?(.*)\$?$/, '$1') + ')$')) {
-								$.fn.h5form.setCustomValidity(ui, opts.msgPattern);
+								setCustomValidity(ui, opts.msgPattern);
 								return true;
 							}
 						}
@@ -497,7 +510,7 @@
 							isNecessary = true;
 							if (!isEmpty && validateRe(ui,
 							   '[\\w-\\.]{3,}@([\\w-]{2,}\\.)*([\\w-]{2,}\\.)[\\w-]{2,4}', 'i')) {
-								$.fn.h5form.setCustomValidity(ui, opts.msgEmail);
+								setCustomValidity(ui, opts.msgEmail);
 								return true;
 							}
 						}
@@ -508,7 +521,7 @@
 							if (!isEmpty && validateRe(ui,
 							   '[\\w-\\.]{3,}:\\/\\/([\\w-]{2,}\\.)*([\\w-]{2,}\\.)[\\w-]{2,4}',
 							   'i')) {
-								$.fn.h5form.setCustomValidity(ui, opts.msgUrl);
+								setCustomValidity(ui, opts.msgUrl);
 								return true;
 							}
 						}
@@ -518,7 +531,7 @@
 						if (!hasMaxlength && ui.is('textarea') && getAttr(ui, 'maxlength')) {
 							isNecessary = true;
 							if (over = validateMaxlength(ui)) {
-								$.fn.h5form.setCustomValidity(ui, opts.msgMaxlen.replace(/#/, over));
+								setCustomValidity(ui, opts.msgMaxlen.replace(/#/, over));
 								return true;
 							}
 						}
@@ -540,15 +553,17 @@
 							// Is this control within datetime?
 							if (ui.parent().hasClass(opts.classDatetime)) {
 								ui0 = ui.parent().prev();	// hidden datetime control
-								type0 = getAttr(ui0, 'type').toLowerCase();	// datetime or datetime-local
+								// datetime or datetime-local
+								type0 = getAttr(ui0, 'type').toLowerCase();
 
 								ui2 = ui.parent().children('input');	// a set of date & time
-								$.fn.h5form.setCustomValidity(ui2, '');
+								setCustomValidity(ui2, '');
 								var i = ui2.index(ui), date = ui2.eq(0).val(), time = ui2.eq(1).val();
 								if (date != '' || time != '') {
 									// Complement the other control if empty
 									if (date == '' || time == '') {
-										var min = getLocalDatetime(getAttr(ui0, 'min'), true);	// use min value
+										// use min value
+										var min = getLocalDatetime(getAttr(ui0, 'min'), true);
 										if (i == 0 && date != '' && time == '') { ui2.eq(1).val(min[1]); }
 										if (i == 1 && time != '' && date == '') { ui2.eq(0).val(min[0]); }
 										date = ui2.eq(0).val(), time = ui2.eq(1).val();
@@ -596,15 +611,15 @@
 //# NUMBER|DATETIME
 							// Perform validtions
 							if (validateRe(ui0, pattern) || (validateStep(ui0, min, step))) {
-								$.fn.h5form.setCustomValidity(ui2, opts.msgInvalid);
+								setCustomValidity(ui2, opts.msgInvalid);
 								return true;
 							}
 							if (validateMin(ui0)) {
-								$.fn.h5form.setCustomValidity(ui2, opts.msgMin.replace(/#/, getAttr(ui0, 'min')));
+								setCustomValidity(ui2, opts.msgMin.replace(/#/, getAttr(ui0, 'min')));
 								return true;
 							}
 							if (validateMax(ui0)) {
-								$.fn.h5form.setCustomValidity(ui2, opts.msgMax.replace(/#/, getAttr(ui0, 'max')));
+								setCustomValidity(ui2, opts.msgMax.replace(/#/, getAttr(ui0, 'max')));
 								return true;
 							}
 						}
@@ -657,7 +672,7 @@
 						form.attr('novalidate', 'novalidate');
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 						validatableElements.each(function() {
-							$.fn.h5form.setCustomValidity($(this), '');
+							setCustomValidity($(this), '');
 						});
 //# FORM
 					}
@@ -696,7 +711,7 @@
 //# PLACEHOLDER
 				// Clear Placeholder
 				if (!hasPlaceholder) {
-					for (i = elmPlaceholder.length-1; i>=0; i--) {
+					for (i = elmPlaceholder.length - 1; i >= 0; i--) {
 						if (i != undefined) {
 							var elm = elmPlaceholder[i];
 							if (elm.val() == getAttr(elm, 'placeholder')) {
@@ -761,7 +776,9 @@
 		// functions of datetime
 
 		function attr2num(item, name, def) {
-			var val = (name) ? ((name == 'val') ? item.val() : getAttr(item, name)) : def;
+			var val = def;
+			if (name) { val = (name == 'val') ? item.val() : getAttr(item, name); }
+
 			if (val == undefined || val == '') val = '' + def;
 //# DATETIME
 			// Result seconds on unix time if the type is time

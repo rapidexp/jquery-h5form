@@ -10,6 +10,7 @@
 
 	<style style="text/css">
 	  body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
+	  strong { color: firebrick; }
 
 	  table.sample { width: 90%; margin: auto; }
 	  table.sample th { width: 50%; text-align: left; }
@@ -69,25 +70,25 @@ foreach ($_POST as $name => $value):
 	<header>
 	  <h1>HTML5 Forms using jQuery.h5form</h1>
 
-	  <p>There are a lot of testing  for the HTML5 forms.
+	  <p>There are a lot of testing  for HTML5 forms.
 		Please try to test using Internet Explorer!!<br>
-		These forms that have following class on this page are bound <a href="http://www.rapidexp.com/h5form/">jquery.h5form</a>.</p>
+		These forms that have a following class on this page are bound <a href="http://www.rapidexp.com/h5form/">jquery.h5form</a>.</p>
 
 
 <pre>
   $('form.h5form').h5form();
 </pre>
 
-	  <p>The indicators in the title of each testing represent the browsers this plugin will give the enhancement.</p>
+	  <p>The indicators in the title of each testing represents the browsers this plugin will give the enhancement.</p>
 	</header>
 
 
 	<section>
 	  <h2>Bugs of Internet Explorer</h2>
 
-	  <h3 id="test-1">Test-1. Press the enter key <sup>[IE 8-]</sup></h3>
+	  <h3 id="test-1">Test-1. Press enter key <sup>[IE 8-]</sup></h3>
 
-	  <p>If there is only one text box in the form and you press the enter key in the text box, it does not sent any values on IE 8 or earlier.<br>
+	  <p>If there is only one text box in a form and you press enter key in the text box, it does not sent any values with IE 8 or earlier.<br>
 		The plugin fixed this problem.</p>
 
 
@@ -130,9 +131,9 @@ foreach ($_POST as $name => $value):
 
 	  <h3 id="test-2">Test-2. Click the button <sup>[IE 7-]</sup></h3>
 
-	  <p>It send the context of clicked button rather than the value on IE 7 or earlier.
-		And when you press the enter key in text box, it does not send any values.<br>
-		Besides, it send contexts of all buttons regardless of type "button" or "submit".<br>
+	  <p>It send the context of clicked button rather than the value with IE 7 or earlier.
+		And when you press enter key in a text box, it does not send any values.<br>
+		Besides, it send the contexts of all buttons regardless of type "button" or "submit".<br>
 		The plugin fixed all these problems.</p>
 
 	  <table class="sample">
@@ -183,9 +184,9 @@ foreach ($_POST as $name => $value):
 
 	  <h3 id="test-3">Test-3. Default type of the button</h3>
 
-	  <p>The default type of a button element is "button" rather than "submit" on IE 7 or earlier.<br>
+	  <p>The default type of a button element is "button" rather than "submit" with IE 7 or earlier.<br>
 		However oops, the plugin can not fix this problem.
-		We must not eliminate a type of a button element for the time being.</p>
+		We must not eliminate a type of button elements for the time being.</p>
 
 	  <table class="sample">
 		<tr>
@@ -286,7 +287,7 @@ foreach ($_POST as $name => $value):
 		</tr>
 	  </table>
 
-	  <p id="test-4.5">What about when you press the Enter in a text box with button type?</p>
+	  <p id="test-4.5">What about when you press enter key in the text box with button type?</p>
 
 	  <table class="sample">
 		<tr>
@@ -325,7 +326,7 @@ foreach ($_POST as $name => $value):
 
 
 
-	  <h3 id="test-5">Test-5. The maxlength attributes of textarea <sup>[IE 9-]</sup></h3>
+	  <h3 id="test-5">Test-5. The maxlength attribute of textarea <sup>[IE 9-]</sup></h3>
 
 	  <p>If you are using multi-byte languages, you will notice that the plugin is not able to input monitoring via the input method.<br>
 	  However, the plugin will alert the number of characters that has been exceeded as the auxiliary.</p>
@@ -370,7 +371,9 @@ foreach ($_POST as $name => $value):
 
 	  <h3 id="test-6">Test-6. The email and url state <sup>[IE 9-]</sup></h3>
 
-	  <p>The validation of email and url state will become effective only need to specify the type.</p>
+	  <p>
+		The validation of the email and the url  will become effective only need to specify a type.
+	  </p>
 
 
 	  <table class="sample">
@@ -414,8 +417,9 @@ foreach ($_POST as $name => $value):
 
 	  <h3 id="test-7">Test-7. The number and range state <sup>[IE 9-] [Firefox]</sup></h3>
 
-	  <p>These states are not currently supported on the Firefox.
-		The plugin to achieve the range states with the help of jQuery UI.</p>
+	  <p>
+		The plugin to achieve the range states with the help of jQuery UI.
+	  </p>
 
 	  <table class="sample">
 		<tr>
@@ -459,7 +463,7 @@ foreach ($_POST as $name => $value):
 
 	  <h3 id="test-8">Test-8. The date state and the time state <sup>[IE 10-] [Firefox] [Safari]</sup></h3>
 
-	  <p>Even with the date state, the plugin is achieved with the help of jQuery UI on Internet Explorer, Firefox, Chrome and Safari.</p>
+	  <p>Even with the date state, the plugin is achieved with the help of jQuery UI with IE, Firefox and Safari.</p>
 
 	  <table class="sample">
 		<tr>
@@ -648,7 +652,7 @@ foreach ($_POST as $name => $value):
 	  <h3 id="test-12">Test-12. Auto complete width Datalist <sup>[IE 8-] <del>[IE 9]</del></sup></h3>
 
 	  <p>
-		Even with the plugin, this feature is not available in IE 9. Because it doesn't read childen of the datalist to DOM.<br>
+		Even with the plugin, this feature is not available in IE 9. Because it does not read childen of the datalist to DOM.<br>
 		To make the work even IE 9, you sould add the following meta tag to your header.<br>
 		<pre>  &lt;meta http-equiv="X-UA-Compatible" content="IE=10; IE=8"&gt;</pre>
 		Note: This document is set "IE=edge" for testing under the plane condition of the browser.
@@ -776,12 +780,12 @@ foreach ($_POST as $name => $value):
 
 	  <h3 id="test-14">Test-14. The formaction attribute and etc. <sup>[IE 9-]</sup></h3>
 
-	  <p>The right button of each form has the form-attributes.
-		Please think what happens when you click each button.</p>
+	  <p>The right button of each form has form-attributes.
+		Please think what happens when you click the each button.</p>
 
 	  <table class="sample">
 		<tr>
-		  <th>It has attributes of formaction, formmethod and formtarget.</th>
+		  <th>It has attributes of the formaction, the formmethod and the formtarget.</th>
 		  <th>It has the formnovalidate attribute.</th>
 		</tr>
 
@@ -822,6 +826,123 @@ foreach ($_POST as $name => $value):
 		</tr>
 	  </table>
 	</section>
+
+	<section>
+	  <h2>Utilities</h2>
+
+	  <h3 id="test-15">Test-15. $.fn.h5form.checkValidity( selector )</h3>
+
+	  <p>
+		If one of all elements of the designated selector has an error, it returns FALSE.
+	  </p>
+
+	  <table class="sample">
+		<tr>
+		  <th>Script</th>
+		  <th>HTML</th>
+		</tr>
+
+		<tr>
+		  <td><pre>
+$('[name="test-15b"]').click(function() {
+    if (<strong>$.fn.h5form.checkValidity($('.test-15'))</strong>) {
+        alert('OK');
+    } else {
+        alert("There are some error.");
+    }
+});
+</pre>
+		  </td>
+		  <td>
+			<script type="text/javascript">
+				$(function() {
+					$('[name="test-15b"]').click(function() {
+						if ($.fn.h5form.checkValidity($('.test-15'))) {
+							alert('OK');
+						} else {
+							alert("There are some error.");
+						}
+					});
+				});
+			</script>
+			<form action="#test-15" method="post" class="h5form">
+			  <input class="test-15" type="email" name="input-15a" required title="Enter valid email address.">
+			  <input class="test-15" type="text" name="input-15b" required pattern="\d{4}-\d{3}" title="Enter such as 1234-567.">
+			  <input type="submit" name="test-15" value="OK">
+			</form>
+			<input name="test-15b" type="button" value="checkValidity">
+<pre class="source" style="display:none">
+&lt;form action="#test-15" method="post" <strong>class="h5form"</strong>&gt;
+  &lt;input <strong>class="test-15"</strong> type="email" name="input-15a" required title="Enter valid email address."&gt;
+  &lt;input <strong>class="test-15"</strong> type="text" name="input-15b" required
+  pattern="\d{4}-\d{3}" title="Enter such as 1234-567."&gt;
+  &ltinput type="submit" name="test-15" value="OK"&gt;
+&lt;/form&gt;
+&lt;input <strong>name="test-15b"</strong> type="button" value="checkValidity"&gt;
+</pre>
+		  </td>
+		</tr>
+	  </table>
+
+
+	  <h3 id="test-16">Test-16. $.fn.h5form.setCustomValidity( selector, message )</h3>
+
+	  <p>
+		You can use thd setCustomValidity, too.
+	  </p>
+
+	  <p>
+		NOTE: A stored message cannot be cleared by other means with modern browsers, but may be cleared by a change event with IE.
+	  </p>
+
+	  <table class="sample">
+		<tr>
+		  <th>Script</th>
+		  <th>HTML</th>
+		</tr>
+
+		<tr>
+		  <td><pre>
+ui = $('[name="test-16"]');
+$('[name="test-16b"]').click(function() {
+    <strong>$.fn.h5form.setCustomValidity(ui, "Here is some error.")</strong>;
+});
+$('[name="test-16c"]').click(function() {
+    <strong>$.fn.h5form.setCustomValidity(ui, "")</strong>;
+});
+</pre>
+		  </td>
+		  <td>
+			<script type="text/javascript">
+				$(function() {
+					ui = $('[name="test-16"]');
+					$('[name="test-16b"]').click(function() {
+						$.fn.h5form.setCustomValidity(ui, "Here is some error.");
+					});
+					$('[name="test-16c"]').click(function() {
+						$.fn.h5form.setCustomValidity(ui, "");
+					});
+				});
+			</script>
+			<form action="#test-16" method="post" class="h5form">
+			  <input type="text" name="test-16">
+			  <input type="submit" value="OK">
+			</form>
+			<input name="test-16b" type="button" value="setCustomValidity">
+			<input name="test-16c" type="button" value="Clear">
+<pre class="source" style="display:none">
+&lt;form action="#test-16" method="post" <strong>class="h5form"</strong>&gt;
+  &lt;input type="text" <strong>name="test-16"</strong>&gt;
+&lt;/form&gt;
+&lt;input <strong>name="test-16b"</strong> type="button" value="setCustomValidity"&gt;
+&lt;input <strong>name="test-16c"</strong> type="button" value="Clear"&gt;
+</pre>
+		  </td>
+		</tr>
+	  </table>
+
+	</section>
+
 
 	<footer>
 	  <p>Author: by Yoshiyuki Mikome <a href="http://www.rapidexp.com/h5form">http://www.rapidexp.com/h5form</a><br>

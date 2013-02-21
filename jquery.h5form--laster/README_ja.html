@@ -122,7 +122,7 @@
 		<tbody>
 
 		  <tr>
-			<th rowspan="2">すべての要素</th>
+			<th rowspan="4">すべての要素</th>
 			<th>* フキダシメッセージ</th>
 			<td>*1</td>
 			<td>E</td>
@@ -147,6 +147,34 @@
 			<td>S</td>
 			<td>E</td>
 			<td>S</td>
+			<td>E</td>
+		  </tr>
+
+		  <tr>
+			<th>+ $.fn.h5form.setCustomValidity</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+		  </tr>
+
+		  <tr>
+			<th>+ $.fn.h5form.checkValidity</th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
 			<td>E</td>
 		  </tr>
 
@@ -836,6 +864,46 @@ $(<span class="str">'form'</span>).h5form({
 
 	</section>
 
+	<section>
+	  <h2>Utilities</h2>
+
+	  <p>
+		HTML5のメソッドを非対応ブラウザでも利用できるように拡張しました。<br>
+		対応ブラウザでは要素の CustomValidity に、非対応ブラウザでは jQuery.data('CustomValidity') にメッセージを格納します。<br>
+	  </p>
+
+
+	  <table class="solid options">
+		<thead>
+		  <tr>
+			<th width="40%">メソッド</th>
+			<th width="60%">説明</th>
+		  </tr>
+		</thead>
+
+		<tbody>
+		  <tr>
+			<td>$.fn.h5form.checkValidity( selector )</td>
+			<td>
+			  指定の要素のバリデーション状態を返します。<br>
+			  バリデーションエラーが格納されていれば FALSE、いずれのエラーもなければ TRUE を返します。
+			</td>
+		  </tr>
+
+		  <tr>
+			<td>$.fn.h5form.setCustomValidity( selector, message )</td>
+			<td>
+			  指定の要素にバリデーションメッセージをセットします。<br>
+			  格納されたメッセージはユーザがサブミットボタンを押したときに表示されます。<br>
+			  メッセージを削除するには空文字列 "" を引数に与えてください（null は Opera で誤動作します）。
+			</td>
+		  </tr>
+
+		</tbody>
+	  </table>
+
+	</section>
+
 
 	<section>
 	  <h2>Balloon messages</h2>
@@ -925,7 +993,13 @@ $(<span class="str">'form'</span>).h5form({
 	  <h3>Version -laster		(-today)</h3>
 
 	  <ul>
-		<li></li>
+		<li>パブリック関数を他とバッティングしないように修正</li>
+		<li>$.fn.checkValidity(element) を追加</li>
+		<li>$.fn.setCustomValidity(element, message) を追加</li>
+		<li>checkValidity のため Opera へのフックを復活</li>
+		<li>input type="button"でバリデーションが実行されていた</li>
+		<li>Number 状態のスピンが時刻になっていた</li>
+		<li>Number, Data, Time 状態のエラーがサブミットをすり抜けていた</li>
 	  </ul>
 
 	  <h3>Version 2.9.1	(2013-02-16)</h3>

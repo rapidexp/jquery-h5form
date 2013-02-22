@@ -24,7 +24,7 @@
 			opera = parseInt(ua.replace(/.*opera[\/ ](\d+).*/, '$1')),
 			// "Version/5.0 Safari/533.16"
 			safari = parseInt(ua.replace(/.*version\/(\d+).*safari.*/, '$1')),
-			android = (navigator.userAgent.search(/Android/) != -1);
+			android = parseInt(ua.replace(/.*android (\d+).*/, '$1'));
 
 		var outerHTML = function(ui) {
 			// Firefox 10 or earlier does not have outerHTML
@@ -73,33 +73,35 @@
 		var test1 = $('<input>').hide().appendTo($('body')).get(0),
 			test2 = $('textarea:first').get(0) || new Object(),
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
-			hasCustomValidity = ('setCustomValidity' in test1) && !android,
-			hasAppendTitle = chrome || (msie > 9),
+			reqCustomValidity = !('setCustomValidity' in test1) || android,
+			reqAppendTitle = !chrome && !(msie > 9),
 //# AUTOFOCUS
-			hasAutofocus = ('autofocus' in test1),
+			reqAutofocus = !('autofocus' in test1),
 //# REQUIRED
-			hasRequired = ('required' in test1) && !android,
-			hasPattern = ('pattern' in test1) && !android,
+			reqRequired = !('required' in test1) || android,
+			reqPattern = !('pattern' in test1) || android,
 //# EMAILURL
-			hasEmail = hasUrl = hasCustomValidity && hasPattern && !android, // maybe
+			reqEmail = reqUrl = reqCustomValidity || reqPattern || android, // maybe
 //# PLACEHOLDER
-			hasPlaceholder = ('placeholder' in test1),
+			reqPlaceholder = !('placeholder' in test1),
 //# NUMBER
-			hasNumber = hasSpin = hasRange =
-				('step' in test1) && ('min' in test1) && !android && !firefox,
+			// android must be reqSpin = false and reqNumber = true
+			// reqNumber provieds validation of min and max
+			reqSpin = !('step' in test1) || !('min' in test1) || firefox,
+			reqNumber = reqRange = (android) ? true : reqSpin,
 //# DATETIME
-			hasDateTime = (opera >= 9),
-			hasDate = hasDateTime || chrome > 21,
-			hasTime = hasDateTime || chrome > 22,
+			reqDateTime = !(opera > 8),
+			reqDate = reqDateTime && !(chrome > 21),
+			reqTime = reqDateTime && !(chrome > 22),
 //# MAXLENGTH
-			hasMaxlength = ('maxLength' in test2),
+			reqMaxlength = !('maxLength' in test2),
 //# FORM
-			hasFormAttr = ('form' in test1) && ('formAction' in test1) && !android,
+			reqFormAttr = !('form' in test1) || !('formAction' in test1) || android,
 //# AUTOCOMPLETE
-			hasDatalist = ('autocomplete' in test1) && ('list' in test1),
+			reqDatalist = !('autocomplete' in test1) || !('list' in test1),
 //#
-			hasBugButton = (msie && msie < 8);
-			hasBugEnter = (msie && msie < 9) || android;
+			reqBugButton = (msie && msie < 8);
+			reqBugEnter = (msie && msie < 9) || android;
 
 		for (i = opts.hasOptions.length - 1; i >= 0; i--) {
 			eval(opts.hasOptions[i] + '=true;');
@@ -110,13 +112,24 @@
 		var validatable = ':input:enabled:not(:button, :submit)';
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 		// clear balloons
-		$(validatable).click(function() {
-			$(this).siblings(opts.exprResponse).remove();
-			$(opts.exprBehind).removeAttr('disabled');
-		});
-		$(document).on('click', opts.exprResponse, function() {
-			$(this).remove();
-		});
+		if ('on' in $(document)) {
+			// .live() was removed by jQuery 1.9
+			$(document).on('click', validatable, function() {
+				$(this).siblings(opts.exprResponse).remove();
+				$(opts.exprBehind).removeAttr('disabled');
+			})
+			.on('click', opts.exprResponse, function() {
+				$(this).remove();
+			});
+		} else {
+			$(validatable).live('click', function() {
+				$(this).siblings(opts.exprResponse).remove();
+				$(opts.exprBehind).removeAttr('disabled');
+			});
+			$(opts.exprResponse).live('click', function() {
+				$(this).remove();
+			});
+		}
 //#
 		var getAttr = function(ui, name) {
 			var attr = ui.attr(name);
@@ -160,13 +173,11 @@
 			if ($novalidate) message = '';	// null is invalid in opera
 			if (ui.is(validatable)) {
 				// Add a title to the message
-				if (!hasAppendTitle && message && (title = getAttr(ui, 'title'))) {
+				if (reqAppendTitle && message && (title = getAttr(ui, 'title'))) {
 					message += '\n' + title;
 				}
 				// Set a custon validity
-				if (hasCustomValidity) {
-					ui.get(0).setCustomValidity(message);
-				} else {
+				if (reqCustomValidity) {
 					if (message) {
 						ui.data('customValidity', message.replace(/\n/, '<br />'));
 					} else {
@@ -182,6 +193,8 @@
 							}
 						}
 					}
+				} else {
+					ui.get(0).setCustomValidity(message);
 				}
 			}
 			return ui;
@@ -196,12 +209,12 @@
 		$.fn.h5form.checkValidity = function(ui) {
 			var result = true;
 			ui.each(function() {
-				if (hasCustomValidity) {
-					if (!$(this).get(0).checkValidity()) {
+				if (reqCustomValidity) {
+					if ($(this).data('customValidity')) {
 						return (result = false);
 					}
 				} else {
-					if ($(this).data('customValidity')) {
+					if (!$(this).get(0).checkValidity()) {
 						return (result = false);
 					}
 				}
@@ -265,14 +278,14 @@
 
 //# AUTOFOCUS
 					// Is autofoucs
-					if (!hasAutofocus && !elmAutofocus && getAttr(ui, 'autofocus')) {
+					if (reqAutofocus && !elmAutofocus && getAttr(ui, 'autofocus')) {
 						elmAutofocus = ui;
 					}
 //# PLACEHOLDER
 					// Focus and blur attach for Placeholder
 					var placeholder = getAttr(ui, 'placeholder');
 
-					if (!hasPlaceholder && placeholder && type != 'password') {
+					if (reqPlaceholder && placeholder && type != 'password') {
 						elmPlaceholder.push(ui);
 
 						var evFocus = (function() {
@@ -294,9 +307,9 @@
 					// Spin button
 					if (
 //# NUMBER
-						(!hasSpin && type == 'number') ||
+						(reqSpin && type == 'number') ||
 //# DATETIME
-						(!hasTime && type == 'time') ||
+						(reqTime && type == 'time') ||
 //# NUMBER|DATETIME
 						false) {
 						var className, allow;
@@ -340,7 +353,7 @@
 
 //# DATETIME
 					// Datepicker
-					if (!hasDate && (type == 'date') && ('datepicker' in ui)) {
+					if (reqDate && (type == 'date') && ('datepicker' in ui)) {
 						var option = opts.datepicker;
 						option.dateFormat = 'yy-mm-dd';
 						option.minDate = getAttr(ui, 'min');
@@ -350,7 +363,7 @@
 
 //# NUMBER
 					// Slider
-					if (!hasRange && (type == 'range') && ('slider' in ui)) {
+					if (reqRange && (type == 'range') && ('slider' in ui)) {
 						var min = attr2num(ui, 'min', 0),
 							max = attr2num(ui, 'max', 100),
 							step = attr2num(ui, 'step', 1),
@@ -368,7 +381,7 @@
 
 //# MAXLENGTH
 					// Maxlength
-					if (!hasMaxlength && ui.is('textarea') &&
+					if (reqMaxlength && ui.is('textarea') &&
 						(maxlength = getAttr(ui, 'maxlength'))) {
 						// Keypress event attach
 						var evKeypress = (function(ev) {
@@ -384,7 +397,7 @@
 
 //# DATETIME
 					// Datetime
-					if (!hasDateTime && (type == 'datetime' || type == 'datetime-local')) {
+					if (reqDateTime && (type == 'datetime' || type == 'datetime-local')) {
 						if (!ui.next().hasClass(opts.classDatetime)) {
 							var val = getLocalDatetime(ui.val()),
 								min = getLocalDatetime(getAttr(ui, 'min')),
@@ -421,7 +434,7 @@
 						}
 					}
 //# AUTOCOMPLETE
-					if ((!hasDatalist) &&
+					if ((reqDatalist) &&
 						(list = getAttr(ui, 'list')) &&
 						('autocomplete' in ui))
 					{
@@ -469,7 +482,7 @@
 						// NOTE: null is invalid in opera
 						setCustomValidity($('[name="' + name + '"]'), '');
 //#
-						if (hasBugEnter && !ui.is('select, textarea, button')) {
+						if (reqBugEnter && !ui.is('select, textarea, button')) {
 							// Keypress event attach
 							var evKeypress2 = (function(ev) {
 								var cc = ev.charCode || ev.keyCode;
@@ -484,7 +497,7 @@
 						}
 //# REQUIRED
 						// Required
-						if (!hasRequired && getAttr(ui, 'required')) {
+						if (reqRequired && getAttr(ui, 'required')) {
 							isNecessary = true;
 							if (isEmpty) {
 								var msg = opts.msgEmpty;
@@ -496,7 +509,7 @@
 						}
 //# PATTERN
 						// Pattern
-						if (!hasPattern && (pattern = getAttr(ui, 'pattern'))) {
+						if (reqPattern && (pattern = getAttr(ui, 'pattern'))) {
 							isNecessary = true;
 							if (!isEmpty &&
 								validateRe(ui, '^(' + pattern.replace(/^\^?(.*)\$?$/, '$1') + ')$')) {
@@ -506,7 +519,7 @@
 						}
 //# EMAILURL
 						// Email
-						if (!hasEmail && type == 'email') {
+						if (reqEmail && type == 'email') {
 							isNecessary = true;
 							if (!isEmpty && validateRe(ui,
 							   '[\\w-\\.]{3,}@([\\w-]{2,}\\.)*([\\w-]{2,}\\.)[\\w-]{2,4}', 'i')) {
@@ -516,7 +529,7 @@
 						}
 
 						// URL
-						if (!hasUrl && type == 'url') {
+						if (reqUrl && type == 'url') {
 							isNecessary = true;
 							if (!isEmpty && validateRe(ui,
 							   '[\\w-\\.]{3,}:\\/\\/([\\w-]{2,}\\.)*([\\w-]{2,}\\.)[\\w-]{2,4}',
@@ -528,7 +541,7 @@
 
 //# MAXLENGTH
 						// Maxlength
-						if (!hasMaxlength && ui.is('textarea') && getAttr(ui, 'maxlength')) {
+						if (reqMaxlength && ui.is('textarea') && getAttr(ui, 'maxlength')) {
 							isNecessary = true;
 							if (over = validateMaxlength(ui)) {
 								setCustomValidity(ui, opts.msgMaxlen.replace(/#/, over));
@@ -540,9 +553,9 @@
 						// Number, Date, Time
 						if (
 //# NUMBER
-							(!hasNumber && type == 'number') ||
+							(reqNumber && type == 'number') ||
 //# DATETIME
-							(!hasDateTime && (type == 'date' || type == 'time')) ||
+							(reqDateTime && (type == 'date' || type == 'time')) ||
 //# NUMBER|DATETIME
 							false) {
 							isNecessary = true;
@@ -557,7 +570,7 @@
 								type0 = getAttr(ui0, 'type').toLowerCase();
 
 								ui2 = ui.parent().children('input');	// a set of date & time
-								setCustomValidity(ui2, '');
+//								setCustomValidity(ui2, '');
 								var i = ui2.index(ui), date = ui2.eq(0).val(), time = ui2.eq(1).val();
 								if (date != '' || time != '') {
 									// Complement the other control if empty
@@ -610,6 +623,8 @@
 							}
 //# NUMBER|DATETIME
 							// Perform validtions
+							setCustomValidity(ui2, '');
+
 							if (validateRe(ui0, pattern) || (validateStep(ui0, min, step))) {
 								setCustomValidity(ui2, opts.msgInvalid);
 								return true;
@@ -655,7 +670,7 @@
 				var ui = $(this),
 					validatableElements = form.find(validatable);	// Rescan becase for typeTo
 //# FORM
-				if (!hasFormAttr) {
+				if (reqFormAttr) {
 					if (attr = getAttr(ui, 'formaction')) {
 						form.attr('action', attr);
 					}
@@ -683,7 +698,7 @@
 
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 				// Show balloons message
-				if (!hasCustomValidity) {
+				if (reqCustomValidity) {
 					var result = true;
 					validatableElements.each(function() {
 						if (message = $(this).data('customValidity')) {
@@ -710,7 +725,7 @@
 
 //# PLACEHOLDER
 				// Clear Placeholder
-				if (!hasPlaceholder) {
+				if (reqPlaceholder) {
 					for (i = elmPlaceholder.length - 1; i >= 0; i--) {
 						if (i != undefined) {
 							var elm = elmPlaceholder[i];
@@ -722,7 +737,7 @@
 				}
 
 //#
-				if (hasBugButton)
+				if (reqBugButton)
 				{
 					// Set a value of button:submit you clicked to input:hidden.
 					$('<input type="hidden" name="' + getAttr(ui, 'name') +

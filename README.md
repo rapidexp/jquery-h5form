@@ -33,11 +33,23 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.9.2 (2013-02-22)
+
+* Draw the line between public and private methods.
+* Added $.fn.checkValidity(selector).
+* Added $.fn.setCustomValidity(selector, message).
+* Hook again to Opera for checkValidity.
+* Unnecessary validation in input type="button".
+* Spin of number state was as time.
+* Error of number, data and time state slipped at submit.
+* Tested with Android 4.0.
+* Support agin jQuery 1.6.3 or later
+
 ### Version 2.9.1 (2013-02-16)
 
 * Added support required for checkbox and radio
 * Support jQuery 1.9 (exclude 1.6 or earlier)
-* Fixed error in IE 7 with the number, date and time state.
+* Fixed error on the number, date and time state with IE 7.
 * Added datapicker in options.
 
 ### Version 2.9.0 (2013-02-01)
@@ -53,17 +65,17 @@ __More information about the support of each browser, [please see here...](http:
 ### Version 2.8.1 (2013-01-28)
 
 * Added support Autocomplete.
-* Fixed enbug of 2.8.0 about button on IE 7.
+* Fixed enbug of 2.8.0 about button with IE 7.
 
 
 ### Version 2.8.0 (2013-01-12)
 
 * Removed support of time state from Chrome 23.
-* Fixed determination of number and rang on FireFox 17.
+* Fixed determination of number and rang with FireFox 17.
 * Close balloon when also click itself.
 * Disabled spin button of Number and time in default.
 * Typo of the message in English.
-* Stored customValidity in .data() on IE.
+* Stored customValidity in .data() with IE.
 
 
 ### Version 2.7.2 (2012-12-11)
@@ -79,8 +91,8 @@ __More information about the support of each browser, [please see here...](http:
 
 * Invert the balloon that has small right margin.
 * Updated css for inverted balloon.
-* Added support required when press the Enter on a text box with submission button in Android.
-* The required attribute was not working when press the Enter on a text box in IE.
+* Added support required when press the Enter on a text box with submission button with Android.
+* The required attribute was not working when press the Enter on a text box with IE.
 
 ### Version 2.6.1 (2012-09-29)
 
@@ -88,7 +100,7 @@ __More information about the support of each browser, [please see here...](http:
 
 ### Version 2.6.0 (2012-09-29)
 
-* Removed support of date state in Chrome.
+* Removed support of date state from Chrome 22.
 * Close balloon when click itself instead of body.
 * Added exprResponse in options.
 * Added exprBehide in options.
@@ -135,7 +147,7 @@ __More information about the support of each browser, [please see here...](http:
 ### Version 2.2 (2012-06-15)
 
 * Fixed an error in the form that does not have any input element.
-* Added support for bugs in IE on submit.
+* Added support for bugs on submit with IE.
 
 ### Version 2.1 (2012-06-12)
 

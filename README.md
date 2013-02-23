@@ -33,6 +33,11 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.9.3 (2013-02-23)
+
+* Added $.fn.showBalloon(selector, message).
+* Fixed css of reversed balloon.
+
 ### Version 2.9.2 (2013-02-22)
 
 * Draw the line between public and private methods.

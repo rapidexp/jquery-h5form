@@ -6,7 +6,7 @@
 	<title>Test of jQuery.h5form</title>
 
 	<link rel="stylesheet" type="text/css" href="/lib/css/smoothness/jquery-ui-custom.css" />
-	<link rel="stylesheet" type="text/css" href="css/jquery.h5form--laster.css" />
+	<link rel="stylesheet" type="text/css" href="css/jquery.h5form-2.9.3.css" />
 
 	<style style="text/css">
 	  body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
@@ -35,7 +35,7 @@
 
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="en/jquery.h5form--laster.js"></script>
+	<script type="text/javascript" src="en/jquery.h5form-2.9.3.js"></script>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 
 <script type="text/javascript">

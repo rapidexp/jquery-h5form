@@ -221,6 +221,18 @@
 			});
 			return result;
 		};
+		var showBalloon = function(ui, message) {
+			if (!ui.prev().is(opts.exprResponse)) {
+				var m = opts.exprResponse.match(/^\.([^, ]+),? *\.?([^, ]*)/),
+				name = ($(window).width() - ui.offset().left < 300 && !!m[2]) ?
+					m[2] : m[1];
+				ui.before('<span class="' + name + '"></span>');
+				$(opts.exprBehind).attr('disabled', 'disabled');
+			}
+			ui.prev().html('<p>' + message.replace(/\n/, '<br/>') + '</p>');
+ 			ui.focus().select();	// focus only does not work in IE
+		};
+		$.fn.h5form.showBalloon = showBalloon;
 
 //#
 		// for each form
@@ -705,15 +717,7 @@
 							err = $(this);
 							if (opts.styleErr) err.css(opts.styleErr);
 							if (result) {
-								if (!err.prev().is(opts.exprResponse)) {
-									var m = opts.exprResponse.match(/^\.([^, ]+),? *\.?([^, ]*)/),
-									name = ($(window).width() - err.offset().left < 300 && !!m[2]) ?
-										m[2] : m[1];
-									err.before('<span class="' + name + '"></span>');
-									$(opts.exprBehind).attr('disabled', 'disabled');
-								}
-								err.prev().html('<p>' + message.replace(/\n/, '<br/>') + '</p>');
-								err.focus().select();	// focus only does not work in IE
+								showBalloon(err, message);
 								result = false;
 							}
 						}

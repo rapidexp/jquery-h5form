@@ -64,7 +64,7 @@
 			classDatetime: 'h5form-datetime',
 			datepicker: { },
 //#
-			hasOptions: [],
+			options: {},
 			dynamicHtml: '.h5form-dynamic'
 		};
 		var opts = $.extend({}, defaults, options);
@@ -90,7 +90,7 @@
 			reqSpin = !('step' in test1) || !('min' in test1) || firefox,
 			reqNumber = reqRange = (android) ? true : reqSpin,
 //# DATETIME
-			reqDateTime = !(opera > 8),
+			reqDateTime = !(opera > 8 || chrome > 24),
 			reqDate = reqDateTime && !(chrome > 21),
 			reqTime = reqDateTime && !(chrome > 22),
 //# MAXLENGTH
@@ -103,8 +103,8 @@
 			reqBugButton = (msie && msie < 8);
 			reqBugEnter = (msie && msie < 9) || android;
 
-		for (i = opts.hasOptions.length - 1; i >= 0; i--) {
-			eval(opts.hasOptions[i] + '=true;');
+		for (name in opts.options) {
+			eval(name + '=' + opts.options[name] + ';');
 		}
 
 		$('input:last').remove();

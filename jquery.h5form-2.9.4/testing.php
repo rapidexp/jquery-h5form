@@ -6,7 +6,7 @@
 	<title>Test of jQuery.h5form</title>
 
 	<link rel="stylesheet" type="text/css" href="/lib/css/smoothness/jquery-ui-custom.css" />
-	<link rel="stylesheet" type="text/css" href="css/jquery.h5form--laster.css" />
+	<link rel="stylesheet" type="text/css" href="css/jquery.h5form-2.9.4.css" />
 
 	<style style="text/css">
 	  body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
@@ -35,7 +35,7 @@
 
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="en/jquery.h5form--laster.js"></script>
+	<script type="text/javascript" src="en/jquery.h5form-2.9.4.js"></script>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 
 <script type="text/javascript">
@@ -474,15 +474,15 @@ foreach ($_POST as $name => $value):
 		<tr>
 		  <td>
 			<form action="#test-8" method="post">
-			  <input type="date" name="input-8-date" min="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d', strtotime('+1 week'));?>" title="One week from today"><br>
-			  <input type="time" name="input-8-time" min="7:00" max="18:00" step="600" title="From 7:00 to 18:00 step 10 minutes">
+			  <input type="date" name="input-8-date" value="<?php echo date('Y-m-d')?>" min="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d', strtotime('+1 week'));?>" title="One week from today"><br>
+			  <input type="time" name="input-8-time" value="12:00" min="7:00" max="18:00" step="600" title="From 7:00 to 18:00 step 10 minutes">
 			  <input type="submit" name="test-8" value="submit">
 			</form>
 <pre class="source" style="display:none">
 &lt;form action="#test-8" method="post"&gt;
-  &lt;input <strong>type="date"</strong> name="input-8-date" <strong>min="<?php echo date('Y-m-d');?>"</strong>
-    <strong>max="<?php echo date('Y-m-d', strtotime('+1 week'));?>"</strong> title="One week from today"&gt;&lt;br&gt;
-  &lt;input <strong>type="time"</strong> name="input-8-time" <strong>min="7:00" max="18:00"</strong>
+  &lt;input <strong>type="date"</strong> name="input-8-date" value="<?php echo date('Y-m-d')?>"
+    <strong>min="<?php echo date('Y-m-d');?>"</strong> <strong>max="<?php echo date('Y-m-d', strtotime('+1 week'));?>"</strong> title="One week from today"&gt;&lt;br&gt;
+  &lt;input <strong>type="time"</strong> name="input-8-time" value="12:00" <strong>min="7:00" max="18:00"</strong>
     <strong>step="600"</strong>  title="From 7:00 to 18:00 step 10 minutes"&gt;
   &lt;input type="submit" name="test-8" value="submit" &gt;
 &lt;/form&gt;
@@ -490,15 +490,15 @@ foreach ($_POST as $name => $value):
 		  </td>
 		  <td>
 			<form action="#test-8" method="post" class="h5form">
-			  <input type="date" name="input-8-date" min="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d', strtotime('+1 week'));?>" title="One week from today"><br>
-			  <input type="time" name="input-8-time" min="7:00" max="18:00" step="600" title="From 7:00 to 18:00 step 10 minutes">
+			  <input type="date" name="input-8-date" value="<?php echo date('Y-m-d')?>" min="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d', strtotime('+1 week'));?>" title="One week from today"><br>
+			  <input type="time" name="input-8-time" value="12:00" min="7:00" max="18:00" step="600" title="From 7:00 to 18:00 step 10 minutes">
 			  <input type="submit" name="test-8" value="submit">
 			</form>
 <pre class="source" style="display:none">
 &lt;form action="#test-8" method="post" <strong>class="h5form</strong>"&gt;
-  &lt;input <strong>type="date"</strong> name="input-8-date" <strong>min="<?php echo date('Y-m-d');?>"</strong>
-    <strong>max="<?php echo date('Y-m-d', strtotime('+1 week'));?>"</strong> title="One week from today"&gt;&lt;br&gt;
-  &lt;input <strong>type="time"</strong> name="input-8-time" <strong>min="7:00" max="18:00"</strong>
+  &lt;input <strong>type="date"</strong> name="input-8-date"  value="<?php echo date('Y-m-d')?>"
+    <strong>min="<?php echo date('Y-m-d');?>"</strong> <strong>max="<?php echo date('Y-m-d', strtotime('+1 week'));?>"</strong> title="One week from today"&gt;&lt;br&gt;
+  &lt;input <strong>type="time"</strong> name="input-8-time" value="12:00" <strong>min="7:00" max="18:00"</strong>
     <strong>step="600"</strong>  title="From 7:00 to 18:00 step 10 minutes"&gt;
   &lt;input type="submit" name="test-8" value="submit" &gt;
 &lt;/form&gt;
@@ -525,7 +525,7 @@ foreach ($_POST as $name => $value):
 		  <td>
 			<form action="#test-9" method="post">
 			  <input type="datetime" name="input-9-gm" min="<?php echo gmdate('Y-m-d\TH:i:s', ceil(time()/1800)*1800).'Z';?>" step="1800" title="Every 30 minutes from now."><br>
-			  <input type="datetime-local" name="input-9-lc" min="<?php echo date('Y-m-d\TH:i:s', ceil(time()/1800)*1800); ?>" step="1800" title="Every 30 minutes from now.">
+			  <input type="datetime-local" name="input-9-lc" value="<?php echo date('Y-m-d\TH:i:s', ceil(time()/1800)*1800); ?>" min="<?php echo date('Y-m-d\TH:i:s', ceil(time()/1800)*1800); ?>" step="1800" title="Every 30 minutes from now.">
 			  <input type="submit" name="test-9" value="submit">
 			</form>
 <pre class="source" style="display:none">
@@ -543,7 +543,7 @@ foreach ($_POST as $name => $value):
 		  <td>
 			<form action="#test-9" method="post" class="h5form">
 			  <input type="datetime" name="input-9-gm" min="<?php echo gmdate('Y-m-d\TH:i:s', ceil(time()/1800)*1800).'Z';?>" step="1800" title="Every 30 minutes from now."><br>
-			  <input type="datetime-local" name="input-9-lc" min="<?php echo date('Y-m-d\TH:i:s', ceil(time()/1800)*1800); ?>" step="1800" title="Every 30 minutes from now.">
+			  <input type="datetime-local" name="input-9-lc" value="<?php echo date('Y-m-d\TH:i:s', ceil(time()/1800)*1800); ?>" min="<?php echo date('Y-m-d\TH:i:s', ceil(time()/1800)*1800); ?>" step="1800" title="Every 30 minutes from now.">
 			  <input type="submit" name="test-9" value="submit">
 			</form>
 <pre class="source" style="display:none">

@@ -33,6 +33,11 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.9.4 (2013-03-15)
+
+* Removed support of time state from Chrome 25.
+* Added debug options in options.
+
 ### Version 2.9.3 (2013-02-23)
 
 * Added $.fn.showBalloon(selector, message).

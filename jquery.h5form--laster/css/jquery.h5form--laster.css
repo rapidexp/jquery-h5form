@@ -10,7 +10,7 @@
 	position: absolute;
 	margin: 1.6em 0 0 14px;
 	padding: 0;
-	bordeデバッグ用r-rigsolid khaki;
+	border-right: 10px solid khaki;
 	border-top: 10px solid transparent;
 	box-shadow: 3px 3px 6px dimgray;
 	z-index: 1000;
@@ -27,7 +27,6 @@
 	box-shadow: 3px 3px 6px dimgray;
 	-position: relative; /* for IE6 */
 }
-
 
 
 .h5form-reversed {
@@ -53,20 +52,20 @@
 	-position: relative; /* for IE6 */
 }
 
-.h5form-placeholder {
-    color: #999999;
-    cursor: text;
-    display: block;
-    position: absolute;
-    /*font-size: 110%;*/
-    left: 0;
-    line-height: 140%;
-    padding: 11px 9px;
-    pointer-events: none;
-    top: 27px;
-    z-index: 2;
+/**
+ * Placeholder
+ *
+ */
 
+.h5form-placeholder {
+	position: absolute;
+	color: #a1a1a1;
+	background-color: transparent;
+	margin: 0.2em;
+	padding: 0;
+	z-index: 999;
 }
+
 
 /**
  *  ime-mode

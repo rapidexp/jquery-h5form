@@ -33,6 +33,11 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.10.1 (2013-03-22)
+
+* Fixed validation error when press the enter in text box.
+* Fixed an error of placeholder.
+
 ### Version 2.10.0 (2013-03-21)
 
 * Placeholder does not disappear even if the focus.

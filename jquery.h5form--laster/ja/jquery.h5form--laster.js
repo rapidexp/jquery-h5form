@@ -305,7 +305,7 @@
 					// Focus and blur attach for Placeholder
 					var placeholder = getAttr(ui, 'placeholder');
 					if (reqPlaceholder && placeholder) {
-						$(this).prev('.'.opts.classPlaceholder).remove();
+						$(this).prev('.'+opts.classPlaceholder).remove();
 						var phld = $('<span />').insertBefore(ui)
 							.addClass(opts.classPlaceholder)
 							.text(placeholder).click(function() { ui.focus(); });
@@ -495,7 +495,7 @@
 							var evKeypress2 = (function(ev) {
 								var cc = ev.charCode || ev.keyCode;
 								if (cc == 13) {
-									form.find('input:submit, button:submit').eq(0).click();
+									form.find('[type="submit"]').eq(0).focus().click();
 									return false;
 								}
 								return true;

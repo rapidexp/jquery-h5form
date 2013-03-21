@@ -305,7 +305,7 @@
 					// Focus and blur attach for Placeholder
 					var placeholder = getAttr(ui, 'placeholder');
 					if (reqPlaceholder && placeholder) {
-						$(this).prev('.'.opts.classPlaceholder).remove();
+						$(this).prev('.'+opts.classPlaceholder).remove();
 						var phld = $('<span />').insertBefore(ui)
 							.addClass(opts.classPlaceholder)
 							.text(placeholder).click(function() { ui.focus(); });

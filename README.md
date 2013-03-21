@@ -33,6 +33,11 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.10.0 (2013-03-21)
+
+* Placeholder does not disappear even if the focus.
+* Focus the item with a servier side balloon.
+
 ### Version 2.9.4 (2013-03-15)
 
 * Removed support of time state from Chrome 25.

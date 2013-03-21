@@ -42,13 +42,13 @@
 			msgEmpty: 'このフィールドを入力してください。',
 			msgUnselct: 'いずれかのオプションを選択してください。',
 			msgUncheck: 'チェックボックスをチェックしてください。',
+//# PLACEHOLDER
+			classPlaceholder: 'h5form-placeholder',
 //# PATTERN
 			msgPattern: '必用なパターンに一致していません。',
 //# EMAILURL
 			msgEmail: 'メールアドレスが正しくありません。',
 			msgUrl: 'URLが正しくありません。',
-//# PLACEHOLDER
-			colorOff: '#a1a1a1',
 //# MAXLENGTH
 			msgMaxlen: '指定の文字数上限より # 文字多いです。',
 //# NUMBER|DATETIME
@@ -90,9 +90,10 @@
 			reqSpin = !('step' in test1) || !('min' in test1) || firefox,
 			reqNumber = reqRange = (android) ? true : reqSpin,
 //# DATETIME
-			reqDateTime = !(opera > 8 || chrome > 24),
-			reqDate = reqDateTime && !(chrome > 21),
-			reqTime = reqDateTime && !(chrome > 22),
+			reqDateTimeLocal = !(opera > 8 || chrome > 24),
+			reqDateTime = !(opera > 8),
+			reqDate = reqDateTimeLocal && !(chrome > 21),
+			reqTime = reqDateTimeLocal && !(chrome > 22),
 //# MAXLENGTH
 			reqMaxlength = !('maxLength' in test2),
 //# FORM
@@ -131,6 +132,15 @@
 			});
 		}
 //#
+		// focus server side error
+		if ($(opts.exprResponse).length) {
+			var ui = $(exprResponse).eq(0).next(':input');
+			if (ui.is(':hidden')) {
+				ui = ui.parent().find(':input:not(:hidden)');
+			}
+			ui.eq(0).focus();
+		}
+
 		var getAttr = function(ui, name) {
 			var attr = ui.attr(name);
 			return (attr == undefined) ? '' : attr;
@@ -242,8 +252,6 @@
 			var form = $(this),
 //# AUTOFOCUS
 				elmAutofocus,
-//# PLACEHOLDER
-				elmPlaceholder = new Array(),
 //#
 				validatableElements = form.find(validatable);
 
@@ -296,23 +304,15 @@
 //# PLACEHOLDER
 					// Focus and blur attach for Placeholder
 					var placeholder = getAttr(ui, 'placeholder');
-
-					if (reqPlaceholder && placeholder && type != 'password') {
-						elmPlaceholder.push(ui);
-
-						var evFocus = (function() {
-							if (ui.val() == placeholder) {
-								ui.attr('value', '').css('color', '');
-							}
+					if (reqPlaceholder && placeholder) {
+						$(this).prev('.'.opts.classPlaceholder).remove();
+						var phld = $('<span />').insertBefore(ui)
+							.addClass(opts.classPlaceholder)
+							.text(placeholder).click(function() { ui.focus(); });
+						var evPlaceholder = (function() {
+							if (ui.val().length > 0) phld.hide(); else phld.show();
 						});
-						ui.unbind('focus', evFocus).focus(evFocus);
-
-						var evBlur = (function() {
-							if (ui.val() == '' || ui.val() == placeholder) {
-								ui.val(placeholder).css('color', opts.colorOff);
-							}
-						});
-						ui.unbind('blur', evBlur).blur(evBlur).blur();
+						ui.bind('keyup keydown cut past', evPlaceholder).keyup();
 					}
 
 //# NUMBER|DATETIME
@@ -409,7 +409,7 @@
 
 //# DATETIME
 					// Datetime
-					if (reqDateTime && (type == 'datetime' || type == 'datetime-local')) {
+					if ((reqDateTime && type == 'datetime') || (reqDateTimeLocal && type == 'datetime-local')) {
 						if (!ui.next().hasClass(opts.classDatetime)) {
 							var val = getLocalDatetime(ui.val()),
 								min = getLocalDatetime(getAttr(ui, 'min')),
@@ -483,11 +483,7 @@
 							name = ui.attr('name'),
 							isChecked = $('[name="' + name + '"]:checked').length,
 							isEmpty = ((ui.val() == '') ||
-									   (ui.is(':checkbox, :radio') && !isChecked) ||
-//# PLACEHOLDER
-									   (placeholder && ui.val() == placeholder) ||
-//#
-									   false);
+									   (ui.is(':checkbox, :radio') && !isChecked));
 
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 						// clear validity first
@@ -567,7 +563,7 @@
 //# NUMBER
 							(reqNumber && type == 'number') ||
 //# DATETIME
-							(reqDateTime && (type == 'date' || type == 'time')) ||
+							(reqDate && type == 'date') || (reqTime && type == 'time') ||
 //# NUMBER|DATETIME
 							false) {
 							isNecessary = true;
@@ -727,20 +723,6 @@
 //#
 				// Submit if no error
 
-//# PLACEHOLDER
-				// Clear Placeholder
-				if (reqPlaceholder) {
-					for (i = elmPlaceholder.length - 1; i >= 0; i--) {
-						if (i != undefined) {
-							var elm = elmPlaceholder[i];
-							if (elm.val() == getAttr(elm, 'placeholder')) {
-								elm.val('');
-							}
-						}
-					}
-				}
-
-//#
 				if (reqBugButton)
 				{
 					// Set a value of button:submit you clicked to input:hidden.
@@ -771,7 +753,7 @@
 			var len = item.val().length,
 				max = attr2num(item, 'maxlength', 0);
 			// if error, reulst value is number of overflow
-			return (len && max && (len	> max)) ? len - max : 0;
+			return (len && max && (len > max)) ? len - max : 0;
 		}
 //# NUMBER|DATETIME
 		function validateStep(item, min, step) {

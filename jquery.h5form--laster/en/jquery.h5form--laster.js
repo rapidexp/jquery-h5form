@@ -495,7 +495,12 @@
 							var evKeypress2 = (function(ev) {
 								var cc = ev.charCode || ev.keyCode;
 								if (cc == 13) {
-									form.find('[type="submit"]').eq(0).focus().click();
+									if (android &&
+										(next = validatableElements.index(ui) + 1) < validatableElements.length) {
+										validatableElements.eq(next).focus();
+									} else {
+										form.find('[type="submit"]').eq(0).focus().click();
+									}
 									return false;
 								}
 								return true;

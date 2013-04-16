@@ -34,7 +34,7 @@
 
 		//default configuration properties
 		var defaults = {
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH|BALLOON
 			exprResponse: '.h5form-response, .h5form-reversed',
 			exprBehind: '.h5fom-behind',
 			styleErr: { backgroundColor: 'mistyrose' },
@@ -111,7 +111,7 @@
 		$('input:last').remove();
 
 		var validatable = ':input:enabled:not(:button, :submit)';
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH|BALLOON
 		// clear balloons
 		if ('on' in $(document)) {
 			// .live() was removed by jQuery 1.9
@@ -231,6 +231,7 @@
 			});
 			return result;
 		};
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH|BALLOON
 		var showBalloon = function(ui, message) {
 			if (!ui.prev().is(opts.exprResponse)) {
 				var m = opts.exprResponse.match(/^\.([^, ]+),? *\.?([^, ]*)/),

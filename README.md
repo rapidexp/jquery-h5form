@@ -33,6 +33,12 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.10.2 (2013-04-16)
+
+* Go to next when press enter with Android.
+* Allowed empty error messages.
+* Remove placeholder when use plugin.
+
 ### Version 2.10.1 (2013-03-22)
 
 * Fixed validation error when press the enter in text box.

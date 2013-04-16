@@ -184,7 +184,7 @@
 			if (ui.is(validatable)) {
 				// Add a title to the message
 				if (reqAppendTitle && message && (title = getAttr(ui, 'title'))) {
-					message += '\n' + title;
+					message = $.trim(message + '\n' + title);
 				}
 				// Set a custon validity
 				if (reqCustomValidity) {
@@ -312,7 +312,8 @@
 						var evPlaceholder = (function() {
 							if (ui.val().length > 0) phld.hide(); else phld.show();
 						});
-						ui.bind('keyup keydown cut past', evPlaceholder).keyup();
+						ui.bind('keyup keydown cut past', evPlaceholder).keyup()
+						  .removeAttr('placeholder');
 					}
 
 //# NUMBER|DATETIME
@@ -496,8 +497,8 @@
 								var cc = ev.charCode || ev.keyCode;
 								if (cc == 13) {
 									if (android &&
-										(next = validatableElements.index(ui) + 1) < validatableElements.length) {
-										validatableElements.eq(next).focus();
+										(idx = validatableElements.index(ui) + 1) < validatableElements.length) {
+										validatableElements.eq(idx).focus();
 									} else {
 										form.find('[type="submit"]').eq(0).focus().click();
 									}

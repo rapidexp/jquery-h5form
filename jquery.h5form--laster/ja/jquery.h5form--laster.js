@@ -17,7 +17,7 @@
 	$.fn.h5form = function(options) {
 		// Check UA
 		var ua = window.navigator.userAgent.toLowerCase(),
-			msie = parseInt(ua.replace(/.*msie (\d+).*/, '$1')),
+			msie = document.documentMode,
 			firefox = parseInt(ua.replace(/.*firefox\/(\d+).*/, '$1')),
 			chrome = parseInt(ua.replace(/.*chrome\/(\d+).*/, '$1')),
 			// "opara/9.80" or "opera 10.10"

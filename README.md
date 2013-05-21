@@ -33,6 +33,10 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.10.3 (2013-05-21)
+
+* Use document.documentMode for IE.
+
 ### Version 2.10.2 (2013-04-16)
 
 * Go to next when press enter with Android.

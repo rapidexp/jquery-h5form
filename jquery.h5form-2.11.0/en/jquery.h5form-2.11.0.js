@@ -1,6 +1,6 @@
 /**
  *	jQuery.h5form - HTML5 Forms Plugin
- *	Version -laster / Japanese
+ *	Version 2.11.0 / English
  *
  *	Author: by Yoshiyuki Mikomde http://www.rapidexp.com/h5form
  *
@@ -34,36 +34,30 @@
 
 		//default configuration properties
 		var defaults = {
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH|BALLOON
 			exprResponse: '.h5form-response, .h5form-reversed',
 			exprBehind: '.h5fom-behind',
 			styleErr: { backgroundColor: 'mistyrose' },
-//# PLACEHOLDER
 			classPlaceholder: 'h5form-placeholder',
-//#
-			msgEmpty: 'このフィールドを入力してください。',
-			msgUnselect: 'いずれかのオプションを選択してください。',
-			msgUncheck: 'チェックボックスをチェックしてください。',
-			msgPattern: '必用なパターンに一致していません。',
-			msgEmail: 'メールアドレスが正しくありません。',
-			msgUrl: 'URLが正しくありません。',
-			msgNumber: '数値で入力してください。',
-			msgDatetime: '日時が正しくありません。',
-			msgDate: '日付が正しくありません。',
-			msgTime: '時刻が正しくありません。',
-			msgStep: '値の刻みが正しくありません。',
-			msgMin: '# 以上で指定してください。',
-			msgMax: '# 以下で指定してください。',
-			msgMaxlen: '指定の文字数上限より # 文字多いです。',
-//# NUMBER
+			msgEmpty: 'Please enter this field.',
+			msgUnselect: 'Please select an item.',
+			msgUncheck: 'Please check this checkbox.',
+			msgPattern: 'Does not match the required pattern.',
+			msgEmail: 'E-mail address is not correct.',
+			msgUrl: 'URL is not correct.',
+			msgNumber: 'Number is not correct.',
+			msgDatetime: 'Date time is not correct.',
+			msgDate: 'Date is not correct.',
+			msgTime: 'Time is not correct.',
+			msgStep: 'Step is not correct.',
+			msgMin: 'Please be greater than or equal to #.',
+			msgMax: 'Please be less than or equal to #.',
+			msgMaxlen: 'Too many # characters.',
 			addSpin: true,
 			classSpinNumber: 'h5form-spinNumber',
 			classRange: 'h5form-range',
-//# DATETIME
 			classSpinTime: 'h5form-spinTime',
 			classDatetime: 'h5form-datetime',
 			datepicker: { },
-//#
 			options: {},
 			dynamicHtml: '.h5form-dynamic'
 		};
@@ -73,37 +67,25 @@
 		var test1 = $('<input>').hide().appendTo($('body')).get(0),
 			test2 = $('textarea:first').get(0) || new Object(),
 			reqAppendTitle = !chrome && !(msie > 9),
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 			reqCustomValidity = !('setCustomValidity' in test1) || android,
-//# AUTOFOCUS
 			reqAutofocus = !('autofocus' in test1),
-//# REQUIRED
 			reqRequired = !('required' in test1) || android,
 			reqPattern = !('pattern' in test1) || android,
-//# EMAILURL
 			reqEmail = reqUrl = reqCustomValidity || reqPattern || android, // maybe
-//# PLACEHOLDER
 			reqPlaceholder = !('placeholder' in test1),
-//# NUMBER
 			// android must be reqSpin = false and reqNumber = true
 			// reqNumber provieds validation of min and max
 			reqSpin = !('step' in test1) || !('min' in test1) || firefox,
 			reqNumber = reqRange = (android) ? true : reqSpin,
-//# DATETIME
 			reqDateTimeLocal = !(opera > 8 || chrome > 24),
 			reqDateTime = !(opera > 8),
 			reqDate = reqDateTimeLocal && !(chrome > 21),
 			reqTime = reqDateTimeLocal && !(chrome > 22),
-//# MAXLENGTH
 			reqMaxlength = !('maxLength' in test2),
-//# FORM
 			reqFormAttr = !('form' in test1) || !('formAction' in test1) || android,
-//# AUTOCOMPLETE
 			reqDatalist = !('autocomplete' in test1) || !('list' in test1),
-//# IEBUGFIX
 			reqBugButton = (msie && msie < 8);
 			reqBugEnter = (msie && msie < 9) || android;
-//#
 
 		for (name in opts.options) {
 			eval(name + '=' + opts.options[name] + ';');
@@ -112,7 +94,6 @@
 		$('input:last').remove();
 
 		var validatable = ':input:enabled:not(:button, :submit)';
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH|BALLOON
 		// clear balloons
 		if ('on' in $(document)) {
 			// .live() was removed by jQuery 1.9
@@ -132,7 +113,6 @@
 				$(this).remove();
 			});
 		}
-//#
 		// focus server side error
 		if ($(opts.exprResponse).length) {
 			var ui = $(opts.exprResponse).eq(0).next(':input');
@@ -147,7 +127,6 @@
 			return (attr == undefined) ? '' : attr;
 		};
 
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 		/**
 		 * Change Type
 		 * @param {string} type -- type.
@@ -173,7 +152,6 @@
 			return ui2.replaceAll(ui);
 		};
 
-//#
 		/**
 		 * Set a custom validity to the elements
 		 * @param {string} message -- message.
@@ -189,7 +167,6 @@
 					message = $.trim(message + '\n' + title);
 				}
 				// Set a custon validity
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 				if (reqCustomValidity) {
 					if (message) {
 						ui.data('customValidity', message.replace(/\n/, '<br />'));
@@ -207,17 +184,13 @@
 						}
 					}
 				} else {
-//#
 					ui.get(0).setCustomValidity(message);
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 				}
-//#
 			}
 			return ui;
 		};
 		$.fn.h5form.setCustomValidity = setCustomValidity;
 
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 		/**
 		 * Check validity of the element
 		 * @param {object} ui		-- element.
@@ -238,7 +211,6 @@
 			});
 			return result;
 		};
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH|BALLOON
 		var showBalloon = function(ui, message) {
 			if (!ui.prev().is(opts.exprResponse)) {
 				var m = opts.exprResponse.match(/^\.([^, ]+),? *\.?([^, ]*)/),
@@ -252,23 +224,18 @@
 		};
 		$.fn.h5form.showBalloon = showBalloon;
 
-//#
 		// for each form
 		return $(this).each(function() {
 
 			//Private properties
 			var form = $(this),
-//# AUTOFOCUS
 				elmAutofocus,
-//#
 				validatableElements = form.find(validatable);
 
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH|FORM
 			// form.attr('novalidate') result undefined,
 			// when from has simply "novalidate" rather than "novalidate='novalidate'"
 			$novalidate = !!outerHTML(form).match(/^[^>]+ novalidate/);
 
-//# NUMBER|DATETIME
 			/**
 			 * Spin number or time
 			 * @param {object} ui	- ui.
@@ -291,7 +258,6 @@
 				ui.val((isNumber) ? val : sec2str(val, step % 60, true));
 				return ui;
 			};
-//#
 
 			/**
 			 * For each control function
@@ -305,12 +271,10 @@
 					var ui = $(this),
 						type = getAttr(ui, 'type').toLowerCase();
 
-//# AUTOFOCUS
 					// Is autofoucs
 					if (reqAutofocus && !elmAutofocus && getAttr(ui, 'autofocus')) {
 						elmAutofocus = ui;
 					}
-//# PLACEHOLDER
 					// Focus and blur attach for Placeholder
 					var placeholder = getAttr(ui, 'placeholder');
 					if (reqPlaceholder && placeholder) {
@@ -325,29 +289,22 @@
 						  .removeAttr('placeholder');
 					}
 
-//# NUMBER|DATETIME
 					// Spin button
 					if (
-//# NUMBER
 						(reqSpin && type == 'number') ||
-//# DATETIME
 						(reqTime && type == 'time') ||
-//# NUMBER|DATETIME
 						false) {
 						var className, allow;
 						ui = typeTo(ui, 'text');
 						switch (type) {
-//# NUMBER
 						case 'number':
 							className = opts.classSpinNumber;
 							allow = [8, 9, 35, 36, 37, 39, 46, 190];
 							break;
-//# DATETIME
 						default:
 							className = opts.classSpinTime;
 							allow = [8, 9, 35, 36, 37, 39, 46, 59, 186, 190];
 							break;
-//# NUMBER|DATETIME
 						}
 
 						// Keydown event attach
@@ -373,7 +330,6 @@
 						}
 					}
 
-//# DATETIME
 					// Datepicker
 					if (reqDate && (type == 'date') && ('datepicker' in ui)) {
 						var option = opts.datepicker;
@@ -383,7 +339,6 @@
 						ui = typeTo(ui, 'text').datepicker(option);
 					}
 
-//# NUMBER
 					// Slider
 					if (reqRange && (type == 'range') && ('slider' in ui)) {
 						var min = attr2num(ui, 'min', 0),
@@ -401,7 +356,6 @@
 						});
 					}
 
-//# MAXLENGTH
 					// Maxlength
 					if (reqMaxlength && ui.is('textarea') &&
 						(maxlength = getAttr(ui, 'maxlength'))) {
@@ -417,7 +371,6 @@
 						ui.unbind('keypress', evKeypress).keypress(evKeypress);
 					}
 
-//# DATETIME
 					// Datetime
 					if ((reqDateTime && type == 'datetime') || (reqDateTimeLocal && type == 'datetime-local')) {
 						if (!ui.next().hasClass(opts.classDatetime)) {
@@ -443,19 +396,14 @@
 								' title="' + getAttr(ui, 'title') + '">' +
 								tz +
 								'</span>');
-//# REQUIRED|DATETIME
 							if (getAttr(ui, 'required')) {
 								ui.removeAttr('required');
 								initControl(ui.next().children().attr('required', 'required'));
 							} else {
-//# DATETIME
 								initControl(ui.next().children());
-//# REQUIRED|DATETIME
 							}
-//# DATETIME
 						}
 					}
-//# AUTOCOMPLETE
 					if ((reqDatalist) &&
 						(list = getAttr(ui, 'list')) &&
 						('autocomplete' in ui))
@@ -481,7 +429,6 @@
 							if (ev.keyCode == 13) $(this).autocomplete('search');
 						});
 					}
-//#
 
 					/**
 					 * Change event
@@ -495,11 +442,9 @@
 							isEmpty = ((ui.val() == '') ||
 									   (ui.is(':checkbox, :radio') && !isChecked));
 
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 						// clear validity first
 						// NOTE: null is invalid in opera
 						setCustomValidity($('[name="' + name + '"]'), '');
-//# IEBUGFIX
 						if (reqBugEnter && !ui.is('select, textarea, button')) {
 							// Keypress event attach
 							var evKeypress2 = (function(ev) {
@@ -518,7 +463,6 @@
 							ui.unbind('keypress', evKeypress2).keypress(evKeypress2);
 							isNecessary = true;
 						}
-//# REQUIRED
 						// Required
 						if (reqRequired && getAttr(ui, 'required')) {
 							isNecessary = true;
@@ -530,7 +474,6 @@
 								return true;
 							}
 						}
-//# PATTERN
 						// Pattern
 						if (reqPattern && (pattern = getAttr(ui, 'pattern'))) {
 							isNecessary = true;
@@ -540,7 +483,6 @@
 								return true;
 							}
 						}
-//# EMAILURL
 						// Email
 						if (reqEmail && type == 'email') {
 							isNecessary = true;
@@ -562,7 +504,6 @@
 							}
 						}
 
-//# MAXLENGTH
 						// Maxlength
 						if (reqMaxlength && ui.is('textarea') && getAttr(ui, 'maxlength')) {
 							isNecessary = true;
@@ -572,20 +513,15 @@
 							}
 						}
 
-//# NUMBER|DATETIME
 						// Number, Date, Time
 						if (
-//# NUMBER
 							(reqNumber && type == 'number') ||
-//# DATETIME
 							(reqDate && type == 'date') || (reqTime && type == 'time') ||
-//# NUMBER|DATETIME
 							false) {
 							isNecessary = true;
 
 							// Set values to local
 							var ui0 = ui, type0 = type, ui2 = ui;
-//# DATETIME
 							// Is this control within datetime?
 							if (ui.parent().hasClass(opts.classDatetime)) {
 								ui0 = ui.parent().prev();	// hidden datetime control
@@ -616,13 +552,11 @@
 									ui0.val('');
 								}
 							}
-//# NUMBER|DATETIME
 							// Set validation parameters
 							var pattern = '^-?\\d+\\.?\\d*$',
 								min = 0,
 								step = 1,
 								msgError = opts.msgNumber;
-//# DATETIME
 							switch (type0) {
 							case 'date':
 								pattern = '^\\d+-\\d+-\\d+$';
@@ -649,7 +583,6 @@
 								msgError = opts.msgDatetime;
 								break;
 							}
-//# NUMBER|DATETIME
 							// Perform validtions
 							setCustomValidity(ui2, '');
 
@@ -670,7 +603,6 @@
 								return true;
 							}
 						}
-//#
 						return isNecessary;
 					});
 
@@ -728,11 +660,9 @@
 			};
 			initControl(validatableElements, true);
 
-//# AUTOFOCUS
 			if (elmAutofocus) {
 				elmAutofocus.focus().select();	// focus only does not work in IE
 			}
-//#
 
 			//
 			// When submit
@@ -745,7 +675,6 @@
 
 				var ui = $(this),
 					validatableElements = form.find(validatable);	// Rescan becase for typeTo
-//# FORM
 				if (reqFormAttr) {
 					if (attr = getAttr(ui, 'formaction')) {
 						form.attr('action', attr);
@@ -761,18 +690,14 @@
 					}
 					if (null != ui.attr('formnovalidate')) {
 						form.attr('novalidate', 'novalidate');
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 						validatableElements.each(function() {
 							setCustomValidity($(this), '');
 						});
-//# FORM
 					}
 				}
-//#
 				// Re-scan for dinamic controls
 				initControl(form.find(opts.dynamicHtml));
 
-//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 				// Show balloons message
 				if (reqCustomValidity) {
 					var result = true;
@@ -788,7 +713,6 @@
 					});
 					if (!result) return false;
 				}
-//# IEBUGFIX
 				// Submit if no error
 
 				if (reqBugButton)
@@ -803,12 +727,10 @@
 						form.find('input:submit').remove();
 					}
 				}
-//#
 			});
 
 		});
 
-//# PATTERN|EMAILURL|NUMBER|DATETIME
 		// Validations
 		// if error, result value is true (is not zero).
 		// search returns zero when first match.
@@ -817,14 +739,12 @@
 			re = new RegExp(pattern, flags);
 			return ((item.val() != '') && item.val().search(re));
 		}
-//# MAXLENGTH
 		function validateMaxlength(item) {
 			var len = item.val().length,
 				max = attr2num(item, 'maxlength', 0);
 			// if error, reulst value is number of overflow
 			return (len && max && (len > max)) ? len - max : 0;
 		}
-//# NUMBER|DATETIME
 		function validateStep(item, min, step) {
 			min = (getAttr(item, 'type').toLowerCase().indexOf('datetime')) ?
 				attr2num(item, 'min', min) : attr2num(item, '', min);
@@ -850,7 +770,6 @@
 			if (name) { val = (name == 'val') ? item.val() : getAttr(item, name); }
 
 			if (val == undefined || val == '') val = '' + def;
-//# DATETIME
 			// Result seconds on unix time if the type is time
 			// or resuts days on unix time if the type is date
 			// because the return value is compared with the step base.
@@ -859,10 +778,8 @@
 			if (val.match(/\d+-\d+-\d+/))
 				return Date.parse(utc2js(val)) / (1000 * 60 * 60 * 24);	// days
 			if (val.match(/\d+:\d/)) return str2sec(val, true);	// seconds
-//# NUMBER|DATETIME
 			return Number(val);
 		}
-//# DATETIME
 		function str2sec(str, gmt) {
 			if (str.search(/\d+:\d+/)) str = '00:00';
 			if (gmt) str += ' GMT';
@@ -912,7 +829,6 @@
 				return 'UTC';
 			}
 		}
-//#
 	};
 
 })(jQuery);

@@ -17,7 +17,7 @@
 	$.fn.h5form = function(options) {
 		// Check UA
 		var ua = window.navigator.userAgent.toLowerCase(),
-			msie = document.documentMode,
+			msie = document.documentMode || parseInt(ua.replace(/.*msie (\d+).*/, '$1')),
 			firefox = parseInt(ua.replace(/.*firefox\/(\d+).*/, '$1')),
 			chrome = parseInt(ua.replace(/.*chrome\/(\d+).*/, '$1')),
 			// "opara/9.80" or "opera 10.10"
@@ -38,23 +38,23 @@
 			exprResponse: '.h5form-response, .h5form-reversed',
 			exprBehind: '.h5fom-behind',
 			styleErr: { backgroundColor: 'mistyrose' },
-//# REQUIRED
-			msgEmpty: 'Please enter this field.',
-			msgUnselct: 'Please select an item.',
-			msgUncheck: 'Please check this checkbox.',
 //# PLACEHOLDER
 			classPlaceholder: 'h5form-placeholder',
-//# PATTERN
+//#
+			msgEmpty: 'Please enter this field.',
+			msgUnselect: 'Please select an item.',
+			msgUncheck: 'Please check this checkbox.',
 			msgPattern: 'Does not match the required pattern.',
-//# EMAILURL
 			msgEmail: 'E-mail address is not correct.',
 			msgUrl: 'URL is not correct.',
-//# MAXLENGTH
-			msgMaxlen: 'Too many # characters.',
-//# NUMBER|DATETIME
-			msgInvalid: 'Value is invalid.',
+			msgNumber: 'Number is not correct.',
+			msgDatetime: 'Date time is not correct.',
+			msgDate: 'Date is not correct.',
+			msgTime: 'Time is not correct.',
+			msgStep: 'Step is not correct.',
 			msgMin: 'Please be greater than or equal to #.',
 			msgMax: 'Please be less than or equal to #.',
+			msgMaxlen: 'Too many # characters.',
 //# NUMBER
 			addSpin: true,
 			classSpinNumber: 'h5form-spinNumber',
@@ -72,9 +72,9 @@
 		// Test browser
 		var test1 = $('<input>').hide().appendTo($('body')).get(0),
 			test2 = $('textarea:first').get(0) || new Object(),
+			reqAppendTitle = !chrome && !(msie > 9),
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 			reqCustomValidity = !('setCustomValidity' in test1) || android,
-			reqAppendTitle = !chrome && !(msie > 9),
 //# AUTOFOCUS
 			reqAutofocus = !('autofocus' in test1),
 //# REQUIRED
@@ -100,9 +100,10 @@
 			reqFormAttr = !('form' in test1) || !('formAction' in test1) || android,
 //# AUTOCOMPLETE
 			reqDatalist = !('autocomplete' in test1) || !('list' in test1),
-//#
+//# IEBUGFIX
 			reqBugButton = (msie && msie < 8);
 			reqBugEnter = (msie && msie < 9) || android;
+//#
 
 		for (name in opts.options) {
 			eval(name + '=' + opts.options[name] + ';');
@@ -134,7 +135,7 @@
 //#
 		// focus server side error
 		if ($(opts.exprResponse).length) {
-			var ui = $(exprResponse).eq(0).next(':input');
+			var ui = $(opts.exprResponse).eq(0).next(':input');
 			if (ui.is(':hidden')) {
 				ui = ui.parent().find(':input:not(:hidden)');
 			}
@@ -172,6 +173,7 @@
 			return ui2.replaceAll(ui);
 		};
 
+//#
 		/**
 		 * Set a custom validity to the elements
 		 * @param {string} message -- message.
@@ -187,6 +189,7 @@
 					message = $.trim(message + '\n' + title);
 				}
 				// Set a custon validity
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 				if (reqCustomValidity) {
 					if (message) {
 						ui.data('customValidity', message.replace(/\n/, '<br />'));
@@ -204,13 +207,17 @@
 						}
 					}
 				} else {
+//#
 					ui.get(0).setCustomValidity(message);
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 				}
+//#
 			}
 			return ui;
 		};
 		$.fn.h5form.setCustomValidity = setCustomValidity;
 
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 		/**
 		 * Check validity of the element
 		 * @param {object} ui		-- element.
@@ -256,6 +263,7 @@
 //#
 				validatableElements = form.find(validatable);
 
+//# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH|FORM
 			// form.attr('novalidate') result undefined,
 			// when from has simply "novalidate" rather than "novalidate='novalidate'"
 			$novalidate = !!outerHTML(form).match(/^[^>]+ novalidate/);
@@ -383,7 +391,7 @@
 							step = attr2num(ui, 'step', 1),
 							val = attr2num(ui, 'val', (min + max) / 2 - ((min + max) / 2 % step));
 
-						ui.hide().after('<span class="' + opts.classRange +
+						ui.hide().css({width: 0, margin:0}).after('<span class="' + opts.classRange +
 										'"><div></div></span>').val(val);
 						ui.next().children().slider({
 							min: min, max: max, step: step, value: val,
@@ -453,7 +461,7 @@
 						('autocomplete' in ui))
 					{
 						var arr = new Array();
-						$('datalist#' + list).children('option').each(function() {
+						$('datalist#' + list).find('option').each(function() {
 							arr.push($(this).val());
 						});
 						// Avoid conflicts with the browser
@@ -491,7 +499,7 @@
 						// clear validity first
 						// NOTE: null is invalid in opera
 						setCustomValidity($('[name="' + name + '"]'), '');
-//#
+//# IEBUGFIX
 						if (reqBugEnter && !ui.is('select, textarea, button')) {
 							// Keypress event attach
 							var evKeypress2 = (function(ev) {
@@ -516,7 +524,7 @@
 							isNecessary = true;
 							if (isEmpty) {
 								var msg = opts.msgEmpty;
-								if (ui.is('select, :radio')) msg = opts.msgUnselct;
+								if (ui.is('select, :radio')) msg = opts.msgUnselect;
 								if (ui.is(':checkbox')) msg = opts.msgUncheck;
 								setCustomValidity(ui, msg);
 								return true;
@@ -612,36 +620,45 @@
 							// Set validation parameters
 							var pattern = '^-?\\d+\\.?\\d*$',
 								min = 0,
-								step = 1;
+								step = 1,
+								msgError = opts.msgNumber;
 //# DATETIME
 							switch (type0) {
 							case 'date':
 								pattern = '^\\d+-\\d+-\\d+$';
 								min = '1970-01-01';
 								step = 1;
+								msgError = opts.msgDate;
 								break;
 							case 'time':
 								pattern = '^\\d+:\\d+:?\\d*\\.?\\d*$';
 								min = '00:00';
 								step = 60;
+								msgError = opts.msgTime;
 								break;
 							case 'datetime':
 								pattern = '^\\d+-\\d+-\\d+T\\d+:\\d+:?\\d*\\.?\\d*Z$';
 								min = '1970-01-01T00:00';
 								step = 60;
+								msgError = opts.msgDatetime;
 								break;
 							case 'datetime-local':
 								pattern = '^\\d+-\\d+-\\d+T\\d+:\\d+:?\\d*\\.?\\d*$';
 								min = '1970-01-01T00:00';
 								step = 60;
+								msgError = opts.msgDatetime;
 								break;
 							}
 //# NUMBER|DATETIME
 							// Perform validtions
 							setCustomValidity(ui2, '');
 
-							if (validateRe(ui0, pattern) || (validateStep(ui0, min, step))) {
-								setCustomValidity(ui2, opts.msgInvalid);
+							if (validateRe(ui0, pattern)) {
+								setCustomValidity(ui2, msgError);
+								return true;
+							}
+							if (validateStep(ui0, min, step)) {
+								setCustomValidity(ui2, opts.msgStep);
 								return true;
 							}
 							if (validateMin(ui0)) {
@@ -661,8 +678,52 @@
 					if (evChange()) {
 						// Attach the change event if necessary
 						ui.unbind('change', evChange).change(evChange);
-					}
+					} else {
+						var elm = ui.get(0);
+						var initValidity = function() {
+ 							setCustomValidity(ui, '');
+						};
+						var setInvalid = function() {
+							var msgError = '';
+							if (elm.validity.valueMissing) {
+								if (ui.is('select')) msgError = opts.msgUnselect;
+								else if (ui.is(':checkbox')) msgError = opts.msgUncheck;
+								else msgError = opts.msgEmpty;
+							}
+							else if (elm.validity.patternMismatch) {
+								msgError = opts.msgPattern;
+							}
+							else if (elm.validity.tooLong) {
+								msgError = opts.msgMaxlen.replace(/#/. validateMaxlength(ui));
+							}
+							else if (elm.validity.rangeOverflow) {
+								msgError = opts.msgMax.replace(/#/, gertAttr(ui, 'max'));
+							}
+							else if (elm.validity.rangeUnderflow) {
+								msgError = opts.msgMin.replace(/#/, getAttr(ui, 'min'));
+							}
+							else if (elm.validity.typeMismatch) {
+								switch(type) {
+									case 'email': msgError = opts.msgEmail; break;
+									case 'url': msgError = opts.msgUrl; break;
+									case 'date': msgError = opts.msgDate; break;
+									case 'time': msgError = opts.msgTime; break;
+									case 'datetime': msgError = opts.msgDatetime; break;
+									case 'datetime-local': msgError = opts.msgDatetime; break;
+								}
+							}
+							else if (elm.validity.stepMismatch) {
+								msgError = opts.msgStep;
+							}
+							if (msgError) {
+								setCustomValidity(ui, msgError);
+							}
+						};
 
+						ui.unbind('change', initValidity).change(initValidity);
+						elm.removeEventListener('invalid', setInvalid);
+						elm.addEventListener('invalid', setInvalid, false);
+					}
 				});
 			};
 			initControl(validatableElements, true);
@@ -727,7 +788,7 @@
 					});
 					if (!result) return false;
 				}
-//#
+//# IEBUGFIX
 				// Submit if no error
 
 				if (reqBugButton)
@@ -742,6 +803,7 @@
 						form.find('input:submit').remove();
 					}
 				}
+//#
 			});
 
 		});

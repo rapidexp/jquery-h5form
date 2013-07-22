@@ -33,6 +33,14 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.11.0 (2013-07-22)
+
+* Unified the validation messages of each browser.
+* Dealt with half-finished "range" of Firefox.
+* Fixed an error of the balloon drawn in server side.
+* Set the z-index of placeholders to 1 for the conflict with datapicker.
+* Modified about a datalist to make work with IE 9.
+
 ### Version 2.10.3 (2013-05-21)
 
 * Use document.documentMode for IE.

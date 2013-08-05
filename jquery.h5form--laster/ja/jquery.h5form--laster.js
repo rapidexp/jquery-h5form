@@ -285,8 +285,8 @@
 
 				val = val - ((val - base) % step) + step * ((isDown) ? -1 : 1);
 
-				if (max != '' && val > max) val = max;
-				if (min != '' && val < min) val = min;
+				if ((max || max == '0') && val > max) val = max;
+				if ((min || min == '0') && val < min) val = min;
 
 				ui.val((isNumber) ? val : sec2str(val, step % 60, true));
 				return ui;
@@ -721,8 +721,13 @@
 						};
 
 						ui.unbind('change', initValidity).change(initValidity);
-						elm.removeEventListener('invalid', setInvalid);
-						elm.addEventListener('invalid', setInvalid, false);
+						if (elm.removeEventListener && elm.addEventListener) {
+							elm.removeEventListener('invalid', setInvalid);
+							elm.addEventListener('invalid', setInvalid, false);
+						} else {
+							elm.detachEvent('invalid', setInvalid);
+							elm.attachEvent('invalid', setInvalid);
+						}
 					}
 				});
 			};
@@ -860,7 +865,8 @@
 				return Date.parse(utc2js(val)) / (1000 * 60 * 60 * 24);	// days
 			if (val.match(/\d+:\d/)) return str2sec(val, true);	// seconds
 //# NUMBER|DATETIME
-			return Number(val);
+			if (val.length) val = Number(val);
+			return val;
 		}
 //# DATETIME
 		function str2sec(str, gmt) {

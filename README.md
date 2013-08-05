@@ -33,6 +33,11 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.11.1 (2013-08-05)
+
+* min=0 doesn't work in the spin of number.
+* Script error was occurred with IE 8 or earlier.
+
 ### Version 2.11.0 (2013-07-22)
 
 * Unified the validation messages of each browser.

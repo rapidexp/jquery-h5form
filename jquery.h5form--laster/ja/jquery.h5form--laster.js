@@ -87,8 +87,10 @@
 //# NUMBER
 			// android must be reqSpin = false and reqNumber = true
 			// reqNumber provieds validation of min and max
-			reqSpin = !('step' in test1) || !('min' in test1) || firefox,
-			reqNumber = reqRange = (android) ? true : reqSpin,
+			reqSpin = !('step' in test1) || !('min' in test1) || !!firefox || !!msie,
+			reqNumber = reqRange = (!!android || reqSpin && msie != 10),
+//			reqNumber = reqRange = (android) ? true : reqSpin,
+//			reqSpin = (msie) ? true : reqSpin,
 //# DATETIME
 			reqDateTimeLocal = !(opera > 8 || chrome > 24),
 			reqDateTime = !(opera > 8),

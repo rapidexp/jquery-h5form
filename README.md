@@ -33,6 +33,10 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.11.2 (2013-08-06)
+
+* Added spin buttons in the number state with IE 10.
+
 ### Version 2.11.1 (2013-08-05)
 
 * min=0 doesn't work in the spin of number.

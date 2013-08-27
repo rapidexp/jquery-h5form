@@ -88,9 +88,8 @@
 			// android must be reqSpin = false and reqNumber = true
 			// reqNumber provieds validation of min and max
 			reqSpin = !('step' in test1) || !('min' in test1) || !!firefox || !!msie,
-			reqNumber = reqRange = (!!android || reqSpin && msie != 10),
-//			reqNumber = reqRange = (android) ? true : reqSpin,
-//			reqSpin = (msie) ? true : reqSpin,
+			reqNumber = (!!android || reqSpin && !(msie > 9)),
+			reqRange = reqNumber && !(firefox > 22),
 //# DATETIME
 			reqDateTimeLocal = !(opera > 8 || chrome > 24),
 			reqDateTime = !(opera > 8),
@@ -103,7 +102,7 @@
 //# AUTOCOMPLETE
 			reqDatalist = !('autocomplete' in test1) || !('list' in test1),
 //# IEBUGFIX
-			reqBugButton = (msie && msie < 8);
+			reqBugButton = (msie && msie < 8),
 			reqBugEnter = (msie && msie < 9) || android;
 //#
 

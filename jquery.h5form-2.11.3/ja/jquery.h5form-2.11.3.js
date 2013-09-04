@@ -1,6 +1,6 @@
 /**
  *	jQuery.h5form - HTML5 Forms Plugin
- *	Version 2.11.1 / Japanese
+ *	Version 2.11.3 / Japanese
  *
  *	Author: by Yoshiyuki Mikomde http://www.rapidexp.com/h5form
  *
@@ -66,7 +66,6 @@
 		// Test browser
 		var test1 = $('<input>').hide().appendTo($('body')).get(0),
 			test2 = $('textarea:first').get(0) || new Object(),
-			reqAppendTitle = !chrome && !(msie > 9),
 			reqCustomValidity = !('setCustomValidity' in test1) || android,
 			reqAutofocus = !('autofocus' in test1),
 			reqRequired = !('required' in test1) || android,
@@ -75,8 +74,9 @@
 			reqPlaceholder = !('placeholder' in test1),
 			// android must be reqSpin = false and reqNumber = true
 			// reqNumber provieds validation of min and max
-			reqSpin = !('step' in test1) || !('min' in test1) || firefox,
-			reqNumber = reqRange = (android) ? true : reqSpin,
+			reqSpin = !('step' in test1) || !('min' in test1) || !!firefox || !!msie,
+			reqNumber = (!!android || reqSpin && !(msie > 9)),
+			reqRange = reqNumber && !(firefox > 22),
 			reqDateTimeLocal = !(opera > 8 || chrome > 24),
 			reqDateTime = !(opera > 8),
 			reqDate = reqDateTimeLocal && !(chrome > 21),
@@ -84,7 +84,7 @@
 			reqMaxlength = !('maxLength' in test2),
 			reqFormAttr = !('form' in test1) || !('formAction' in test1) || android,
 			reqDatalist = !('autocomplete' in test1) || !('list' in test1),
-			reqBugButton = (msie && msie < 8);
+			reqBugButton = (msie && msie < 8),
 			reqBugEnter = (msie && msie < 9) || android;
 
 		for (name in opts.options) {
@@ -132,7 +132,7 @@
 		 * @param {string} type -- type.
 		 * @return {object} -- this.
 		 */
-		var typeTo = function(ui, type) {
+		var typeTo = function(ui, type, orgType) {
 			var	at = ui.get(0).attributes,
 			ui2 = $('<input type="' + type + '">');
 
@@ -140,14 +140,12 @@
 				name = at[i].nodeName;
 				value = at[i].nodeValue;
 				if (name && value) {
-					if (name == 'type') {
-						type = value;	// original type for additional class
-					} else {
+					if (name != 'type') {
 						ui2.attr(name, value);
 					}
 				}
 			}
-			ui2.addClass('h5form-' + type);
+			ui2.addClass('h5form-' + orgType);
 
 			return ui2.replaceAll(ui);
 		};
@@ -163,7 +161,7 @@
 			if ($novalidate) message = '';	// null is invalid in opera
 			if (ui.is(validatable)) {
 				// Add a title to the message
-				if (reqAppendTitle && message && (title = getAttr(ui, 'title'))) {
+				if (message && (title = getAttr(ui, 'title'))) {
 					message = $.trim(message + '\n' + title);
 				}
 				// Set a custon validity
@@ -295,7 +293,7 @@
 						(reqTime && type == 'time') ||
 						false) {
 						var className, allow;
-						ui = typeTo(ui, 'text');
+						ui = typeTo(ui, 'text', type);
 						switch (type) {
 						case 'number':
 							className = opts.classSpinNumber;
@@ -336,7 +334,7 @@
 						option.dateFormat = 'yy-mm-dd';
 						option.minDate = getAttr(ui, 'min');
 						option.maxDate = getAttr(ui, 'max');
-						ui = typeTo(ui, 'text').datepicker(option);
+						ui = typeTo(ui, 'text', type).datepicker(option);
 					}
 
 					// Slider

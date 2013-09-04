@@ -72,7 +72,6 @@
 		// Test browser
 		var test1 = $('<input>').hide().appendTo($('body')).get(0),
 			test2 = $('textarea:first').get(0) || new Object(),
-			reqAppendTitle = !chrome && !(msie > 9),
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH
 			reqCustomValidity = !('setCustomValidity' in test1) || android,
 //# AUTOFOCUS
@@ -154,7 +153,7 @@
 		 * @param {string} type -- type.
 		 * @return {object} -- this.
 		 */
-		var typeTo = function(ui, type) {
+		var typeTo = function(ui, type, orgType) {
 			var	at = ui.get(0).attributes,
 			ui2 = $('<input type="' + type + '">');
 
@@ -162,14 +161,12 @@
 				name = at[i].nodeName;
 				value = at[i].nodeValue;
 				if (name && value) {
-					if (name == 'type') {
-						type = value;	// original type for additional class
-					} else {
+					if (name != 'type') {
 						ui2.attr(name, value);
 					}
 				}
 			}
-			ui2.addClass('h5form-' + type);
+			ui2.addClass('h5form-' + orgType);
 
 			return ui2.replaceAll(ui);
 		};
@@ -186,7 +183,7 @@
 			if ($novalidate) message = '';	// null is invalid in opera
 			if (ui.is(validatable)) {
 				// Add a title to the message
-				if (reqAppendTitle && message && (title = getAttr(ui, 'title'))) {
+				if (message && (title = getAttr(ui, 'title'))) {
 					message = $.trim(message + '\n' + title);
 				}
 				// Set a custon validity
@@ -336,7 +333,7 @@
 //# NUMBER|DATETIME
 						false) {
 						var className, allow;
-						ui = typeTo(ui, 'text');
+						ui = typeTo(ui, 'text', type);
 						switch (type) {
 //# NUMBER
 						case 'number':
@@ -381,7 +378,7 @@
 						option.dateFormat = 'yy-mm-dd';
 						option.minDate = getAttr(ui, 'min');
 						option.maxDate = getAttr(ui, 'max');
-						ui = typeTo(ui, 'text').datepicker(option);
+						ui = typeTo(ui, 'text', type).datepicker(option);
 					}
 
 //# NUMBER

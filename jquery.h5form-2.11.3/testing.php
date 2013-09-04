@@ -6,7 +6,7 @@
 	<title>Test of jQuery.h5form</title>
 
 	<link rel="stylesheet" type="text/css" href="/lib/css/smoothness/jquery-ui-custom.css" />
-	<link rel="stylesheet" type="text/css" href="css/jquery.h5form-2.11.0.css" />
+	<link rel="stylesheet" type="text/css" href="css/jquery.h5form-2.11.3.css" />
 
 	<style style="text/css">
 	  body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
@@ -35,7 +35,7 @@
 
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="en/jquery.h5form-2.11.0.js"></script>
+	<script type="text/javascript" src="en/jquery.h5form-2.11.3.js"></script>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 
 <script type="text/javascript">
@@ -434,14 +434,14 @@ foreach ($_POST as $name => $value):
 		<tr>
 		  <td>
 			<form action="#test-7" method="post">
-			  <input type="number" name="input-7-num" min="12" max="30" step="0.5" title="From 12 to 30 step 0.5"><br>
+			  <input type="number" name="input-7-num" min="0" max="30" step="0.5" title="From 0 to 30 step 0.5"><br>
 			  <input type="range" name="input-7-ran" step="10">
 			  <input type="submit" name="test-7" value="submit">
 			</form>
 <pre class="source" style="display:none">
 &lt;form action="#test-7" method="post"&gt;
   &lt;input <strong>type="Number"</strong> name="input-7-num"
-    <strong>min="12" max="30" step="0.5"</strong> title="From 12 to 30 step 0.5"&gt;&lt;br&gt;
+    <strong>min="0" max="30" step="0.5"</strong> title="From 0 to 30 step 0.5"&gt;&lt;br&gt;
   &lt;input <strong>type="range"</strong> name="input-7-ran" <strong>step="10"</strong>&gt;
   &lt;input type="submit" name="test-7" value="submit"&gt;
 &lt;/form&gt;
@@ -449,14 +449,14 @@ foreach ($_POST as $name => $value):
 		  </td>
 		  <td>
 			<form action="#test-7" method="post" class="h5form">
-			  <input type="number" name="input-7-num" min="12" max="30" step="0.5" title="From 12 to 30 step 0.5"><br>
+			  <input type="number" name="input-7-num" min="0" max="30" step="0.5" title="From 0 to 30 step 0.5"><br>
 			  <input type="range" name="input-7-ran" step="10">
 			  <input type="submit" name="test-7" value="submit">
 			</form>
 <pre class="source" style="display:none">
 &lt;form action="#test-7" method="post" <strong>class="h5form"</strong>&gt;
   &lt;input <strong>type="number"</strong> name="input-7-num"
-    <strong>min="12" max="30" step="0.5"</strong> title="From 12 to 30 step 0.5"&gt;&lt;br&gt;
+    <strong>min="0" max="30" step="0.5"</strong> title="From 0 to 30 step 0.5"&gt;&lt;br&gt;
   &lt;input <strong>type="range"</strong> name="input-7-ran" <strong>step="10"</strong>&gt;
   &lt;input type="submit" name="test-7" value="submit"&gt;
 &lt;/form&gt;
@@ -889,7 +889,7 @@ $('[name="test-15b"]').click(function() {
   required title="Enter valid email address."&gt;&lt;br&gt;
   &lt;input <strong>class="test-15"</strong> type="text" name="input-15b" required
   pattern="\d{4}-\d{3}" title="Enter such as 1234-567."&gt;
-  &ltinput type="submit" name="test-15" value="OK"&gt;
+  &lt;input type="submit" name="test-15" value="OK"&gt;
 &lt;/form&gt;
 &lt;input <strong>name="test-15b"</strong> type="button" value="checkValidity"&gt;
 </pre>

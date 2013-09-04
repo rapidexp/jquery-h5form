@@ -33,6 +33,12 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.11.3 (2013-09-04)
+
+* Removed support of range state from Firefox 23.
+* Always adds a title to a message.
+* Fixed the number state with IE7.
+
 ### Version 2.11.2 (2013-08-06)
 
 * Added spin buttons in the number state with IE 10.

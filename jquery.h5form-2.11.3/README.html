@@ -129,7 +129,7 @@
 		<tbody>
 
 		  <tr>
-			<th rowspan="5">All elements</th>
+			<th rowspan="4">All elements</th>
 			<th>+ The balloon message</th>
 			<td>*1</td>
 			<td>E</td>
@@ -139,20 +139,6 @@
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
-			<td>S</td>
-			<td>E</td>
-		  </tr>
-
-		  <tr>
-			<th>* The message including title</th>
-			<td>E</td>
-			<td>E</td>
-			<td>E</td>
-			<td>E</td>
-			<td>S</td>
-			<td>E</td>
-			<td>S</td>
-			<td>E</td>
 			<td>S</td>
 			<td>E</td>
 		  </tr>
@@ -329,17 +315,17 @@
 		  </tr>
 
 		  <tr>
-			<th>+ Number state</th>
+			<th>+ Number state<sup>*8</sup></th>
+			<td>E</td>
+			<td>E</td>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
 			<td>E</td>
 			<td>S</td>
+			<td>S</td>
+			<td>S</td>
 			<td>E</td>
-			<td>S</td>
-			<td>S</td>
-			<td>S</td>
-			<td>*8</td>
 		  </tr>
 
 		  <tr>
@@ -349,7 +335,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>S</td>
-			<td>E</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -631,7 +617,9 @@
 		</dd>
 
 		<dt>*8</dt>
-		<dd>The plugin gives validations of the min, the max and the step except user interface of the spin.</dd>
+		<dd>
+		  The plugin gives spin buttons except validations with IE 10, and gives validations except spin buttons with Android.
+		</dd>
 
 		<dt>*9</dt>
 		<dd>In the Android it will move a focus to the next control, or submit only on the last control.</dd>
@@ -644,7 +632,7 @@
 
 	  <p>
 		Please download
-		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.11.0.zip" target="_blank">jquery.h5form-2.11.0.zip</a>
+		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.11.3.zip" target="_blank">jquery.h5form-2.11.3.zip</a>
 	  </p>
 
 
@@ -661,7 +649,7 @@
 	  <p>
 		And if you wish, you can get a smaller size javascript by removing unnecessary features.<br>
 		Please uncheck the unnecessary features and click the download button.
-		Oh yes, you must have the <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.11.0/css/jquery.h5form-2.11.0.css" target="_blank">style sheet</a> included in the archive above to the other.
+		Oh yes, you must have the <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.11.3/css/jquery.h5form-2.11.3.css" target="_blank">style sheet</a> included in the archive above to the other.
 	  </p>
 
 	  <p>
@@ -702,11 +690,11 @@
 	  </p>
 
 <pre class="source">
-<span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span> href=<span class="str">"css/jquery.h5form-2.11.0.css"</span> /&gt;</span>
+<span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span> href=<span class="str">"css/jquery.h5form-2.11.3.css"</span> /&gt;</span>
 <span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
   src=<span class="str">"https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"</span>&gt;&lt;/script&gt;</span>
 <span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
-  src=<span class="str">"jquery.h5form-2.11.0.min.js"</span>&gt;&lt;/script&gt;</span>
+  src=<span class="str">"jquery.h5form-2.11.3.min.js"</span>&gt;&lt;/script&gt;</span>
 
 <span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>&gt;</span>
 $(<span class="name">function</span>() {
@@ -1129,7 +1117,28 @@ $(<span class="name">function</span>() {
 	<section id="history">
 	  <h2>History</h2>
 
-	  <h3>Version 2.11.0		(2013-07-22)</h3>
+	  <h3>Version 2.11.3		(2013-09-04)</h3>
+
+	  <ul>
+		<li>Removed support of range state from Firefox 23.</li>
+		<li>Always adds a title to a message.</li>
+		<li>Fixed the number state with IE7.</li>
+	  </ul>
+
+	  <h3>Version 2.11.2 (2013-08-06)</h3>
+
+	  <ul>
+		<li>Added spin buttons in the number state with IE 10.</li>
+	  </ul>
+
+	  <h3>Version 2.11.1 (2013-08-05)</h3>
+
+	  <ul>
+		<li>min=0 doesn't work in the spin of number.</li>
+		<li>Script error was occurred with IE 8 or earlier.</li>
+	  </ul>
+
+	  <h3>Version 2.11.0 (2013-07-22)</h3>
 
 	  <ul>
 		<li>Unified the validation messages of each browser.</li>

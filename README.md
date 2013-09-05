@@ -33,6 +33,11 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.11.4 (2013-09-05)
+
+* Fixed the required attribute in a date state.
+* Fixed the typing in a time state.
+
 ### Version 2.11.3 (2013-09-04)
 
 * Removed support of range state from Firefox 23.

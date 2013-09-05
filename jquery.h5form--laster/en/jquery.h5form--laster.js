@@ -155,11 +155,15 @@
 		 */
 		var typeTo = function(ui, type, orgType) {
 			var	at = ui.get(0).attributes,
-			ui2 = $('<input type="' + type + '">');
+				ui2 = $('<input type="' + type + '">'),
+				flg = ['required', 'disabled', 'readonly', 'checked'];
 
 			for (i = at.length - 1; i >= 0; i--) {
 				name = at[i].nodeName;
 				value = at[i].nodeValue;
+				if (!value && $.inArray(name, flg) >= 0) {
+					value = name;
+				}
 				if (name && value) {
 					if (name != 'type') {
 						ui2.attr(name, value);
@@ -343,7 +347,7 @@
 //# DATETIME
 						default:
 							className = opts.classSpinTime;
-							allow = [8, 9, 35, 36, 37, 39, 46, 59, 186, 190];
+							allow = [8, 9, 35, 36, 37, 39, 46, 58, 186, 190];
 							break;
 //# NUMBER|DATETIME
 						}
@@ -885,7 +889,8 @@
 
 			date = date.replace(/\b(\d)\b/g, '0$1');
 			var time = (val) ?
-				dt.toString().replace(/.* (\d+:\d+:\d+).*$/, '$1') : '12:00';
+				dt.toString().replace(/.* (\d+:\d+:\d+).*$/, '$1')
+					.replace(/(\d+:\d+):00/, '$1') : '12:00';
 
 			return new Array(date, time);
 		}

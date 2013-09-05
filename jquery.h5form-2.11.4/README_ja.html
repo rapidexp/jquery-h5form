@@ -124,7 +124,7 @@
 		<tbody>
 
 		  <tr>
-			<th rowspan="5">すべての要素</th>
+			<th rowspan="4">すべての要素</th>
 			<th>+ フキダシメッセージ</th>
 			<td>*1</td>
 			<td>E</td>
@@ -134,20 +134,6 @@
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
-			<td>S</td>
-			<td>E</td>
-		  </tr>
-
-		  <tr>
-			<th>* メッセージにTitleを含む</th>
-			<td>E</td>
-			<td>E</td>
-			<td>E</td>
-			<td>E</td>
-			<td>S</td>
-			<td>E</td>
-			<td>S</td>
-			<td>E</td>
 			<td>S</td>
 			<td>E</td>
 		  </tr>
@@ -343,7 +329,7 @@
 			<td>E</td>
 			<td>E</td>
 			<td>S</td>
-			<td>E</td>
+			<td>S</td>
 			<td>S</td>
 			<td>S</td>
 			<td>S</td>
@@ -641,7 +627,7 @@
 	  <h2>Download</h2>
 
 	  <p>
-		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.11.2.zip" target="_blank">jquery.h5form-2.11.2.zip</a>
+		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.11.4.zip" target="_blank">jquery.h5form-2.11.4.zip</a>
 		をダウンロードしてください。
 	  </p>
 
@@ -658,7 +644,7 @@
 	  <p>
 		不要な機能を省いたより小さな javascript もダウンロードできます。
 		不要な機能のチェックを外してから ダウンロード ボタンをクリックしてください。<br>
-		この他にアーカイブに含まれる <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.11.2/css/jquery.h5form-2.11.2.css" target="_blank">スタイルシート</a> は別途のダウンロードが必要です。
+		この他にアーカイブに含まれる <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.11.4/css/jquery.h5form-2.11.4.css" target="_blank">スタイルシート</a> は別途のダウンロードが必要です。
 	  </p>
 
 	  <p>
@@ -700,11 +686,11 @@
 	  </p>
 
  <pre class="source">
-<span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span> href=<span class="str">"css/jquery.h5form-2.11.2.css"</span> /&gt;</span>
+<span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span> href=<span class="str">"css/jquery.h5form-2.11.4.css"</span> /&gt;</span>
 <span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
   src=<span class="str">"https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"</span>&gt;&lt;/script&gt;</span>
 <span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
-  src=<span class="str">"jquery.h5form-2.11.2.min.js"</span>&gt;&lt;/script&gt;</span>
+  src=<span class="str">"jquery.h5form-2.11.4.min.js"</span>&gt;&lt;/script&gt;</span>
 
 <span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>&gt;</span>
 $(<span class="name">function</span>() {
@@ -1120,7 +1106,23 @@ $(<span class="name">function</span>() {
 	<section id="history">
 	  <h2>History</h2>
 
-	  <h3>Version 2.11.2		(2013-08-06)</h3>
+	  <h3>Version 2.11.4		(2013-09-05)</h3>
+
+	  <ul>
+		<li>Date状態のrequired属性が外れるのを修正</li>
+		<li>Time状態で : が入力できなかった</li>
+	  </ul>
+
+	  <h3>Version 2.11.3 (2013-09-04)</h3>
+
+	  <ul>
+		<li>Firefox 23 からRange状態のサポートを削除</li>
+		<li>常にタイトルをメッセージに追加</li>
+		<li>IE7 の Number 状態を修正</li>
+	  </ul>
+
+
+	  <h3>Version 2.11.2 (2013-08-06)</h3>
 
 	  <ul>
 		<li>IE 10のNumber状態にスピンボタンを追加</li>

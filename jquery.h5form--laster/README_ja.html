@@ -722,6 +722,23 @@ $(<span class="name">function</span>() {
   src=<span class="str">"https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"</span>&gt;&lt;/script&gt;</span>
 </pre>
 
+	  <p>
+		さらに、マスクプラグインがインストールされていると Date と Time 状態で利用します。<br>
+		マスクプラグインには「$(expr).mask(options)」で指定するものが利用できます。
+		定義が異なる場合は、次のようなラッパーを h5form の前に定義してください。
+	  </p>
+
+<pre class="source">
+<b>$.fn.mask = <span class="name">function</span>(opt) { $(this).mymask(opt); };</b>
+$(<span class="str">'form'</span>).h5form({
+  maskDate: { mask: <span class="str">'####-##-##'</span> },
+  maskTime: { mask: <span class="str">'##:##'</span> },
+  datepicker: {
+    showOn: <span class="str">'button'</span>,
+    onClose: <span class="name">function</span>() { blur(); }  <span class="comm">// set value to mask from datepicker</span>
+  }
+});
+</pre>
 
 	  <h3>CSS</h3>
 
@@ -856,11 +873,25 @@ $(<span class="name">function</span>() {
 
 		  <tr>
 			<td>datepicker</td>
-			<td>{ }</td>
+			<td>{ dateFormat: 'yy-mm-dd' }</td>
 			<td>
 			  jQuery UI datepicekr の options が指定できます。<br>
-			  ただし、minDate と maxDate は要素の min と max 属性から決定され、
-			  dateFormat は 'yy-mm-dd' に固定です。
+			  ただし、minDate と maxDate は要素の min と max 属性から決定されます。
+			</td>
+		  </tr>
+
+		  <tr>
+			<td>maskDate</td>
+			<td>'9999-99-99'</td>
+			<td>
+			  利用する mask プラグインによっては { mask: '9999-99-99' } であるかもしれません。
+			</td>
+		  </tr>
+		  <tr>
+			<td>maskTime</td>
+			<td>'99:99'</td>
+			<td>
+			  利用する mask プラグインによっては { mask: '99:99' } であるかもしれません。
 			</td>
 		  </tr>
 
@@ -913,6 +944,15 @@ $(<span class="name">function</span>() {
 				<tr>
 				  <td>reqPlaceholder</td>
 				  <td>プラグインのPlaceholderを使います。</td>
+				</tr>
+				<tr>
+				  <td>
+					reqDate<br>
+					reqTime<br>
+					reqDateTimeLocal<br>
+					reqDateTime
+				  </td>
+				  <td>プラグインの日時UIを使います。</td>
 				</tr>
 			  </table>
 
@@ -1107,6 +1147,12 @@ $(<span class="name">function</span>() {
 	  <h2>History</h2>
 
 	  <h3>Version -laster		(-today)</h3>
+
+	  <ul>
+		<li>Date状態にjquery.ui.mask を利用</li>
+	  </ul>
+
+	  <h3>Version 2.11.4 (2013-09-05)</h3>
 
 	  <ul>
 		<li>Date状態のrequired属性が外れるのを修正</li>

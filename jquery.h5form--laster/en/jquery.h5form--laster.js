@@ -62,7 +62,11 @@
 //# DATETIME
 			classSpinTime: 'h5form-spinTime',
 			classDatetime: 'h5form-datetime',
-			datepicker: { },
+			datepicker: {
+				dateFormat: 'yy-mm-dd'
+			},
+			maskDate: '9999-99-99',
+			maskTime: '99:99',
 //#
 			options: {},
 			dynamicHtml: '.h5form-dynamic'
@@ -360,7 +364,13 @@
 							if (($.inArray(cc, allow) >= 0) || (cc >= 48 && cc <= 57)) return true;
 							return false;
 						});
-						ui.unbind('keydown', evKeydown).keydown(evKeydown);
+						if (type == 'time' && ('mask' in ui)) {
+//							ui.unbind('mask').mask({ mask: opts.maskTime });
+							ui.unbind('mask').mask(opts.maskTime);
+						}
+						else {
+							ui.unbind('keydown', evKeydown).keydown(evKeydown);
+						}
 
 						if (opts.addSpin) {
 							ui.after('<span class="' + className + '">' +
@@ -369,22 +379,27 @@
 
 							// Click button
 							ui.next().children().click(function() {
-								spin(ui, ui.next().children().index($(this))).change();
+								spin(ui, ui.next().children().index($(this))).change().blur();
 								// change for Chrome
+								// blur for mask
 							});
 						}
 					}
 
 //# DATETIME
 					// Datepicker
-					if (reqDate && (type == 'date') && ('datepicker' in ui)) {
-						var option = opts.datepicker;
-						option.dateFormat = 'yy-mm-dd';
-						option.minDate = getAttr(ui, 'min');
-						option.maxDate = getAttr(ui, 'max');
-						ui = typeTo(ui, 'text', type).datepicker(option);
+					if (reqDate && (type == 'date')) {
+						if ('datepicker' in ui) {
+							var option = opts.datepicker;
+							option.minDate = getAttr(ui, 'min');
+							option.maxDate = getAttr(ui, 'max');
+							ui = typeTo(ui, 'text', type).datepicker(option);
+						}
+						if ('mask' in ui) {
+//							ui.unbind('mask').mask({ mask: opts.maskDate });
+							ui.unbind('mask').mask(opts.maskDate);
+						}
 					}
-
 //# NUMBER
 					// Slider
 					if (reqRange && (type == 'range') && ('slider' in ui)) {
@@ -602,8 +617,8 @@
 									if (date == '' || time == '') {
 										// use min value
 										var min = getLocalDatetime(getAttr(ui0, 'min'), true);
-										if (i == 0 && date != '' && time == '') { ui2.eq(1).val(min[1]); }
-										if (i == 1 && time != '' && date == '') { ui2.eq(0).val(min[0]); }
+										if (i == 0 && date != '' && time == '') { ui2.eq(1).val(min[1]).change().blur(); }
+										if (i == 1 && time != '' && date == '') { ui2.eq(0).val(min[0]).change().blur(); }
 										date = ui2.eq(0).val(), time = ui2.eq(1).val();
 									}
 									// Copy to hidden datetime control

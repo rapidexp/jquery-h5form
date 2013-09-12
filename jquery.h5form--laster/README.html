@@ -726,6 +726,23 @@ $(<span class="name">function</span>() {
   src=<span class="str">"https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"</span>&gt;&lt;/script&gt;</span>
 </pre>
 
+	  <p>
+		Furthermore, you can use it in date-time states if a mask plugin is installed.<br>
+		The mask plugin must be defined as `$(expr).mask(options)`.
+		Please define the following rapper as needed before h5from.
+	  </p>
+
+<pre class="source">
+<b>$.fn.mask = <span class="name">function</span>(opt) { $(this).mymask(opt); };</b>
+$(<span class="str">'form'</span>).h5form({
+  maskDate: { mask: <span class="str">'####-##-##'</span> },
+  maskTime: { mask: <span class="str">'##:##'</span> },
+  datepicker: {
+    showOn: <span class="str">'button'</span>,
+    onClose: <span class="name">function</span>() { blur(); }  <span class="comm">// set value to mask from datepicker</span>
+  }
+});
+</pre>
 
 	  <h3>CSS</h3>
 
@@ -859,12 +876,22 @@ $(<span class="name">function</span>() {
 
 		  <tr>
 			<td>datepicker</td>
-			<td>{ }</td>
+			<td>{ dateFormat: 'yy-mm-dd' }</td>
 			<td>
 			  The options of the datepicker. See the documents of the jQuery UI.<br>
-			  However, the maxDate and the minDate are determined by the attribute of the min and the max on the element,
-			  and the value of the dateFormat  is fixed at 'yy-mm-dd'.
+			  However, the maxDate and the minDate are determined by the attribute of the min and the max on the element.<br>
 			</td>
+		  </tr>
+
+		  <tr>
+			<td>maskDate</td>
+			<td>'9999-99-99'</td>
+			<td>Some plugin is { mask: '9999-99-99' }.</td>
+		  </tr>
+		  <tr>
+			<td>maskTime</td>
+			<td>'99:99'</td>
+			<td>Some plugin is { mask: '99-99' }</td>
 		  </tr>
 
 		  <tr>
@@ -913,11 +940,20 @@ $(<span class="name">function</span>() {
 				</tr>
 				<tr>
 				  <td>reqCustomValidity</td>
-				  <td>Use the balloon messages of the plugin.</td>
+				  <td>Use balloon messages of the plugin.</td>
 				</tr>
 				<tr>
 				  <td>reqPlaceholder</td>
-				  <td>Use the placeholder of the plugin.</td>
+				  <td>Use placeholders of the plugin.</td>
+				</tr>
+				<tr>
+				  <td>
+					reqDate<br>
+					reqTime<br>
+					reqDateTimeLocal<br>
+					reqDateTime
+				  </td>
+				  <td>Use date-time userinterfaces of the plugin.</td>
 				</tr>
 			  </table>
 
@@ -1118,6 +1154,12 @@ $(<span class="name">function</span>() {
 	  <h2>History</h2>
 
 	  <h3>Version -laster		(-today)</h3>
+
+	  <ul>
+		<li>Use jquery.ui.mask for data states.</li>
+	  </ul>
+
+	  <h3>Version 2.11.4 (2013-09-05)</h3>
 
 	  <ul>
 		<li>Fixed the required attribute in a date state.</li>

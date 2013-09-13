@@ -30,7 +30,9 @@
 	  sup { color: red; }
 	  pre.source { margin: 1em; padding: 1em; border: 1px solid gray; overflow: auto; background-color: whitesmoke; }
 	  pre.source .tag { color: teal; }
+	  pre.source .key { color: darkorange; }
 	  pre.source .name { color: blue; }
+	  pre.source .func { color: darkblue; }
 	  pre.source .str { color: purple; }
 	  pre.source .comm { color: green; }
 	  #history h3 { font-size: 100%; }
@@ -43,14 +45,28 @@
 	  table.source td { border: 1px solid silver; padding: 1em; vertical-align: top; }
 	</style>
 
-	<script type="text/javascript">
-		$(function() {
-			$('table.support tbody td').each(function() {
-				if ($(this).text() == 'E') $(this).css({color: 'blue', fontWeight: 'bold'});
-				if ($(this).text() == 'x') $(this).css({color: 'red'});
-			});
-		});
-	</script>
+<script type="text/javascript">
+$(function() {
+	$('table.support tbody td').each(function() {
+		if ($(this).text() == 'E') $(this).css({color: 'blue', fontWeight: 'bold'});
+		if ($(this).text() == 'x') $(this).css({color: 'red'});
+	});
+	$('pre.source').each(function() {
+		var content = $(this).html();
+		content = content.replace(/("[^\"]*")/g, '<span class="str">$1</span>');
+		content = content.replace(/('[^\']*')/g, '<span class="str">$1</span>');
+
+		content = content.replace(/(\&lt;[a-z0-9\/])/g, '<span class="tag">$1');
+		content = content.replace(/(\&gt;)/g, '$1</span>');
+
+		content = content.replace(/(function)/g, '<span class="name">$1</span>');
+		content = content.replace(/([a-z0-9]+)\(/g, '<span class="func">$1</span>(');
+		content = content.replace(/( [a-z-]+): /ig, '<span class="key">$1</span>: ');
+		content = content.replace(/(\/\/ .+)\n/g, '<span class="comm">$1</span>\n');
+		$(this).html(content);
+	});
+});
+</script>
 
   <?php  if (file_exists('../site.inc.php')) include '../site.inc.php'; ?>
   </head>
@@ -627,7 +643,7 @@
 	  <h2>Download</h2>
 
 	  <p>
-		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.11.3.zip" target="_blank">jquery.h5form-2.11.3.zip</a>
+		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.12.0.zip" target="_blank">jquery.h5form-2.12.0.zip</a>
 		をダウンロードしてください。
 	  </p>
 
@@ -644,7 +660,7 @@
 	  <p>
 		不要な機能を省いたより小さな javascript もダウンロードできます。
 		不要な機能のチェックを外してから ダウンロード ボタンをクリックしてください。<br>
-		この他にアーカイブに含まれる <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.11.3/css/jquery.h5form-2.11.3.css" target="_blank">スタイルシート</a> は別途のダウンロードが必要です。
+		この他にアーカイブに含まれる <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.12.0/css/jquery.h5form-2.12.0.css" target="_blank">スタイルシート</a> は別途のダウンロードが必要です。
 	  </p>
 
 	  <p>
@@ -686,22 +702,22 @@
 	  </p>
 
  <pre class="source">
-<span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span> href=<span class="str">"css/jquery.h5form-2.11.3.css"</span> /&gt;</span>
-<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
-  src=<span class="str">"https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"</span>&gt;&lt;/script&gt;</span>
-<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
-  src=<span class="str">"jquery.h5form-2.11.3.min.js"</span>&gt;&lt;/script&gt;</span>
+&lt;link rel="stylesheet" type="text/css" href="css/jquery.h5form-2.12.0.css" /&gt;
+&lt;script type="text/javascript"
+  src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"
+  src="jquery.h5form-2.12.0.min.js"&gt;&lt;/script&gt;
 
-<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>&gt;</span>
-$(<span class="name">function</span>() {
-  $(<span class="str">'form'</span>).h5form({
-    msgEmpty: <span class="str">'入力してください。'</span>,
-    msgUnselect: <span class="str">'いずれかのオプションを選択してください。'</span>,
-    msgUncheck: <span class="str">'チェックボックスをチェックしてください。'</span>,
-    msgPattern: <span class="str">'必要なパターンに一致してません。'</span>
+&lt;script type="text/javascript"&gt;
+$(function() {
+  $('form').h5form({
+    msgEmpty: '入力してください。',
+    msgUnselect: 'いずれかのオプションを選択してください。',
+    msgUncheck: 'チェックボックスをチェックしてください。',
+    msgPattern: '必要なパターンに一致してません。'
   });
 });
-<span class="tag">&lt;/script&gt;</span>
+&lt;/script&gt;
 </pre>
 
 
@@ -716,12 +732,29 @@ $(<span class="name">function</span>() {
 	  </p>
 
 <pre class="source">
-<span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span>
-  href=<span class="str">"../../css/smoothness/jquery-ui-custom.css"</span> /&gt;</span>
-<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
-  src=<span class="str">"https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"</span>&gt;&lt;/script&gt;</span>
+&lt;link rel="stylesheet" type="text/css"
+  href="../../css/smoothness/jquery-ui-custom.css" /&gt;
+&lt;script type="text/javascript"
+  src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"&gt;&lt;/script&gt;
 </pre>
 
+	  <p>
+		さらに、マスクプラグインがインストールされていると Date と Time 状態で利用します。<br>
+		マスクプラグインには「$(expr).mask(options)」で指定するものが利用できます。
+		定義が異なる場合は、次のようなラッパーを h5form の前に定義してください。
+	  </p>
+
+<pre class="source">
+$.fn.mask = function(opt) { $(this).mymask(opt); };
+$('form').h5form({
+  maskDate: { mask: '####-##-##' },
+  maskTime: { mask: '##:##' },
+  datepicker: {
+    showOn: 'button',
+    onClose: function() { blur(); }  // set value to mask from datepicker
+  }
+});
+</pre>
 
 	  <h3>CSS</h3>
 
@@ -732,7 +765,7 @@ $(<span class="name">function</span>() {
 	  </p>
 
 <pre class="source">
-[type="number"], <span style="color: red;">.h5form-number</span> {
+[type="number"], <b>.h5form-number</b> {
 	font-weight: bold;
 }
 </pre>
@@ -856,11 +889,25 @@ $(<span class="name">function</span>() {
 
 		  <tr>
 			<td>datepicker</td>
-			<td>{ }</td>
+			<td>{ dateFormat: 'yy-mm-dd' }</td>
 			<td>
 			  jQuery UI datepicekr の options が指定できます。<br>
-			  ただし、minDate と maxDate は要素の min と max 属性から決定され、
-			  dateFormat は 'yy-mm-dd' に固定です。
+			  ただし、minDate と maxDate は要素の min と max 属性から決定されます。
+			</td>
+		  </tr>
+
+		  <tr>
+			<td>maskDate</td>
+			<td>'9999-99-99'</td>
+			<td>
+			  利用する mask プラグインによっては { mask: '9999-99-99' } であるかもしれません。
+			</td>
+		  </tr>
+		  <tr>
+			<td>maskTime</td>
+			<td>'99:99'</td>
+			<td>
+			  利用する mask プラグインによっては { mask: '99:99' } であるかもしれません。
 			</td>
 		  </tr>
 
@@ -913,6 +960,15 @@ $(<span class="name">function</span>() {
 				<tr>
 				  <td>reqPlaceholder</td>
 				  <td>プラグインのPlaceholderを使います。</td>
+				</tr>
+				<tr>
+				  <td>
+					reqDate<br>
+					reqTime<br>
+					reqDateTimeLocal<br>
+					reqDateTime
+				  </td>
+				  <td>プラグインの日時UIを使います。</td>
 				</tr>
 			  </table>
 
@@ -1106,7 +1162,20 @@ $(<span class="name">function</span>() {
 	<section id="history">
 	  <h2>History</h2>
 
-	  <h3>Version 2.11.3		(2013-09-04)</h3>
+	  <h3>Version 2.12.0		(2013-09-13)</h3>
+
+	  <ul>
+		<li>Date状態にjquery.ui.mask を利用</li>
+	  </ul>
+
+	  <h3>Version 2.11.4 (2013-09-05)</h3>
+
+	  <ul>
+		<li>Date状態のrequired属性が外れるのを修正</li>
+		<li>Time状態で : が入力できなかった</li>
+	  </ul>
+
+	  <h3>Version 2.11.3 (2013-09-04)</h3>
 
 	  <ul>
 		<li>Firefox 23 からRange状態のサポートを削除</li>
@@ -1423,3 +1492,4 @@ $(<span class="name">function</span>() {
 
   </body>
 </html>
+  

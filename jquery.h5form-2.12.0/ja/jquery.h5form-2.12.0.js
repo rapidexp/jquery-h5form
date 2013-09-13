@@ -1,6 +1,6 @@
 /**
  *	jQuery.h5form - HTML5 Forms Plugin
- *	Version 2.11.3 / English
+ *	Version 2.12.0 / Japanese
  *
  *	Author: by Yoshiyuki Mikomde http://www.rapidexp.com/h5form
  *
@@ -38,26 +38,31 @@
 			exprBehind: '.h5fom-behind',
 			styleErr: { backgroundColor: 'mistyrose' },
 			classPlaceholder: 'h5form-placeholder',
-			msgEmpty: 'Please enter this field.',
-			msgUnselect: 'Please select an item.',
-			msgUncheck: 'Please check this checkbox.',
-			msgPattern: 'Does not match the required pattern.',
-			msgEmail: 'E-mail address is not correct.',
-			msgUrl: 'URL is not correct.',
-			msgNumber: 'Number is not correct.',
-			msgDatetime: 'Date time is not correct.',
-			msgDate: 'Date is not correct.',
-			msgTime: 'Time is not correct.',
-			msgStep: 'Step is not correct.',
-			msgMin: 'Please be greater than or equal to #.',
-			msgMax: 'Please be less than or equal to #.',
-			msgMaxlen: 'Too many # characters.',
+			msgEmpty: 'このフィールドを入力してください。',
+			msgUnselect: 'いずれかのオプションを選択してください。',
+			msgUncheck: 'チェックボックスをチェックしてください。',
+			msgPattern: '必用なパターンに一致していません。',
+			msgEmail: 'メールアドレスが正しくありません。',
+			msgUrl: 'URLが正しくありません。',
+			msgNumber: '数値で入力してください。',
+			msgDatetime: '日時が正しくありません。',
+			msgDate: '日付が正しくありません。',
+			msgTime: '時刻が正しくありません。',
+			msgStep: '値の刻みが正しくありません。',
+			msgMin: '# 以上で指定してください。',
+			msgMax: '# 以下で指定してください。',
+			msgMaxlen: '指定の文字数上限より # 文字多いです。',
 			addSpin: true,
 			classSpinNumber: 'h5form-spinNumber',
 			classRange: 'h5form-range',
 			classSpinTime: 'h5form-spinTime',
 			classDatetime: 'h5form-datetime',
-			datepicker: { },
+			datepicker: {
+				dateFormat: 'yy-mm-dd',
+				onClose: function() { $(this).blur(); }
+			},
+			maskDate: '9999-99-99',
+			maskTime: '99:99',
 			options: {},
 			dynamicHtml: '.h5form-dynamic'
 		};
@@ -134,11 +139,15 @@
 		 */
 		var typeTo = function(ui, type, orgType) {
 			var	at = ui.get(0).attributes,
-			ui2 = $('<input type="' + type + '">');
+				ui2 = $('<input type="' + type + '">'),
+				flg = ['required', 'disabled', 'readonly', 'checked'];
 
 			for (i = at.length - 1; i >= 0; i--) {
 				name = at[i].nodeName;
 				value = at[i].nodeValue;
+				if (!value && $.inArray(name, flg) >= 0) {
+					value = name;
+				}
 				if (name && value) {
 					if (name != 'type') {
 						ui2.attr(name, value);
@@ -301,7 +310,7 @@
 							break;
 						default:
 							className = opts.classSpinTime;
-							allow = [8, 9, 35, 36, 37, 39, 46, 59, 186, 190];
+							allow = [8, 9, 35, 36, 37, 39, 46, 58, 186, 190];
 							break;
 						}
 
@@ -313,7 +322,12 @@
 							if (($.inArray(cc, allow) >= 0) || (cc >= 48 && cc <= 57)) return true;
 							return false;
 						});
-						ui.unbind('keydown', evKeydown).keydown(evKeydown);
+						if (type == 'time' && ('mask' in ui)) {
+							ui.unbind('mask').mask({ mask: opts.maskTime });
+						}
+						else {
+							ui.unbind('keydown', evKeydown).keydown(evKeydown);
+						}
 
 						if (opts.addSpin) {
 							ui.after('<span class="' + className + '">' +
@@ -322,21 +336,25 @@
 
 							// Click button
 							ui.next().children().click(function() {
-								spin(ui, ui.next().children().index($(this))).change();
+								spin(ui, ui.next().children().index($(this))).change().blur();
 								// change for Chrome
+								// blur for mask
 							});
 						}
 					}
 
 					// Datepicker
-					if (reqDate && (type == 'date') && ('datepicker' in ui)) {
-						var option = opts.datepicker;
-						option.dateFormat = 'yy-mm-dd';
-						option.minDate = getAttr(ui, 'min');
-						option.maxDate = getAttr(ui, 'max');
-						ui = typeTo(ui, 'text', type).datepicker(option);
+					if (reqDate && (type == 'date')) {
+						if ('datepicker' in ui) {
+							var option = opts.datepicker;
+							option.minDate = getAttr(ui, 'min');
+							option.maxDate = getAttr(ui, 'max');
+							ui = typeTo(ui, 'text', type).datepicker(option);
+						}
+						if ('mask' in ui) {
+							ui.unbind('mask').mask({ mask: opts.maskDate });
+						}
 					}
-
 					// Slider
 					if (reqRange && (type == 'range') && ('slider' in ui)) {
 						var min = attr2num(ui, 'min', 0),
@@ -534,8 +552,8 @@
 									if (date == '' || time == '') {
 										// use min value
 										var min = getLocalDatetime(getAttr(ui0, 'min'), true);
-										if (i == 0 && date != '' && time == '') { ui2.eq(1).val(min[1]); }
-										if (i == 1 && time != '' && date == '') { ui2.eq(0).val(min[0]); }
+										if (i == 0 && date != '' && time == '') { ui2.eq(1).val(min[1]).change().blur(); }
+										if (i == 1 && time != '' && date == '') { ui2.eq(0).val(min[0]).change().blur(); }
 										date = ui2.eq(0).val(), time = ui2.eq(1).val();
 									}
 									// Copy to hidden datetime control
@@ -802,7 +820,8 @@
 
 			date = date.replace(/\b(\d)\b/g, '0$1');
 			var time = (val) ?
-				dt.toString().replace(/.* (\d+:\d+:\d+).*$/, '$1') : '12:00';
+				dt.toString().replace(/.* (\d+:\d+:\d+).*$/, '$1')
+					.replace(/(\d+:\d+):00/, '$1') : '12:00';
 
 			return new Array(date, time);
 		}

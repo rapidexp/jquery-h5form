@@ -6,7 +6,7 @@
 	<title>Test of jQuery.h5form</title>
 
 	<link rel="stylesheet" type="text/css" href="/lib/css/smoothness/jquery-ui-custom.css" />
-	<link rel="stylesheet" type="text/css" href="css/jquery.h5form-2.11.3.css" />
+	<link rel="stylesheet" type="text/css" href="css/jquery.h5form-2.12.0.css" />
 
 	<style style="text/css">
 	  body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
@@ -17,7 +17,8 @@
 	  input[type="number"] { width: 4em; }
 	  input[type="date"], input[type="time"] { width: 6em; }
 	  .h5form-number { width: 4em; }
-	  .h5form-date, .h5form-time { width: 6em; }
+	  .h5form-date { width: 8em; }
+	  .h5form-time { width: 4em; }
 	  .source { position:absolute; display: none; border: 2px solid orange; padding: 5px 10px; color: dimgray; background-color: white; border-radius: 8px; box-shadow: 3px 3px 6px gainsboro; z-index: 3; /*width:400px;*/ }
 	  .source strong { color: firebrick; font-weight: normal; }
 	  h3 sup { font-size: 10px; color: red; }
@@ -27,7 +28,8 @@
 	  header a, footer a { color: yellow; }
 	  section { display: block; margin: 1em; padding-bottom: 2em; }
 
-	  .h5form-datetime input { width: 6em; }
+	  .h5form-datetime input:first { width: 8em; }
+	  .h5form-datetime input:last { width: 4em; }
 	  .h5form-spinNumber button, .h5form-spinTime button { height: 12px; margin-top: 1px; }
 	  .delete  { color: gray; text-decoration: line-through; }
 	  .explanation { color: gray; font-style: italic;  }
@@ -35,16 +37,26 @@
 
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="en/jquery.h5form-2.11.3.js"></script>
+
+	<!-- mask フォーカスで反転するタイプ -->
+	<script type="text/javascript" src="https://raw.github.com/digitalBush/jquery.maskedinput/master/src/jquery.maskedinput.js"></script>
+
+	<script type="text/javascript" src="en/jquery.h5form-2.12.0.js"></script>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 
 <script type="text/javascript">
 $(function() {
 	$('form.h5form').h5form({
-		//addSpin: true,
-		//options: {reqCustomValidity:true,reqRequired:true }
-		//options: { reqPlaceholder: true, reqPattern: true  },
-		//msgPattern: ' '
+		datepicker: {
+			dateFormat: 'yy-mm-dd',
+			autoSize: true,
+			changeMonth: true,
+			changeYear: true,
+			showButtonPanel: true,
+			showOtherMonths: true,
+			constrainInput: false,
+			showOn: 'button'
+		}
 	});
 <?php
 foreach ($_POST as $name => $value):

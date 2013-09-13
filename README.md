@@ -33,6 +33,10 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.12.0 (2013-09-13)
+
+*Use jquery.ui.mask for data states.
+
 ### Version 2.11.4 (2013-09-05)
 
 * Fixed the required attribute in a date state.

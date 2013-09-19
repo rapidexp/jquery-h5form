@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>Test of jQuery.h5form</title>
 
-	<link rel="stylesheet" type="text/css" href="/lib/css/smoothness/jquery-ui-custom.css" />
+	<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css" />
 	<link rel="stylesheet" type="text/css" href="css/jquery.h5form--laster.css" />
 
 	<style style="text/css">
@@ -14,11 +14,7 @@
 
 	  table.sample { width: 90%; margin: auto; }
 	  table.sample th { width: 50%; text-align: left; }
-	  input[type="number"] { width: 4em; }
-	  input[type="date"], input[type="time"] { width: 6em; }
-	  .h5form-number { width: 4em; }
-	  .h5form-date { width: 8em; }
-	  .h5form-time { width: 4em; }
+
 	  .source { position:absolute; display: none; border: 2px solid orange; padding: 5px 10px; color: dimgray; background-color: white; border-radius: 8px; box-shadow: 3px 3px 6px gainsboro; z-index: 3; /*width:400px;*/ }
 	  .source strong { color: firebrick; font-weight: normal; }
 	  h3 sup { font-size: 10px; color: red; }
@@ -28,8 +24,6 @@
 	  header a, footer a { color: yellow; }
 	  section { display: block; margin: 1em; padding-bottom: 2em; }
 
-	  .h5form-datetime input:first { width: 8em; }
-	  .h5form-datetime input:last { width: 4em; }
 	  .h5form-spinNumber button, .h5form-spinTime button { height: 12px; margin-top: 1px; }
 	  .delete  { color: gray; text-decoration: line-through; }
 	  .explanation { color: gray; font-style: italic;  }
@@ -52,7 +46,7 @@ $(function() {
 			autoSize: true,
 			changeMonth: true,
 			changeYear: true,
-			showButtonPanel: true,
+			//showButtonPanel: true,
 			showOtherMonths: true,
 			constrainInput: false,
 			showOn: 'button'

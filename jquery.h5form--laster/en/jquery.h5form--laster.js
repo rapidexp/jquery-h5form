@@ -63,7 +63,8 @@
 			classSpinTime: 'h5form-spinTime',
 			classDatetime: 'h5form-datetime',
 			datepicker: {
-				dateFormat: 'yy-mm-dd'
+				dateFormat: 'yy-mm-dd',
+				onClose: function() { $(this).blur(); }
 			},
 			maskDate: '9999-99-99',
 			maskTime: '99:99',
@@ -365,7 +366,6 @@
 							return false;
 						});
 						if (type == 'time' && ('mask' in ui)) {
-//							ui.unbind('mask').mask({ mask: opts.maskTime });
 							ui.unbind('mask').mask(opts.maskTime);
 						}
 						else {
@@ -396,7 +396,6 @@
 							ui = typeTo(ui, 'text', type).datepicker(option);
 						}
 						if ('mask' in ui) {
-//							ui.unbind('mask').mask({ mask: opts.maskDate });
 							ui.unbind('mask').mask(opts.maskDate);
 						}
 					}
@@ -595,7 +594,7 @@
 //# NUMBER
 							(reqNumber && type == 'number') ||
 //# DATETIME
-							(reqDate && type == 'date') || (reqTime && type == 'time') ||
+							((reqDateTimeLocal || reqDateTime) && (type == 'date' || type == 'time')) ||
 //# NUMBER|DATETIME
 							false) {
 							isNecessary = true;

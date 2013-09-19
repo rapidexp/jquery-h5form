@@ -366,7 +366,7 @@
 							return false;
 						});
 						if (type == 'time' && ('mask' in ui)) {
-							ui.unbind('mask').mask({ mask: opts.maskTime });
+							ui.unbind('mask').mask(opts.maskTime);
 						}
 						else {
 							ui.unbind('keydown', evKeydown).keydown(evKeydown);
@@ -396,7 +396,7 @@
 							ui = typeTo(ui, 'text', type).datepicker(option);
 						}
 						if ('mask' in ui) {
-							ui.unbind('mask').mask({ mask: opts.maskDate });
+							ui.unbind('mask').mask(opts.maskDate);
 						}
 					}
 //# NUMBER
@@ -594,7 +594,7 @@
 //# NUMBER
 							(reqNumber && type == 'number') ||
 //# DATETIME
-							(reqDate && type == 'date') || (reqTime && type == 'time') ||
+							((reqDateTimeLocal || reqDateTime) && (type == 'date' || type == 'time')) ||
 //# NUMBER|DATETIME
 							false) {
 							isNecessary = true;

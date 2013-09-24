@@ -57,7 +57,7 @@ foreach ($_POST as $name => $value):
 	if (preg_match('/test-/', $name)):
 	$response = '$_POST = ' . str_replace(array("'", "\n", '  '), array("\\'", '<br>', '&nbsp;&nbsp;'), print_r($_POST, 1));
 ?>
-		$('#<?php echo $name ?>').before('<span class="h5form-response"><p><?php echo $response ?></p></span>');
+		$('#<?php echo $name ?>').before('<span class="h5form-response"><p class="h5form"><?php echo $response ?></p></span>');
 <?php endif; endforeach;?>
 
 	$('table.sample td').hover(
@@ -678,7 +678,7 @@ foreach ($_POST as $name => $value):
 			  <input type="text" name="name" value="" autocomplete="off" list="list-12a">
 			  <button type="submit" name="test-12" value="submit">button</button>
 
-			  <datalist id="list-12a"><br>
+			  <datalist id="list-12a">
 				<select>
 				  <option value="Apple"></option>
 				  <option value="Avocado"></option>

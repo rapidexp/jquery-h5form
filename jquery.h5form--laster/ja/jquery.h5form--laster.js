@@ -161,7 +161,7 @@
 		var typeTo = function(ui, type, orgType) {
 			var	at = ui.get(0).attributes,
 				ui2 = $('<input type="' + type + '">'),
-				flg = ['required', 'disabled', 'readonly', 'checked'];
+				flg = ['required', /*'disabled',*/ 'readonly', 'checked'];
 
 			for (i = at.length - 1; i >= 0; i--) {
 				name = at[i].nodeName;

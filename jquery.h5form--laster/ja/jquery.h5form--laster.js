@@ -254,7 +254,8 @@
 				ui.before('<span class="' + name + '"></span>');
 				$(opts.exprBehind).attr('disabled', 'disabled');
 			}
-			ui.prev().html('<p>' + message.replace(/\n/, '<br/>') + '</p>');
+			ui.prev().html('<p class="h5form">' +
+						   message.replace(/\n/, '<br/>') + '</p>');
  			ui.focus().select();	// focus only does not work in IE
 		};
 		$.fn.h5form.showBalloon = showBalloon;

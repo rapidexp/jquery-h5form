@@ -30,11 +30,10 @@
 	  sup { color: red; }
 	  pre.source { margin: 1em; padding: 1em; border: 1px solid gray; overflow: auto; background-color: whitesmoke; }
 	  pre.source .tag { color: teal; }
-	  pre.source .key { color: darkorange; }
 	  pre.source .name { color: blue; }
 	  pre.source .func { color: darkblue; }
 	  pre.source .str { color: purple; }
-	  pre.source .comm { color: green; }
+	  pre.source .comm { color: darkorange; }
 	  #history h3 { font-size: 100%; }
 	  #download form { border: 1px solid dimgray; padding: 1em; margin: 1em;  }
 	  label { white-space: nowrap; }
@@ -57,11 +56,11 @@ $(function() {
 		content = content.replace(/('[^\']*')/g, '<span class="str">$1</span>');
 
 		content = content.replace(/(\&lt;[a-z0-9\/])/g, '<span class="tag">$1');
+		content = content.replace(/(\&lt;!)/g, '<span class="comm">$1');
 		content = content.replace(/(\&gt;)/g, '$1</span>');
 
-		content = content.replace(/(function)/g, '<span class="name">$1</span>');
+		content = content.replace(/(function|true|false)/g, '<span class="name">$1</span>');
 		content = content.replace(/([a-z0-9]+)\(/g, '<span class="func">$1</span>(');
-		content = content.replace(/( [a-z-]+): /ig, '<span class="key">$1</span>: ');
 		content = content.replace(/(\/\/ .+)\n/g, '<span class="comm">$1</span>\n');
 		$(this).html(content);
 	});
@@ -606,7 +605,8 @@ $(function() {
 
 		<dt>*2</dt>
 		<dd>IE 9 は Datalist 要素の Option 子要素を DOM に読み込みません。
-		  IE 9でも動作するようにするには、Datalist &gt; select &gt; option の構造にする必要があります。</dd>
+		  IE 9でも動作するようにするには、Datalist に data-option 属性に json で配列を追加してください。
+		  デモとテストフォームを参照してください。</dd>
 
 		<dt>*3</dt>
 		<dd>jQuery UI を使えば対応は難しくありません。これらの状態も必要ですか？</dd>
@@ -702,20 +702,14 @@ $(function() {
 	  </p>
 
  <pre class="source">
-&lt;link rel="stylesheet" type="text/css" href="css/jquery.h5form--laster.css" /&gt;
+&lt;link type="text/css" href="/css/jquery.h5form--laster.css" /&gt;
 &lt;script type="text/javascript"
   src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript"
-  src="jquery.h5form--laster.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/js/jquery.h5form--laster.min.js"&gt;&lt;/script&gt;
 
 &lt;script type="text/javascript"&gt;
 $(function() {
-  $('form').h5form({
-    msgEmpty: '入力してください。',
-    msgUnselect: 'いずれかのオプションを選択してください。',
-    msgUncheck: 'チェックボックスをチェックしてください。',
-    msgPattern: '必要なパターンに一致してません。'
-  });
+  $('form').h5form();
 });
 &lt;/script&gt;
 </pre>
@@ -732,7 +726,7 @@ $(function() {
 	  </p>
 
 <pre class="source">
-&lt;link rel="stylesheet" type="text/css"
+&lt;link type="text/css"
   href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css" /&gt;
 &lt;script type="text/javascript"
   src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"&gt;&lt;/script&gt;
@@ -1111,7 +1105,7 @@ $('form').h5form({
 		  <td>
 			<div style="color:red">
 			  &lt;span class="h5form-response"&gt;<br>
-			&nbsp;&nbsp;&lt;p class="h5form"&gt;Please enter this field.&lt;/p&gt;<br>
+			&nbsp;&nbsp;&lt;p&gt;Please enter this field.&lt;/p&gt;<br>
 			  &lt;/span&gt;
 			</div>
 			&lt;input type="text" name="company" required&gt;<br>
@@ -1145,6 +1139,70 @@ $('form').h5form({
 	  </table>
 	</section>
 
+
+	<section id="recommendation">
+	  <h2>Recommendation</h2>
+
+	  <p>
+		Datetime 状態まで HTML5 フォームをフル活用する場合の推奨設定を以下に示します。
+	  </p>
+
+<pre class="source">
+&lt;!-- Style sheets --&gt;
+&lt;link type="text/css"
+  href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css" /&gt;
+&lt;link type="text/css" href="/css/jquery.h5form--laster.css" /&gt;
+
+&lt;!-- jquery & jquery ui --&gt;
+&lt;script type="text/javascript"
+  src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"
+  src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/js/jquery.ui.datepicker-ja.js"&gt;&lt;/script&gt;
+
+&lt;!-- mask & h5form --&gt;
+&lt;script type="text/javascript" src="/js/jquery.maskedinput.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/js/jquery.h5form--laster.min.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript"&gt;
+$(function() {
+  $('form').h5form({
+    // メッセージを再定義しブラウザ間で UI を統一
+    msgEmpty: 'このフィールドを入力してください。',
+    msgUnselect: 'いずれかのオプションを選択してください。',
+    msgUncheck: 'チェックボックスをチェックしてください。',
+    msgPattern: '必用なパターンに一致していません。',
+    msgEmail: 'メールアドレスが正しくありません。',
+    msgUrl: 'URLが正しくありません。',
+    msgNumber: '数値で入力してください。',
+    msgDatetime: '日時が正しくありません。',
+    msgDate: '日付が正しくありません。',
+    msgTime: '時刻が正しくありません。',
+    msgStep: '値の刻みが正しくありません。',
+    msgMin: '# 以上で指定してください。',
+    msgMax: '# 以下で指定してください。',
+    msgMaxlen: '指定の文字数上限より # 文字多いです。',
+    // カレンダーは jquery ui を使用しブラウザ間で UI を統一
+    options: {
+      reqDateTimeLocal: true,
+      reqDateTime: true,
+      reqDate: true,
+      reqTime: true
+    },
+    // カレンダーオプション（任意）
+    datepicker: {
+      autoSize: true,
+      changeMonth: true,
+      changeYear: true,
+      showOn: 'button'
+    }
+  });
+});
+&lt;/script&gt;
+</pre>
+	</section>
+
+
 	<section id="thanks">
 	  <h2>Thanks</h2>
 
@@ -1167,6 +1225,7 @@ $('form').h5form({
 	  <ul>
 		<li>Chrome の Datetime-local 状態のバグをフィックス</li>
 		<li>Datepicker のオプション初期値を編集</li>
+		<li>IE9 における Datalist の回避方法を再修正</li>
 		<li>スタイルシートを編集</li>
 		<li>日本語版のスクリプトが最新でなかった</li>
 	  </ul>

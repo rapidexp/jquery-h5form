@@ -30,11 +30,10 @@
 	  sup { color: red; }
 	  pre.source { margin: 1em; padding: 1em; border: 1px solid gray; overflow: auto; background-color: whitesmoke; }
 	  pre.source .tag { color: teal; }
-	  pre.source .key { color: darkorange; }
 	  pre.source .name { color: blue; }
 	  pre.source .func { color: darkblue; }
 	  pre.source .str { color: purple; }
-	  pre.source .comm { color: green; }
+	  pre.source .comm { color: darkorange; }
 	  #history h3 { font-size: 100%; }
 	  #download form { border: 1px solid dimgray; padding: 1em; margin: 1em;  }
 	  label { white-space: nowrap; }
@@ -56,12 +55,12 @@ $(function() {
 		content = content.replace(/("[^\"]*")/g, '<span class="str">$1</span>');
 		content = content.replace(/('[^\']*')/g, '<span class="str">$1</span>');
 
-		content = content.replace(/(\&lt;[a-z\/])/g, '<span class="tag">$1');
+		content = content.replace(/(\&lt;[a-z0-9\/])/g, '<span class="tag">$1');
+		content = content.replace(/(\&lt;!)/g, '<span class="comm">$1');
 		content = content.replace(/(\&gt;)/g, '$1</span>');
 
-		content = content.replace(/(function)/g, '<span class="name">$1</span>');
+		content = content.replace(/(function|true|false)/g, '<span class="name">$1</span>');
 		content = content.replace(/([a-z0-9]+)\(/g, '<span class="func">$1</span>(');
-		content = content.replace(/( [a-z-]+): /ig, '<span class="key">$1</span>: ');
 		content = content.replace(/(\/\/ .+)\n/g, '<span class="comm">$1</span>\n');
 		$(this).html(content);
 	});
@@ -612,7 +611,8 @@ $(function() {
 
 		<dt>*2</dt>
 		<dd>IE 9 does not read childen of the datalist to DOM.
-			You should insert a select between the datalist and the options, if you need.</dd>
+		  You should insert a data-option attribute encoded to json in the datalist.
+		  See the demo and testing form.</dd>
 
 		<dt>*3</dt>
 		<dd>It is not difficult to support using the jQuery UI. Do you want these states?</dd>
@@ -706,20 +706,14 @@ $(function() {
 	  </p>
 
 <pre class="source">
-&lt;link rel="stylesheet" type="text/css" href="css/jquery.h5form--laster.css" /&gt;
+&lt;link type="text/css" href="/css/jquery.h5form--laster.css" /&gt;
 &lt;script type="text/javascript"
   src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript"
-  src="jquery.h5form--laster.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/js/jquery.h5form--laster.min.js"&gt;&lt;/script&gt;
 
 &lt;script type="text/javascript"&gt;
 $(function() {
-  $('form').h5form({
-    msgEmpty: 'Please enter this field.',
-    msgUnselect: 'Please select an item.',
-    msgUncheck: 'Please check this checkbox.',
-    msgPattern: 'Does not match the required pattern.'
-  });
+  $('form').h5form();
 });
 &lt;/script&gt;
 </pre>
@@ -736,7 +730,7 @@ $(function() {
 	  </p>
 
 <pre class="source">
-&lt;link rel="stylesheet" type="text/css"
+&lt;link type="text/css"
   href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css" /&gt;
 &lt;script type="text/javascript"
   src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"&gt;&lt;/script&gt;
@@ -1116,7 +1110,7 @@ $('form').h5form({
 		  <td>
 			<div style="color:red">
 			  &lt;span class="h5form-response"&gt;<br>
-			&nbsp;&nbsp;&lt;p class="h5form"&gt;Please enter this field.&lt;/p&gt;<br>
+			&nbsp;&nbsp;&lt;p&gt;Please enter this field.&lt;/p&gt;<br>
 			  &lt;/span&gt;
 			</div>
 			&lt;input type="text" name="company" required&gt;<br>
@@ -1151,6 +1145,68 @@ $('form').h5form({
 	</section>
 
 
+	<section id="recommendation">
+	  <h2>Recommendation</h2>
+
+	  <p>
+		The following recommended setting will allow you make the most of HTML5 such as date-time states.
+	  </p>
+
+<pre class="source">
+&lt;!-- Style sheets --&gt;
+&lt;link type="text/css"
+  href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css" /&gt;
+&lt;link type="text/css" href="/css/jquery.h5form--laster.css" /&gt;
+
+&lt;!-- jquery & jquery ui --&gt;
+&lt;script type="text/javascript"
+  src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"
+  src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"&gt;&lt;/script&gt;
+
+&lt;!-- mask & h5form --&gt;
+&lt;script type="text/javascript" src="/js/jquery.maskedinput.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/js/jquery.h5form--laster.min.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript"&gt;
+$(function() {
+  $('form').h5form({
+    // Unify UI between browsers with messages defined here.
+    msgEmpty: 'Please enter this field.',
+    msgUnselect: 'Please select an item.',
+    msgUncheck: 'Please check this checkbox.',
+    msgPattern: 'Does not match the required pattern.',
+    msgEmail: 'E-mail address is not correct.',
+    msgUrl: 'URL is not correct.',
+    msgNumber: 'Number is not correct.',
+    msgDatetime: 'Date time is not correct.',
+    msgDate: 'Date is not correct.',
+    msgTime: 'Time is not correct.',
+    msgStep: 'Step is not correct.',
+    msgMin: 'Please be greater than or equal to #.',
+    msgMax: 'Please be less than or equal to #.',
+    msgMaxlen: 'Too many # characters.',
+    // Unify UI between browsers with a calendar of jquery ui.
+    options: {
+      reqDateTimeLocal: true,
+      reqDateTime: true,
+      reqDate: true,
+      reqTime: true
+    },
+    // Calendar option (voluntarily)
+    datepicker: {
+      autoSize: true,
+      changeMonth: true,
+      changeYear: true,
+      showOn: 'button'
+    }
+  });
+});
+&lt;/script&gt;
+</pre>
+	</section>
+
+
 	<section id="thanks">
 	  <h2>Thanks</h2>
 
@@ -1174,6 +1230,7 @@ $('form').h5form({
 	  <ul>
 		<li>Fixed a bug of the datetime-local state with the Chrome.</li>
 		<li>Modified default values of the datapicker option.</li>
+		<li>Modified about a datalist to make work with IE 9.</li>
 		<li>Modified the style sheet.</li>
 		<li>The script of the Japanese edition was not latest.</li>
 	  </ul>

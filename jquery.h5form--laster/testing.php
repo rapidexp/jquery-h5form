@@ -33,7 +33,7 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 
 	<!-- mask フォーカスで反転するタイプ -->
-	<script type="text/javascript" src="https://raw.github.com/digitalBush/jquery.maskedinput/master/src/jquery.maskedinput.js"></script>
+	<script type="text/javascript" src="/lib/jquery.maskedinput.js"></script>
 
 	<script type="text/javascript" src="en/jquery.h5form--laster.js"></script>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -47,8 +47,8 @@ $(function() {
 			changeMonth: true,
 			changeYear: true,
 			//showButtonPanel: true,
-			showOtherMonths: true,
-			constrainInput: false,
+			//showOtherMonths: true,
+			//constrainInput: false,
 			showOn: 'button'
 		}
 	});
@@ -57,7 +57,7 @@ foreach ($_POST as $name => $value):
 	if (preg_match('/test-/', $name)):
 	$response = '$_POST = ' . str_replace(array("'", "\n", '  '), array("\\'", '<br>', '&nbsp;&nbsp;'), print_r($_POST, 1));
 ?>
-		$('#<?php echo $name ?>').before('<span class="h5form-response"><p class="h5form"><?php echo $response ?></p></span>');
+		$('#<?php echo $name ?>').before('<span class="h5form-response"><p><?php echo $response ?></p></span>');
 <?php endif; endforeach;?>
 
 	$('table.sample td').hover(
@@ -663,7 +663,7 @@ foreach ($_POST as $name => $value):
 
 	  <p>
 		Even with the plugin, this feature is not available in IE 9. Because it does not read childen of the datalist to DOM.<br>
-		To make work even IE 9, you sould insert a select between the datalist and the options.
+		To make work even IE 9, you should append a data-option attribute encoded to json in the datalist.
 	  </p>
 
 	  <table class="sample">
@@ -679,60 +679,54 @@ foreach ($_POST as $name => $value):
 			  <button type="submit" name="test-12" value="submit">button</button>
 
 			  <datalist id="list-12a">
-				<select>
-				  <option value="Apple"></option>
-				  <option value="Avocado"></option>
-				  <option value="Lemon"></option>
-				  <option value="Orange"></option>
-				  <option value="Strawberry"></option>
-				</select>
+				<option value="Apple"></option>
+				<option value="Avocado"></option>
+				<option value="Lemon"></option>
+				<option value="Orange"></option>
+				<option value="Strawberry"></option>
 			  </datalist>
 
 			</form>
 <pre class="source" style="display:none">
 &lt;form action="#test-12" method="post"&gt;
-  &lt;input type="text" name="name" value="" <strong>autocomplete="off" list="list-12"</strong>&gt;
+  &lt;input type="text" name="name" value=""
+    <strong>autocomplete="off" list="list-12"</strong>&gt;
   &lt;button type="submit" name="test-12" value="submit"&gt;button&lt;/button&gt;
   <strong>&lt;datalist id="list-12"&gt;</strong>
-	<strong>&lt;select&gt;</strong>
-	  &lt;option value="Apple"&gt;&lt;/option&gt;
-	  &lt;option value="Avocado"&gt;&lt;/option&gt;
-	  &lt;option value="Lemon"&gt;&lt;/option&gt;
-	  &lt;option value="Orange"&gt;&lt;/option&gt;
-	  &lt;option value="Strawberry"&gt;&lt;/option&gt;
-	<strong>&lt;/select&gt;</strong>
+    &lt;option value="Apple"&gt;&lt;/option&gt;
+    &lt;option value="Avocado"&gt;&lt;/option&gt;
+    &lt;option value="Lemon"&gt;&lt;/option&gt;
+    &lt;option value="Orange"&gt;&lt;/option&gt;
+    &lt;option value="Strawberry"&gt;&lt;/option&gt;
   &lt;/datalist&gt;
 &lt;/form&gt;
 </pre>
 		  </td>
 
-
 		  <td>
 			<form action="#test-12" method="post" class="h5form">
 			  <input type="text" name="name" value="" autocomplete="off" list="list-12b">
 			  <button type="submit" name="test-12" value="submit">button</button>
-			  <datalist id="list-12b">
-				<select>
-				  <option value="Apple"></option>
-				  <option value="Avocado"></option>
-				  <option value="Lemon"></option>
-				  <option value="Orange"></option>
-				  <option value="Strawberry"></option>
-				</select>
+			  <datalist id="list-12b" data-option='["Apple","Avocado","Lemon","Orange","Strawberry"]'>
+				<option value="Apple"></option>
+				<option value="Avocado"></option>
+				<option value="Lemon"></option>
+				<option value="Orange"></option>
+				<option value="Strawberry"></option>
 			  </datalist>
 			</form>
 <pre class="source" style="display:none">
 &lt;form action="#test-12" method="post" <strong>class="h5form"</strong>&gt;
-  &lt;input type="text" name="name" value="" <strong>autocomplete="off" list="list-12"</strong>&gt;
+  &lt;input type="text" name="name" value=""
+    <strong>autocomplete="off" list="list-12"</strong>&gt;
   &lt;button type="submit" name="test-12" value="submit"&gt;button&lt;/button&gt;
-  <strong>&lt;datalist id="list-12"&gt;</strong>
-	<strong>&lt;select&gt;</strong>
-	  &lt;option value="Apple"&gt;&lt;/option&gt;
-	  &lt;option value="Avocado"&gt;&lt;/option&gt;
-	  &lt;option value="Lemon"&gt;&lt;/option&gt;
-	  &lt;option value="Orange"&gt;&lt;/option&gt;
-	  &lt;option value="Strawberry"&gt;&lt;/option&gt;
-	<strong>&lt;/select&gt;</strong>
+  <strong>&lt;datalist id="list-12"</strong>
+    <strong>data-option='["Apple","Avocado","Lemon","Orange","Strawberry"]'&gt;</strong>
+    &lt;option value="Apple"&gt;&lt;/option&gt;
+    &lt;option value="Avocado"&gt;&lt;/option&gt;
+    &lt;option value="Lemon"&gt;&lt;/option&gt;
+    &lt;option value="Orange"&gt;&lt;/option&gt;
+    &lt;option value="Strawberry"&gt;&lt;/option&gt;
   &lt;/datalist&gt;
 &lt;/form&gt;
 </pre>

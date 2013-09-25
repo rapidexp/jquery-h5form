@@ -116,7 +116,7 @@
 
 		$('input:last').remove();
 
-		var validatable = ':input:enabled:not(:button, :submit)';
+		var validatable = ':input:enabled:not(:button, :submit, [type="hidden"])';
 //# REQUIRED|PATTERN|NUMBER|DATETIME|EMAILURL|MAXLENGTH|BALLOON
 		// clear balloons
 		if ('on' in $(document)) {
@@ -254,7 +254,7 @@
 				ui.before('<span class="' + name + '"></span>');
 				$(opts.exprBehind).attr('disabled', 'disabled');
 			}
-			ui.prev().html('<p class="h5form">' +
+			ui.prev().html('<p>' +
 						   message.replace(/\n/, '<br/>') + '</p>');
  			ui.focus().select();	// focus only does not work in IE
 		};
@@ -475,12 +475,17 @@
 //# AUTOCOMPLETE
 					if ((reqDatalist) &&
 						(list = getAttr(ui, 'list')) &&
+						(list = $('#' + list)) &&
 						('autocomplete' in ui))
 					{
 						var arr = new Array();
-						$('datalist#' + list).find('option').each(function() {
-							arr.push($(this).val());
-						});
+						if (list.find('option').length) {
+							list.find('option').each(function() {
+								arr.push($(this).val());
+							});
+						} else if (str = list.attr('data-option')) {
+							arr = $.parseJSON(str);
+						}
 						// Avoid conflicts with the browser
 						ui.removeAttr('list');
 

@@ -16,7 +16,7 @@
 	z-index: 1000;
 	-border-top-color: white; /* for IE6 */
 }
-.h5form-response p.h5form {
+.h5form-response p {
 	float:left;
 	text-align: left;
 	margin: 0 -400px -20px -20px;
@@ -40,7 +40,7 @@
 	z-index: 1000;
 	-border-top-color: white; /* for IE6 */
 }
-.h5form-reversed p.h5form {
+.h5form-reversed {
 	float:right;
 	text-align: left;
 	margin: 0 -40px -20px -400px;

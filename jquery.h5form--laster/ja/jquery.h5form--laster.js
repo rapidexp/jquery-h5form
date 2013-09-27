@@ -68,6 +68,7 @@
 			},
 			maskDate: '9999-99-99',
 			maskTime: '99:99',
+			msgSpin: 'Shiftを押すと１時間、Ctrlを押すと細かく増減します。',
 //#
 			options: {},
 			dynamicHtml: '.h5form-dynamic'
@@ -283,13 +284,21 @@
 			 * @param {bool} isDown	- isDown.
 			 * @return {object}		-- this.
 			 */
+			var spinShift = false,
+				spinCtrl = false;
 			var spin = function(ui, isDown) {
 				var	isNumber = (ui.hasClass('h5form-number')),
 					min = attr2num(ui, 'min', (isNumber) ? '' : 0),
 					max = attr2num(ui, 'max', (isNumber) ? '' : 86400),
-					step = attr2num(ui, 'step', (isNumber) ? 1 : 60),
+					step = step0 = attr2num(ui, 'step', (isNumber) ? 1 : 60),
 					base = (isNumber) ? min : 0,
 					val = (isNumber) ? Number(ui.val()) : str2sec(ui.val(), true);
+
+				if (!isNumber) {
+					if (spinShift) step = 3600;
+					else if (spinCtrl) step = step0;
+					else step = (step0 < 600) ? 600 : step0;
+				}
 
 				val = val - ((val - base) % step) + step * ((isDown) ? -1 : 1);
 
@@ -359,6 +368,11 @@
 						}
 
 						// Keydown event attach
+						var spinAcc = (function(ev, flag) {
+							var cc = ev.charCode || ev.keyCode;
+							if (cc == 17) spinCtrl = flag;
+							if (cc == 16) spinShift = flag;
+						});
 						var evKeydown = (function(ev) {
 							var cc = ev.charCode || ev.keyCode;
 							if (cc == 38) spin(ui, 0);
@@ -379,11 +393,15 @@
 									 '<button type="button">&or;</button></span>');
 
 							// Click button
-							ui.next().children().click(function() {
+							ui.next().children()
+							.attr('title', opts.msgSpin)
+							.click(function() {
 								spin(ui, ui.next().children().index($(this))).change().blur();
 								// change for Chrome
 								// blur for mask
-							});
+							})
+							.keydown(function(ev) { spinAcc(ev, true); })
+							.keyup(function(ev) { spinAcc(ev, false); });
 						}
 					}
 
@@ -853,7 +871,7 @@
 		}
 //# NUMBER|DATETIME
 		function validateStep(item, min, step) {
-			min = (getAttr(item, 'type').toLowerCase().indexOf('datetime')) ?
+			min = (getAttr(item, 'class').toLowerCase().indexOf('datetime')) ?
 				attr2num(item, 'min', min) : attr2num(item, '', min);
 			step = attr2num(item, 'step', step);
 			var val = attr2num(item, 'val', '');
@@ -927,6 +945,7 @@
 		}
 		function utc2js(val) {
 			return val.replace(/-/g, '/').replace(/T/, ' ').replace(/Z/, ' GMT')
+				.replace(/^(\d+\/\d+\/\d+)$/, '$1 GMT')
 				.replace(/([+-])(\d+):(\d+)/, ' GMT$1$2$3');
 		}
 		function getTZ()

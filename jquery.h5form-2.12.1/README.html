@@ -1,56 +1,71 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>jQuery.h5form - HTML5 Forms Plugin</title>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
-	<style style="text/css">
-	  body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
-	  header { display: block; color: white; background-color: black; padding: 1em 2em;  }
-	  header a { color: yellow; }
-	  header #lang { position: absolute; top: 1em; right: 2em; }
-	  header #lang li { display: inline-block; margin-left: 1em; }
-	  footer { display: block; margin-top: 6em; padding: 1em; color: white; background-color: black; }
-	  footer a { color: yellow; }
-	  section { display: block; margin: 1em; padding-bottom: 2em; }
+<style>
+body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
+header { display: block; color: white; background-color: black; padding: 1em 2em;  }
+header a { color: yellow; }
+header #lang { position: absolute; top: 1em; right: 2em; }
+header #lang li { display: inline-block; margin-left: 1em; }
+footer { display: block; margin-top: 6em; padding: 1em; color: white; background-color: black; }
+footer a { color: yellow; }
+section { display: block; margin: 1em; padding-bottom: 2em; }
 
-	  table.solid { border-collapse: collapse;  border: 2px solid gray;  margin: 1em 0; }
-	  table.solid td, table.solid th { border: 1px solid silver; font-weight: normal;  }
-	  table.solid thead th { text-align: center; background-color: dimgray; color: white; }
-	  table.solid tbody th { text-align: left; padding: 0 0.5em;   }
+table.solid { border-collapse: collapse;  border: 2px solid gray;  margin: 1em 0; }
+table.solid td, table.solid th { border: 1px solid silver; font-weight: normal;  }
+table.solid thead th { text-align: center; background-color: dimgray; color: white; }
+table.solid tbody th { text-align: left; padding: 0 0.5em;   }
 
-	  table.support tbody td { text-align: center; width:4em;  }
-	  table.options tbody td { text-align: left; padding: 0.5em; vertical-align: top;  }
+table.support tbody td { text-align: center; width:4em;  }
+table.options tbody td { text-align: left; padding: 0.5em; vertical-align: top;  }
 
-	  dl.note * { margin: 0; padding: 0; line-height: 1.5em; font-size: smaller; }
-	  dl.note dd { position: relative; top:-1.5em; margin-left: 2em; margin-bottom: -1.5em; }
-	  sup { color: red; }
-	  pre.source { margin: 1em; padding: 1em; border: 1px solid gray; overflow: auto; background-color: whitesmoke; }
-	  pre.source .tag { color: teal; }
-	  pre.source .name { color: blue; }
-	  pre.source .str { color: purple; }
-	  pre.source .comm { color: green; }
-	  #history h3 { font-size: 100%; }
-	  #download form { border: 1px solid dimgray; padding: 1em; margin: 1em;  }
-	  label { white-space: nowrap; }
-	  ins { font-style: italic; text-decoration: none; }
+dl.note * { margin: 0; padding: 0; line-height: 1.5em; font-size: smaller; }
+dl.note dd { position: relative; top:-1.5em; margin-left: 2em; margin-bottom: -1.5em; }
+sup { color: red; }
+pre.source { margin: 1em; padding: 1em; border: 1px solid gray; overflow: auto; background-color: whitesmoke; }
+pre.source .tag { color: teal; }
+pre.source .name { color: blue; }
+pre.source .func { color: darkblue; }
+pre.source .str { color: purple; }
+pre.source .comm { color: darkorange; }
+#history h3 { font-size: 100%; }
+#download form { border: 1px solid dimgray; padding: 1em; margin: 1em;  }
+label { white-space: nowrap; }
+ins { font-style: italic; text-decoration: none; }
 
-	  table.source { border-collapse: collapse;  border: 2px solid gray;  margin: 1em 0; }
-	  table.source th { border: 1px solid silver; width:33%; }
-	  table.source td { border: 1px solid silver; padding: 1em; vertical-align: top; }
-	</style>
+table.source { border-collapse: collapse;  border: 2px solid gray;  margin: 1em 0; }
+table.source th { border: 1px solid silver; width:33%; }
+table.source td { border: 1px solid silver; padding: 1em; vertical-align: top; }
+</style>
 
-	<script type="text/javascript">
-		$(function() {
-			$('table.support tbody td').each(function() {
-				if ($(this).text() == 'E') $(this).css({color: 'blue', fontWeight: 'bold'});
-				if ($(this).text() == 'x') $(this).css({color: 'red'});
-			});
-		});
-	</script>
+<script>
+$(function() {
+	$('table.support tbody td').each(function() {
+		if ($(this).text() == 'E') $(this).css({color: 'blue', fontWeight: 'bold'});
+		if ($(this).text() == 'x') $(this).css({color: 'red'});
+	});
+	$('pre.source').each(function() {
+		var content = $(this).html();
+		content = content.replace(/("[^\"]*")/g, '<span class="str">$1</span>');
+		content = content.replace(/('[^\']*')/g, '<span class="str">$1</span>');
+
+		content = content.replace(/(\&lt;[a-z0-9\/])/g, '<span class="tag">$1');
+		content = content.replace(/(\&lt;!)/g, '<span class="comm">$1');
+		content = content.replace(/(\&gt;)/g, '$1</span>');
+
+		content = content.replace(/(function|true|false)/g, '<span class="name">$1</span>');
+		content = content.replace(/([a-z0-9]+)\(/g, '<span class="func">$1</span>(');
+		content = content.replace(/(\/\/ .+)\n/g, '<span class="comm">$1</span>\n');
+		$(this).html(content);
+	});
+});
+</script>
 
   <?php  if (file_exists('../site.inc.php')) include '../site.inc.php'; ?>
   </head>
@@ -106,7 +121,7 @@
 
 	  <p style="margin-left: 2em;">
 		&gt;&gt; <a style="font-size: larger; font-weight: bolder;" href="./testing.php" target="_blank">Demo and testing form is here!</a>
-		<img src="balloon-1.png" alt="" style="vertical-align: top;" />
+		<img src="balloon-1.png" alt="" style="vertical-align: top;">
 	  </p>
 
 	  <table class="solid support">
@@ -596,7 +611,8 @@
 
 		<dt>*2</dt>
 		<dd>IE 9 does not read childen of the datalist to DOM.
-			You should insert a select between the datalist and the options, if you need.</dd>
+		  You should insert a data-option attribute encoded to json in the datalist.
+		  See the demo and testing form.</dd>
 
 		<dt>*3</dt>
 		<dd>It is not difficult to support using the jQuery UI. Do you want these states?</dd>
@@ -632,7 +648,7 @@
 
 	  <p>
 		Please download
-		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.11.4.zip" target="_blank">jquery.h5form-2.11.4.zip</a>
+		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.12.1.zip" target="_blank">jquery.h5form-2.12.1.zip</a>
 	  </p>
 
 
@@ -649,7 +665,7 @@
 	  <p>
 		And if you wish, you can get a smaller size javascript by removing unnecessary features.<br>
 		Please uncheck the unnecessary features and click the download button.
-		Oh yes, you must have the <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.11.4/css/jquery.h5form-2.11.4.css" target="_blank">style sheet</a> included in the archive above to the other.
+		Oh yes, you must have the <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.12.1/css/jquery.h5form-2.12.1.css" target="_blank">style sheet</a> included in the archive above to the other.
 	  </p>
 
 	  <p>
@@ -690,22 +706,15 @@
 	  </p>
 
 <pre class="source">
-<span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span> href=<span class="str">"css/jquery.h5form-2.11.4.css"</span> /&gt;</span>
-<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
-  src=<span class="str">"https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"</span>&gt;&lt;/script&gt;</span>
-<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
-  src=<span class="str">"jquery.h5form-2.11.4.min.js"</span>&gt;&lt;/script&gt;</span>
+&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.1.css"&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form-2.12.1.min.js"&gt;&lt;/script&gt;
 
-<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>&gt;</span>
-$(<span class="name">function</span>() {
-  $(<span class="str">'form'</span>).h5form({
-    msgEmpty: <span class="str">'Please enter this field.'</span>,
-    msgUnselect: <span class="str">'Please select an item.'</span>,
-    msgUncheck: <span class="str">'Please check this checkbox.'</span>,
-    msgPattern: <span class="str">'Does not match the required pattern.'</span>
-  });
+&lt;script&gt;
+$(function() {
+  $('form').h5form();
 });
-<span class="tag">&lt;/script&gt;</span>
+&lt;/script&gt;
 </pre>
 
 
@@ -720,12 +729,26 @@ $(<span class="name">function</span>() {
 	  </p>
 
 <pre class="source">
-<span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span>
-  href=<span class="str">"../../css/smoothness/jquery-ui-custom.css"</span> /&gt;</span>
-<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
-  src=<span class="str">"https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"</span>&gt;&lt;/script&gt;</span>
+&lt;link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css"&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"&gt;&lt;/script&gt;
 </pre>
 
+	  <p>
+		Furthermore, you can use it in date-time states if a mask plugin is installed.<br>
+		The mask plugin must be defined as `$(expr).mask(options)`.
+		Please define the following rapper as needed before h5from.
+	  </p>
+
+<pre class="source">
+$.fn.mask = function(opt) { $(this).mymask(opt); };
+$('form').h5form({
+  maskDate: { mask: '####-##-##' },
+  maskTime: { mask: '##:##' },
+  datepicker: {
+    showOn: 'button'
+  }
+});
+</pre>
 
 	  <h3>CSS</h3>
 
@@ -735,8 +758,8 @@ $(<span class="name">function</span>() {
 	  </p>
 
 <pre class="source">
-[type="number"], <span style="color: red;">.h5form-number</span> {
-	font-weight: bold;
+[type="number"], <b>.h5form-number</b> {
+  font-weight: bold;
 }
 </pre>
 
@@ -781,11 +804,11 @@ $(<span class="name">function</span>() {
 			<td>'Please enter this field.'</td>
 			<td rowspan="14">
 			  The error messages by the plugin.<br>
+			  <br>
 			  If an element have a title attribute, the title sting is appended after these messages.<br>
 			  When you want to make only title message, please set a space character as error message.<br>
 			  <br>
 			  In the msgMaxlen, the msgMin and the msgMax, # is replaced by the value.<br>
-			  If the element has a title attribute, it is appended to these messages.<br>
 			  <br>
 			  In the modern browser, it replaces a peculiar message with these.<br>
 			  Thus you can offer the user interface that is common to all browsers.
@@ -859,12 +882,25 @@ $(<span class="name">function</span>() {
 
 		  <tr>
 			<td>datepicker</td>
-			<td>{ }</td>
+			<td>{
+			  dateFormat: 'yy-mm-dd',<br>
+			  onClose: function() { $(this).blur(); }
+			  }</td>
 			<td>
 			  The options of the datepicker. See the documents of the jQuery UI.<br>
-			  However, the maxDate and the minDate are determined by the attribute of the min and the max on the element,
-			  and the value of the dateFormat  is fixed at 'yy-mm-dd'.
+			  The maxDate and the minDate are determined by the attribute of the min and the max on the element.<br>
 			</td>
+		  </tr>
+
+		  <tr>
+			<td>maskDate</td>
+			<td>'9999-99-99'</td>
+			<td>Some plugin is { mask: '9999-99-99' }.</td>
+		  </tr>
+		  <tr>
+			<td>maskTime</td>
+			<td>'99:99'</td>
+			<td>Some plugin is { mask: '99-99' }</td>
 		  </tr>
 
 		  <tr>
@@ -913,11 +949,20 @@ $(<span class="name">function</span>() {
 				</tr>
 				<tr>
 				  <td>reqCustomValidity</td>
-				  <td>Use the balloon messages of the plugin.</td>
+				  <td>Use balloon messages of the plugin.</td>
 				</tr>
 				<tr>
 				  <td>reqPlaceholder</td>
-				  <td>Use the placeholder of the plugin.</td>
+				  <td>Use placeholders of the plugin.</td>
+				</tr>
+				<tr>
+				  <td>
+					reqDate<br>
+					reqTime<br>
+					reqDateTimeLocal<br>
+					reqDateTime
+				  </td>
+				  <td>Use date-time userinterfaces of the plugin.</td>
 				</tr>
 			  </table>
 
@@ -1056,9 +1101,9 @@ $(<span class="name">function</span>() {
 		</tr>
 		<tr>
 		  <td>
-			<img src="balloon-1.png" alt="fig. The required message" /><br>
+			<img src="balloon-1.png" alt="fig. The required message"><br>
 			border and margin of span<br>
-			<img src="balloon-2.png" alt="fig. The required message 2" /><br>
+			<img src="balloon-2.png" alt="fig. The required message 2"><br>
 		  </td>
 
 		  <td>
@@ -1099,12 +1144,103 @@ $(<span class="name">function</span>() {
 	</section>
 
 
+	<section id="recommendation">
+	  <h2>Recommendation</h2>
+
+	  <p>
+		The following recommended setting will allow you make the most of HTML5 such as date-time states.
+	  </p>
+
+<pre class="source">
+&lt;!-- Style sheets --&gt;
+&lt;link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css"&gt;
+&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.1.css"&gt;
+
+&lt;!-- jquery & jquery ui --&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"&gt;&lt;/script&gt;
+
+&lt;!-- mask & h5form --&gt;
+&lt;script src="/js/jquery.maskedinput.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form-2.12.1.min.js"&gt;&lt;/script&gt;
+
+&lt;script"&gt;
+$(function() {
+  $('form').h5form({
+    // Unify UI between browsers with messages defined here.
+    msgEmpty: 'Please enter this field.',
+    msgUnselect: 'Please select an item.',
+    msgUncheck: 'Please check this checkbox.',
+    msgPattern: 'Does not match the required pattern.',
+    msgEmail: 'E-mail address is not correct.',
+    msgUrl: 'URL is not correct.',
+    msgNumber: 'Number is not correct.',
+    msgDatetime: 'Date time is not correct.',
+    msgDate: 'Date is not correct.',
+    msgTime: 'Time is not correct.',
+    msgStep: 'Step is not correct.',
+    msgMin: 'Please be greater than or equal to #.',
+    msgMax: 'Please be less than or equal to #.',
+    msgMaxlen: 'Too many # characters.',
+    // Unify UI between browsers with a calendar of jquery ui.
+    options: {
+      reqDateTimeLocal: true,
+      reqDateTime: true,
+      reqDate: true,
+      reqTime: true
+    },
+    // Calendar option (voluntarily)
+    datepicker: {
+      autoSize: true,
+      changeMonth: true,
+      changeYear: true,
+      showOn: 'button'
+    }
+  });
+});
+&lt;/script&gt;
+</pre>
+	</section>
+
+
+	<section id="note">
+	  <h2>Note</h2>
+
+	  <p>
+		When using the datetime-local state or the datetime state,
+		you need to be aware delimiter of date and time.<br>
+
+		The type of datetime of Mysql is "2013-09-27 12:32:00",
+		but the type of HTML5 is "2013-09-27T12:32:00" defined in the ISO-8601.
+	  </p>
+	  <p>
+		Opera that was prior to HTML5 support recognizes the value of space-separated,
+		but Chrome only recognizes T-delimited.<br>
+
+		This is by design when loading into the DOM from HTML.
+		Therefore, it can not be corrected by this plugin or any javascript.
+	  </p>
+
+	  <p>
+		There is a need to output  a string replacement on the server side,
+		or to format conversion in Smarty template as follows.<br>
+
+		Fortunately, you can save as it is the datetime of T-delimited to the db of Mysql.
+	  </p>
+
+<pre class="source">
+&lt;input type="datetime-local" name="date_start"
+  value="{{$POST.date_start|date_format:'%Y-%d-%mT%H:%M:%S'}}"&gt;
+</pre>
+	</section>
+
+
 	<section id="thanks">
 	  <h2>Thanks</h2>
 
 	  <p>This plugin was derived from jquery.html5form-1.5.js.
-		But I determined that the project became apparent to another code, I was
-		allowed to change to a single copyright since version 2.
+		But I determined that the project became apparent to another code,
+		I was allowed to change to a single copyright since version 2.<br>
 		Some Variable names and structure may still have left a remnant of html5form.</p>
 
 
@@ -1117,7 +1253,25 @@ $(<span class="name">function</span>() {
 	<section id="history">
 	  <h2>History</h2>
 
-	  <h3>Version 2.11.4		(2013-09-05)</h3>
+	  <h3>Version 2.12.1		(2013-09-27)</h3>
+
+	  <ul>
+		<li>Depending on a time zone, a step error occurred on the data state.</li>
+		<li>Added support of Shift and Ctrl to the spin button of the date state.</li>
+		<li>Fixed a bug of the datetime-local state with the Chrome.</li>
+		<li>Modified default values of the datapicker option.</li>
+		<li>Modified about a datalist to make work with IE 9.</li>
+		<li>Modified the style sheet.</li>
+		<li>The script of the Japanese edition was not latest.</li>
+	  </ul>
+
+	  <h3>Version 2.12.0 (2013-09-13)</h3>
+
+	  <ul>
+		<li>Use jquery.ui.mask for data states.</li>
+	  </ul>
+
+	  <h3>Version 2.11.4 (2013-09-05)</h3>
 
 	  <ul>
 		<li>Fixed the required attribute in a date state.</li>

@@ -33,6 +33,16 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.12.1 (2013-09-27)
+
+* Depending on a time zone, a step error occurred on the data state.
+* Added support of Shift and Ctrl to the spin button of the date state.
+* Fixed a bug of the datetime-local state with the Chrome.
+* Modified default values of the datapicker option.
+* Modified about a datalist to make work with IE 9.
+* Modified the style sheet.
+* The script of the Japanese edition was not latest.
+
 ### Version 2.12.0 (2013-09-13)
 
 * Use jquery.ui.mask for data states.

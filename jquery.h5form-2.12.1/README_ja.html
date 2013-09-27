@@ -1,56 +1,71 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>jQuery.h5form - HTML5 Forms Plugin</title>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
-	<style style="text/css">
-	  body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
-	  header { display: block; color: white; background-color: black; padding: 1em 2em;  }
-	  header a { color: yellow; }
-	  header #lang { position: absolute; top: 1em; right: 2em; }
-	  header #lang li { display: inline-block; margin-left: 1em; }
-	  footer { display: block; margin-top: 6em; padding: 1em; color: white; background-color: black; }
-	  footer a { color: yellow; }
-	  section { display: block; margin: 1em; padding-bottom: 2em; }
+<style>
+body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
+header { display: block; color: white; background-color: black; padding: 1em 2em;  }
+header a { color: yellow; }
+header #lang { position: absolute; top: 1em; right: 2em; }
+header #lang li { display: inline-block; margin-left: 1em; }
+footer { display: block; margin-top: 6em; padding: 1em; color: white; background-color: black; }
+footer a { color: yellow; }
+section { display: block; margin: 1em; padding-bottom: 2em; }
 
-	  table.solid { border-collapse: collapse;  border: 2px solid gray;  margin: 1em 0; }
-	  table.solid td, table.solid th { border: 1px solid silver; font-weight: normal;  }
-	  table.solid thead th { text-align: center; background-color: dimgray; color: white; }
-	  table.solid tbody th { text-align: left; padding: 0 0.5em;   }
+table.solid { border-collapse: collapse;  border: 2px solid gray;  margin: 1em 0; }
+table.solid td, table.solid th { border: 1px solid silver; font-weight: normal;  }
+table.solid thead th { text-align: center; background-color: dimgray; color: white; }
+table.solid tbody th { text-align: left; padding: 0 0.5em;   }
 
-	  table.support tbody td { text-align: center; width:4em;  }
-	  table.options tbody td { text-align: left; padding: 0.5em; vertical-align: top;  }
+table.support tbody td { text-align: center; width:4em;  }
+table.options tbody td { text-align: left; padding: 0.5em; vertical-align: top;  }
 
-	  dl.note * { margin: 0; padding: 0; line-height: 1.5em; font-size: smaller; }
-	  dl.note dd { position: relative; top:-1.5em; margin-left: 2em; margin-bottom: -1.5em; }
-	  sup { color: red; }
-	  pre.source { margin: 1em; padding: 1em; border: 1px solid gray; overflow: auto; background-color: whitesmoke; }
-	  pre.source .tag { color: teal; }
-	  pre.source .name { color: blue; }
-	  pre.source .str { color: purple; }
-	  pre.source .comm { color: green; }
-	  #history h3 { font-size: 100%; }
-	  #download form { border: 1px solid dimgray; padding: 1em; margin: 1em;  }
-	  label { white-space: nowrap; }
-	  ins { font-style: italic; text-decoration: none; }
+dl.note * { margin: 0; padding: 0; line-height: 1.5em; font-size: smaller; }
+dl.note dd { position: relative; top:-1.5em; margin-left: 2em; margin-bottom: -1.5em; }
+sup { color: red; }
+pre.source { margin: 1em; padding: 1em; border: 1px solid gray; overflow: auto; background-color: whitesmoke; }
+pre.source .tag { color: teal; }
+pre.source .name { color: blue; }
+pre.source .func { color: darkblue; }
+pre.source .str { color: purple; }
+pre.source .comm { color: darkorange; }
+#history h3 { font-size: 100%; }
+#download form { border: 1px solid dimgray; padding: 1em; margin: 1em;  }
+label { white-space: nowrap; }
+ins { font-style: italic; text-decoration: none; }
 
-	  table.source { border-collapse: collapse;  border: 2px solid gray;  margin: 1em 0; }
-	  table.source th { border: 1px solid silver; width:33%; }
-	  table.source td { border: 1px solid silver; padding: 1em; vertical-align: top; }
-	</style>
+table.source { border-collapse: collapse;  border: 2px solid gray;  margin: 1em 0; }
+table.source th { border: 1px solid silver; width:33%; }
+table.source td { border: 1px solid silver; padding: 1em; vertical-align: top; }
+</style>
 
-	<script type="text/javascript">
-		$(function() {
-			$('table.support tbody td').each(function() {
-				if ($(this).text() == 'E') $(this).css({color: 'blue', fontWeight: 'bold'});
-				if ($(this).text() == 'x') $(this).css({color: 'red'});
-			});
-		});
-	</script>
+<script>
+$(function() {
+	$('table.support tbody td').each(function() {
+		if ($(this).text() == 'E') $(this).css({color: 'blue', fontWeight: 'bold'});
+		if ($(this).text() == 'x') $(this).css({color: 'red'});
+	});
+	$('pre.source').each(function() {
+		var content = $(this).html();
+		content = content.replace(/("[^\"]*")/g, '<span class="str">$1</span>');
+		content = content.replace(/('[^\']*')/g, '<span class="str">$1</span>');
+
+		content = content.replace(/(\&lt;[a-z0-9\/])/g, '<span class="tag">$1');
+		content = content.replace(/(\&lt;!)/g, '<span class="comm">$1');
+		content = content.replace(/(\&gt;)/g, '$1</span>');
+
+		content = content.replace(/(function|true|false)/g, '<span class="name">$1</span>');
+		content = content.replace(/([a-z0-9]+)\(/g, '<span class="func">$1</span>(');
+		content = content.replace(/(\/\/ .+)\n/g, '<span class="comm">$1</span>\n');
+		$(this).html(content);
+	});
+});
+</script>
 
   <?php  if (file_exists('../site.inc.php')) include '../site.inc.php'; ?>
   </head>
@@ -590,7 +605,8 @@
 
 		<dt>*2</dt>
 		<dd>IE 9 は Datalist 要素の Option 子要素を DOM に読み込みません。
-		  IE 9でも動作するようにするには、Datalist &gt; select &gt; option の構造にする必要があります。</dd>
+		  IE 9でも動作するようにするには、Datalist に data-option 属性に json で配列を追加してください。
+		  デモとテストフォームを参照してください。</dd>
 
 		<dt>*3</dt>
 		<dd>jQuery UI を使えば対応は難しくありません。これらの状態も必要ですか？</dd>
@@ -627,7 +643,7 @@
 	  <h2>Download</h2>
 
 	  <p>
-		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.11.4.zip" target="_blank">jquery.h5form-2.11.4.zip</a>
+		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.12.1.zip" target="_blank">jquery.h5form-2.12.1.zip</a>
 		をダウンロードしてください。
 	  </p>
 
@@ -644,7 +660,7 @@
 	  <p>
 		不要な機能を省いたより小さな javascript もダウンロードできます。
 		不要な機能のチェックを外してから ダウンロード ボタンをクリックしてください。<br>
-		この他にアーカイブに含まれる <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.11.4/css/jquery.h5form-2.11.4.css" target="_blank">スタイルシート</a> は別途のダウンロードが必要です。
+		この他にアーカイブに含まれる <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.12.1/css/jquery.h5form-2.12.1.css" target="_blank">スタイルシート</a> は別途のダウンロードが必要です。
 	  </p>
 
 	  <p>
@@ -686,22 +702,15 @@
 	  </p>
 
  <pre class="source">
-<span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span> href=<span class="str">"css/jquery.h5form-2.11.4.css"</span> /&gt;</span>
-<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
-  src=<span class="str">"https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"</span>&gt;&lt;/script&gt;</span>
-<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
-  src=<span class="str">"jquery.h5form-2.11.4.min.js"</span>&gt;&lt;/script&gt;</span>
+&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.1.css"&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form-2.12.1.min.js"&gt;&lt;/script&gt;
 
-<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>&gt;</span>
-$(<span class="name">function</span>() {
-  $(<span class="str">'form'</span>).h5form({
-    msgEmpty: <span class="str">'入力してください。'</span>,
-    msgUnselect: <span class="str">'いずれかのオプションを選択してください。'</span>,
-    msgUncheck: <span class="str">'チェックボックスをチェックしてください。'</span>,
-    msgPattern: <span class="str">'必要なパターンに一致してません。'</span>
-  });
+&lt;script&gt;
+$(function() {
+  $('form').h5form();
 });
-<span class="tag">&lt;/script&gt;</span>
+&lt;/script&gt;
 </pre>
 
 
@@ -716,12 +725,26 @@ $(<span class="name">function</span>() {
 	  </p>
 
 <pre class="source">
-<span class="tag">&lt;<span class="name">link</span> rel=<span class="str">"stylesheet"</span> type=<span class="str">"text/css"</span>
-  href=<span class="str">"../../css/smoothness/jquery-ui-custom.css"</span> /&gt;</span>
-<span class="tag">&lt;<span class="name">script</span> type=<span class="str">"text/javascript"</span>
-  src=<span class="str">"https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"</span>&gt;&lt;/script&gt;</span>
+&lt;link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css"&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"&gt;&lt;/script&gt;
 </pre>
 
+	  <p>
+		さらに、マスクプラグインがインストールされていると Date と Time 状態で利用します。<br>
+		マスクプラグインには「$(expr).mask(options)」で指定するものが利用できます。
+		定義が異なる場合は、次のようなラッパーを h5form の前に定義してください。
+	  </p>
+
+<pre class="source">
+$.fn.mask = function(opt) { $(this).mymask(opt); };
+$('form').h5form({
+  maskDate: { mask: '####-##-##' },
+  maskTime: { mask: '##:##' },
+  datepicker: {
+    showOn: 'button'
+  }
+});
+</pre>
 
 	  <h3>CSS</h3>
 
@@ -732,8 +755,8 @@ $(<span class="name">function</span>() {
 	  </p>
 
 <pre class="source">
-[type="number"], <span style="color: red;">.h5form-number</span> {
-	font-weight: bold;
+[type="number"], <b>.h5form-number</b> {
+  font-weight: bold;
 }
 </pre>
 
@@ -778,11 +801,11 @@ $(<span class="name">function</span>() {
 			<td>'このフィールドを入力してください。'</td>
 			<td rowspan="14">
 			  プラグインによるエラーメッセージ。<br>
+			  <br>
 			  要素に title 属性があるときは、これらのメッセージの後ろに追加されます。<br>
 			  表示を title メッセージだけにするときは、エラーメッセージとして半角スペースを指定してください。<br>
 			  <br>
 			  msgMaxlen, msgMin, msgMax において、# は値に置き換わります。<br>
-			  要素に title 属性がある場合は、これらのメッセージの後ろに追加されます。<br>
 			  <br>
 			  HTML5 フォーム対応ブラウザに対しても、ブラウザ固有のメッセージをこれらに置換します。<br>
 			  これによりブラウザに依存しないユーザー・インターフェースを提供することができます。
@@ -856,11 +879,28 @@ $(<span class="name">function</span>() {
 
 		  <tr>
 			<td>datepicker</td>
-			<td>{ }</td>
+			<td>{
+			  dateFormat: 'yy-mm-dd',<br>
+			  onClose: function() { $(this).blur(); }
+			  }</td>
 			<td>
 			  jQuery UI datepicekr の options が指定できます。<br>
-			  ただし、minDate と maxDate は要素の min と max 属性から決定され、
-			  dateFormat は 'yy-mm-dd' に固定です。
+			  ただし、minDate と maxDate は要素の min と max 属性から決定されます。
+			</td>
+		  </tr>
+
+		  <tr>
+			<td>maskDate</td>
+			<td>'9999-99-99'</td>
+			<td>
+			  利用する mask プラグインによっては { mask: '9999-99-99' } であるかもしれません。
+			</td>
+		  </tr>
+		  <tr>
+			<td>maskTime</td>
+			<td>'99:99'</td>
+			<td>
+			  利用する mask プラグインによっては { mask: '99:99' } であるかもしれません。
 			</td>
 		  </tr>
 
@@ -913,6 +953,15 @@ $(<span class="name">function</span>() {
 				<tr>
 				  <td>reqPlaceholder</td>
 				  <td>プラグインのPlaceholderを使います。</td>
+				</tr>
+				<tr>
+				  <td>
+					reqDate<br>
+					reqTime<br>
+					reqDateTimeLocal<br>
+					reqDateTime
+				  </td>
+				  <td>プラグインの日時UIを使います。</td>
 				</tr>
 			  </table>
 
@@ -1089,11 +1138,94 @@ $(<span class="name">function</span>() {
 	  </table>
 	</section>
 
+
+	<section id="recommendation">
+	  <h2>Recommendation</h2>
+
+	  <p>
+		Datetime 状態など HTML5 フォームをフル活用する場合の推奨設定を以下に示します。
+	  </p>
+
+<pre class="source">
+&lt;!-- Style sheets --&gt;
+&lt;link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css"&gt;
+&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.1.css"&gt;
+
+&lt;!-- jquery & jquery ui --&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.ui.datepicker-ja.js"&gt;&lt;/script&gt;
+
+&lt;!-- mask & h5form --&gt;
+&lt;script src="/js/jquery.maskedinput.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form-2.12.1.min.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+$(function() {
+  $('form').h5form({
+    // メッセージを再定義しブラウザ間で UI を統一
+    msgEmpty: 'このフィールドを入力してください。',
+    msgUnselect: 'いずれかのオプションを選択してください。',
+    msgUncheck: 'チェックボックスをチェックしてください。',
+    msgPattern: '必用なパターンに一致していません。',
+    msgEmail: 'メールアドレスが正しくありません。',
+    msgUrl: 'URLが正しくありません。',
+    msgNumber: '数値で入力してください。',
+    msgDatetime: '日時が正しくありません。',
+    msgDate: '日付が正しくありません。',
+    msgTime: '時刻が正しくありません。',
+    msgStep: '値の刻みが正しくありません。',
+    msgMin: '# 以上で指定してください。',
+    msgMax: '# 以下で指定してください。',
+    msgMaxlen: '指定の文字数上限より # 文字多いです。',
+    // カレンダーは jquery ui を使用しブラウザ間で UI を統一
+    options: {
+      reqDateTimeLocal: true,
+      reqDateTime: true,
+      reqDate: true,
+      reqTime: true
+    },
+    // カレンダーオプション（任意）
+    datepicker: {
+      autoSize: true,
+      changeMonth: true,
+      changeYear: true,
+      showOn: 'button'
+    }
+  });
+});
+&lt;/script&gt;
+</pre>
+	</section>
+
+	<section id="note">
+	  <h2>Note</h2>
+
+	  <p>
+		Datetime-local や Datetime 状態を使用するときは、日付と時刻の区切り文字に注意が必要です。<br>
+		MySql の Datetime 型は "2013-09-27 12:32:00" ですが HTML5 は ISO-8601 で定義された "2013-09-27T12:32:00" です。
+	  </p>
+	  <p>
+		HTML5 対応に先行した Opera は空白区切りの値でも動きますが、Chrome は T 区切りしか認識しません。<br>
+		これは HTML から DOM への読み込み時の仕様のため、このプラグイン（に限らず javascript）では補正はできません。
+	  </p>
+
+	  <p>
+		サーバーサイドで文字列置換してから画面出力するか、次のように Smarty テンプレートでフォーマット変換する必要があります。<br>
+		幸い Mysql （の現行バージョン）は T 区切りの日時のままで保存できます。
+	  </p>
+
+<pre class="source">
+&lt;input type="datetime-local" name="date_start"
+  value="{{$POST.date_start|date_format:'%Y-%d-%mT%H:%M:%S'}}"&gt;
+</pre>
+	</section>
+
 	<section id="thanks">
 	  <h2>Thanks</h2>
 
 	  <p>このプラグインはjquery.html5form-1.5.js から派生しましたが、
-		明らかに別コードになったとの判断からバージョン２で単独著作の表記としました。
+		明らかに別コードになったとの判断からバージョン２で単独著作の表記としました。<br>
 		変数名や構造には html5form の名残がまだ残っているかもしれません。</p>
 
 
@@ -1106,7 +1238,25 @@ $(<span class="name">function</span>() {
 	<section id="history">
 	  <h2>History</h2>
 
-	  <h3>Version 2.11.4		(2013-09-05)</h3>
+	  <h3>Version 2.12.1		(2013-09-27)</h3>
+
+	  <ul>
+		<li>タイムゾーンによって、Date 状態で Step エラーが出ていた</li>
+		<li>Date 状態のスピンボタンで Shift と Ctrl の押し下げを判定</li>
+		<li>Chrome の Datetime-local 状態のバグをフィックス</li>
+		<li>Datepicker のオプション初期値を編集</li>
+		<li>IE9 における Datalist の回避方法を再修正</li>
+		<li>スタイルシートを編集</li>
+		<li>日本語版のスクリプトが最新でなかった</li>
+	  </ul>
+
+	  <h3>Version 2.12.0 (2013-09-13)</h3>
+
+	  <ul>
+		<li>Date状態にjquery.ui.mask を利用</li>
+	  </ul>
+
+	  <h3>Version 2.11.4 (2013-09-05)</h3>
 
 	  <ul>
 		<li>Date状態のrequired属性が外れるのを修正</li>

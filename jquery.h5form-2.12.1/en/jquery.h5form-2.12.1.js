@@ -1,6 +1,6 @@
 /**
  *	jQuery.h5form - HTML5 Forms Plugin
- *	Version 2.11.4 / English
+ *	Version 2.12.1 / English
  *
  *	Author: by Yoshiyuki Mikomde http://www.rapidexp.com/h5form
  *
@@ -57,7 +57,13 @@
 			classRange: 'h5form-range',
 			classSpinTime: 'h5form-spinTime',
 			classDatetime: 'h5form-datetime',
-			datepicker: { },
+			datepicker: {
+				dateFormat: 'yy-mm-dd',
+				onClose: function() { $(this).blur(); }
+			},
+			maskDate: '9999-99-99',
+			maskTime: '99:99',
+			msgSpin: 'Press Shift to vary a hour, or press Ctrl for with short steps.',
 			options: {},
 			dynamicHtml: '.h5form-dynamic'
 		};
@@ -93,7 +99,7 @@
 
 		$('input:last').remove();
 
-		var validatable = ':input:enabled:not(:button, :submit)';
+		var validatable = ':input:enabled:not(:button, :submit, [type="hidden"])';
 		// clear balloons
 		if ('on' in $(document)) {
 			// .live() was removed by jQuery 1.9
@@ -135,7 +141,7 @@
 		var typeTo = function(ui, type, orgType) {
 			var	at = ui.get(0).attributes,
 				ui2 = $('<input type="' + type + '">'),
-				flg = ['required', 'disabled', 'readonly', 'checked'];
+				flg = ['required', /*'disabled',*/ 'readonly', 'checked'];
 
 			for (i = at.length - 1; i >= 0; i--) {
 				name = at[i].nodeName;
@@ -221,7 +227,8 @@
 				ui.before('<span class="' + name + '"></span>');
 				$(opts.exprBehind).attr('disabled', 'disabled');
 			}
-			ui.prev().html('<p>' + message.replace(/\n/, '<br/>') + '</p>');
+			ui.prev().html('<p>' +
+						   message.replace(/\n/, '<br/>') + '</p>');
  			ui.focus().select();	// focus only does not work in IE
 		};
 		$.fn.h5form.showBalloon = showBalloon;
@@ -244,13 +251,21 @@
 			 * @param {bool} isDown	- isDown.
 			 * @return {object}		-- this.
 			 */
+			var spinShift = false,
+				spinCtrl = false;
 			var spin = function(ui, isDown) {
 				var	isNumber = (ui.hasClass('h5form-number')),
 					min = attr2num(ui, 'min', (isNumber) ? '' : 0),
 					max = attr2num(ui, 'max', (isNumber) ? '' : 86400),
-					step = attr2num(ui, 'step', (isNumber) ? 1 : 60),
+					step = step0 = attr2num(ui, 'step', (isNumber) ? 1 : 60),
 					base = (isNumber) ? min : 0,
 					val = (isNumber) ? Number(ui.val()) : str2sec(ui.val(), true);
+
+				if (!isNumber) {
+					if (spinShift) step = 3600;
+					else if (spinCtrl) step = step0;
+					else step = (step0 < 600) ? 600 : step0;
+				}
 
 				val = val - ((val - base) % step) + step * ((isDown) ? -1 : 1);
 
@@ -310,6 +325,11 @@
 						}
 
 						// Keydown event attach
+						var spinAcc = (function(ev, flag) {
+							var cc = ev.charCode || ev.keyCode;
+							if (cc == 17) spinCtrl = flag;
+							if (cc == 16) spinShift = flag;
+						});
 						var evKeydown = (function(ev) {
 							var cc = ev.charCode || ev.keyCode;
 							if (cc == 38) spin(ui, 0);
@@ -317,7 +337,12 @@
 							if (($.inArray(cc, allow) >= 0) || (cc >= 48 && cc <= 57)) return true;
 							return false;
 						});
-						ui.unbind('keydown', evKeydown).keydown(evKeydown);
+						if (type == 'time' && ('mask' in ui)) {
+							ui.unbind('mask').mask(opts.maskTime);
+						}
+						else {
+							ui.unbind('keydown', evKeydown).keydown(evKeydown);
+						}
 
 						if (opts.addSpin) {
 							ui.after('<span class="' + className + '">' +
@@ -325,22 +350,30 @@
 									 '<button type="button">&or;</button></span>');
 
 							// Click button
-							ui.next().children().click(function() {
-								spin(ui, ui.next().children().index($(this))).change();
+							ui.next().children()
+							.attr('title', opts.msgSpin)
+							.click(function() {
+								spin(ui, ui.next().children().index($(this))).change().blur();
 								// change for Chrome
-							});
+								// blur for mask
+							})
+							.keydown(function(ev) { spinAcc(ev, true); })
+							.keyup(function(ev) { spinAcc(ev, false); });
 						}
 					}
 
 					// Datepicker
-					if (reqDate && (type == 'date') && ('datepicker' in ui)) {
-						var option = opts.datepicker;
-						option.dateFormat = 'yy-mm-dd';
-						option.minDate = getAttr(ui, 'min');
-						option.maxDate = getAttr(ui, 'max');
-						ui = typeTo(ui, 'text', type).datepicker(option);
+					if (reqDate && (type == 'date')) {
+						if ('datepicker' in ui) {
+							var option = opts.datepicker;
+							option.minDate = getAttr(ui, 'min');
+							option.maxDate = getAttr(ui, 'max');
+							ui = typeTo(ui, 'text', type).datepicker(option);
+						}
+						if ('mask' in ui) {
+							ui.unbind('mask').mask(opts.maskDate);
+						}
 					}
-
 					// Slider
 					if (reqRange && (type == 'range') && ('slider' in ui)) {
 						var min = attr2num(ui, 'min', 0),
@@ -408,12 +441,17 @@
 					}
 					if ((reqDatalist) &&
 						(list = getAttr(ui, 'list')) &&
+						(list = $('#' + list)) &&
 						('autocomplete' in ui))
 					{
 						var arr = new Array();
-						$('datalist#' + list).find('option').each(function() {
-							arr.push($(this).val());
-						});
+						if (list.find('option').length) {
+							list.find('option').each(function() {
+								arr.push($(this).val());
+							});
+						} else if (str = list.attr('data-option')) {
+							arr = $.parseJSON(str);
+						}
 						// Avoid conflicts with the browser
 						ui.removeAttr('list');
 
@@ -518,7 +556,7 @@
 						// Number, Date, Time
 						if (
 							(reqNumber && type == 'number') ||
-							(reqDate && type == 'date') || (reqTime && type == 'time') ||
+							((reqDateTimeLocal || reqDateTime) && (type == 'date' || type == 'time')) ||
 							false) {
 							isNecessary = true;
 
@@ -538,8 +576,8 @@
 									if (date == '' || time == '') {
 										// use min value
 										var min = getLocalDatetime(getAttr(ui0, 'min'), true);
-										if (i == 0 && date != '' && time == '') { ui2.eq(1).val(min[1]); }
-										if (i == 1 && time != '' && date == '') { ui2.eq(0).val(min[0]); }
+										if (i == 0 && date != '' && time == '') { ui2.eq(1).val(min[1]).change().blur(); }
+										if (i == 1 && time != '' && date == '') { ui2.eq(0).val(min[0]).change().blur(); }
 										date = ui2.eq(0).val(), time = ui2.eq(1).val();
 									}
 									// Copy to hidden datetime control
@@ -753,7 +791,7 @@
 			return (len && max && (len > max)) ? len - max : 0;
 		}
 		function validateStep(item, min, step) {
-			min = (getAttr(item, 'type').toLowerCase().indexOf('datetime')) ?
+			min = (getAttr(item, 'class').toLowerCase().indexOf('datetime')) ?
 				attr2num(item, 'min', min) : attr2num(item, '', min);
 			step = attr2num(item, 'step', step);
 			var val = attr2num(item, 'val', '');
@@ -823,8 +861,10 @@
 			return new Array(date, time);
 		}
 		function utc2js(val) {
-			return val.replace(/-/g, '/').replace(/T/, ' ').replace(/Z/, ' GMT')
+			ret = val.replace(/-/g, '/').replace(/T/, ' ').replace(/Z/, ' GMT')
 				.replace(/([+-])(\d+):(\d+)/, ' GMT$1$2$3');
+			if (!ret.match(/GMT/)) ret += ' GMT';
+			return ret;
 		}
 		function getTZ()
 		{

@@ -1,50 +1,50 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>jQuery.h5form - HTML5 Forms Plugin</title>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
-	<style style="text/css">
-	  body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
-	  header { display: block; color: white; background-color: black; padding: 1em 2em;  }
-	  header a { color: yellow; }
-	  header #lang { position: absolute; top: 1em; right: 2em; }
-	  header #lang li { display: inline-block; margin-left: 1em; }
-	  footer { display: block; margin-top: 6em; padding: 1em; color: white; background-color: black; }
-	  footer a { color: yellow; }
-	  section { display: block; margin: 1em; padding-bottom: 2em; }
+<style>
+body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
+header { display: block; color: white; background-color: black; padding: 1em 2em;  }
+header a { color: yellow; }
+header #lang { position: absolute; top: 1em; right: 2em; }
+header #lang li { display: inline-block; margin-left: 1em; }
+footer { display: block; margin-top: 6em; padding: 1em; color: white; background-color: black; }
+footer a { color: yellow; }
+section { display: block; margin: 1em; padding-bottom: 2em; }
 
-	  table.solid { border-collapse: collapse;  border: 2px solid gray;  margin: 1em 0; }
-	  table.solid td, table.solid th { border: 1px solid silver; font-weight: normal;  }
-	  table.solid thead th { text-align: center; background-color: dimgray; color: white; }
-	  table.solid tbody th { text-align: left; padding: 0 0.5em;   }
+table.solid { border-collapse: collapse;  border: 2px solid gray;  margin: 1em 0; }
+table.solid td, table.solid th { border: 1px solid silver; font-weight: normal;  }
+table.solid thead th { text-align: center; background-color: dimgray; color: white; }
+table.solid tbody th { text-align: left; padding: 0 0.5em;   }
 
-	  table.support tbody td { text-align: center; width:4em;  }
-	  table.options tbody td { text-align: left; padding: 0.5em; vertical-align: top;  }
+table.support tbody td { text-align: center; width:4em;  }
+table.options tbody td { text-align: left; padding: 0.5em; vertical-align: top;  }
 
-	  dl.note * { margin: 0; padding: 0; line-height: 1.5em; font-size: smaller; }
-	  dl.note dd { position: relative; top:-1.5em; margin-left: 2em; margin-bottom: -1.5em; }
-	  sup { color: red; }
-	  pre.source { margin: 1em; padding: 1em; border: 1px solid gray; overflow: auto; background-color: whitesmoke; }
-	  pre.source .tag { color: teal; }
-	  pre.source .name { color: blue; }
-	  pre.source .func { color: darkblue; }
-	  pre.source .str { color: purple; }
-	  pre.source .comm { color: darkorange; }
-	  #history h3 { font-size: 100%; }
-	  #download form { border: 1px solid dimgray; padding: 1em; margin: 1em;  }
-	  label { white-space: nowrap; }
-	  ins { font-style: italic; text-decoration: none; }
+dl.note * { margin: 0; padding: 0; line-height: 1.5em; font-size: smaller; }
+dl.note dd { position: relative; top:-1.5em; margin-left: 2em; margin-bottom: -1.5em; }
+sup { color: red; }
+pre.source { margin: 1em; padding: 1em; border: 1px solid gray; overflow: auto; background-color: whitesmoke; }
+pre.source .tag { color: teal; }
+pre.source .name { color: blue; }
+pre.source .func { color: darkblue; }
+pre.source .str { color: purple; }
+pre.source .comm { color: darkorange; }
+#history h3 { font-size: 100%; }
+#download form { border: 1px solid dimgray; padding: 1em; margin: 1em;  }
+label { white-space: nowrap; }
+ins { font-style: italic; text-decoration: none; }
 
-	  table.source { border-collapse: collapse;  border: 2px solid gray;  margin: 1em 0; }
-	  table.source th { border: 1px solid silver; width:33%; }
-	  table.source td { border: 1px solid silver; padding: 1em; vertical-align: top; }
-	</style>
+table.source { border-collapse: collapse;  border: 2px solid gray;  margin: 1em 0; }
+table.source th { border: 1px solid silver; width:33%; }
+table.source td { border: 1px solid silver; padding: 1em; vertical-align: top; }
+</style>
 
-<script type="text/javascript">
+<script>
 $(function() {
 	$('table.support tbody td').each(function() {
 		if ($(this).text() == 'E') $(this).css({color: 'blue', fontWeight: 'bold'});
@@ -121,7 +121,7 @@ $(function() {
 
 	  <p style="margin-left: 2em;">
 		&gt;&gt; <a style="font-size: larger; font-weight: bolder;" href="./testing.php" target="_blank">Demo and testing form is here!</a>
-		<img src="balloon-1.png" alt="" style="vertical-align: top;" />
+		<img src="balloon-1.png" alt="" style="vertical-align: top;">
 	  </p>
 
 	  <table class="solid support">
@@ -706,12 +706,11 @@ $(function() {
 	  </p>
 
 <pre class="source">
-&lt;link type="text/css" href="/css/jquery.h5form--laster.css" /&gt;
-&lt;script type="text/javascript"
-  src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="/js/jquery.h5form--laster.min.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="/css/jquery.h5form--laster.css"&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form--laster.min.js"&gt;&lt;/script&gt;
 
-&lt;script type="text/javascript"&gt;
+&lt;script&gt;
 $(function() {
   $('form').h5form();
 });
@@ -730,10 +729,8 @@ $(function() {
 	  </p>
 
 <pre class="source">
-&lt;link type="text/css"
-  href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css" /&gt;
-&lt;script type="text/javascript"
-  src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css"&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"&gt;&lt;/script&gt;
 </pre>
 
 	  <p>
@@ -748,8 +745,7 @@ $('form').h5form({
   maskDate: { mask: '####-##-##' },
   maskTime: { mask: '##:##' },
   datepicker: {
-    showOn: 'button',
-    onClose: function() { blur(); }  // set value to mask from datepicker
+    showOn: 'button'
   }
 });
 </pre>
@@ -763,7 +759,7 @@ $('form').h5form({
 
 <pre class="source">
 [type="number"], <b>.h5form-number</b> {
-	font-weight: bold;
+  font-weight: bold;
 }
 </pre>
 
@@ -808,11 +804,11 @@ $('form').h5form({
 			<td>'Please enter this field.'</td>
 			<td rowspan="14">
 			  The error messages by the plugin.<br>
+			  <br>
 			  If an element have a title attribute, the title sting is appended after these messages.<br>
 			  When you want to make only title message, please set a space character as error message.<br>
 			  <br>
 			  In the msgMaxlen, the msgMin and the msgMax, # is replaced by the value.<br>
-			  If the element has a title attribute, it is appended to these messages.<br>
 			  <br>
 			  In the modern browser, it replaces a peculiar message with these.<br>
 			  Thus you can offer the user interface that is common to all browsers.
@@ -886,10 +882,13 @@ $('form').h5form({
 
 		  <tr>
 			<td>datepicker</td>
-			<td>{ dateFormat: 'yy-mm-dd' }</td>
+			<td>{
+			  dateFormat: 'yy-mm-dd',<br>
+			  onClose: function() { $(this).blur(); }
+			  }</td>
 			<td>
 			  The options of the datepicker. See the documents of the jQuery UI.<br>
-			  However, the maxDate and the minDate are determined by the attribute of the min and the max on the element.<br>
+			  The maxDate and the minDate are determined by the attribute of the min and the max on the element.<br>
 			</td>
 		  </tr>
 
@@ -1102,9 +1101,9 @@ $('form').h5form({
 		</tr>
 		<tr>
 		  <td>
-			<img src="balloon-1.png" alt="fig. The required message" /><br>
+			<img src="balloon-1.png" alt="fig. The required message"><br>
 			border and margin of span<br>
-			<img src="balloon-2.png" alt="fig. The required message 2" /><br>
+			<img src="balloon-2.png" alt="fig. The required message 2"><br>
 		  </td>
 
 		  <td>
@@ -1128,7 +1127,7 @@ $('form').h5form({
 	z-index: 1000;
 	-border-top-color: white; /* for IE6 */
 }
-.h5form-response p.h5form {
+.h5form-response p {
 	float:left;
 	text-align: left;
 	margin: 0 -400px -20px -20px;
@@ -1154,21 +1153,18 @@ $('form').h5form({
 
 <pre class="source">
 &lt;!-- Style sheets --&gt;
-&lt;link type="text/css"
-  href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css" /&gt;
-&lt;link type="text/css" href="/css/jquery.h5form--laster.css" /&gt;
+&lt;link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css"&gt;
+&lt;link rel="stylesheet" href="/css/jquery.h5form--laster.css"&gt;
 
 &lt;!-- jquery & jquery ui --&gt;
-&lt;script type="text/javascript"
-  src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript"
-  src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"&gt;&lt;/script&gt;
 
 &lt;!-- mask & h5form --&gt;
-&lt;script type="text/javascript" src="/js/jquery.maskedinput.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="/js/jquery.h5form--laster.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.maskedinput.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form--laster.min.js"&gt;&lt;/script&gt;
 
-&lt;script type="text/javascript"&gt;
+&lt;script"&gt;
 $(function() {
   $('form').h5form({
     // Unify UI between browsers with messages defined here.
@@ -1207,12 +1203,44 @@ $(function() {
 	</section>
 
 
+	<section id="note">
+	  <h2>Note</h2>
+
+	  <p>
+		When using the datetime-local state or the datetime state,
+		you need to be aware delimiter of date and time.<br>
+
+		The type of datetime of Mysql is "-today 12:32:00",
+		but the type of HTML5 is "-todayT12:32:00" defined in the ISO-8601.
+	  </p>
+	  <p>
+		Opera that was prior to HTML5 support recognizes the value of space-separated,
+		but Chrome only recognizes T-delimited.<br>
+
+		This is by design when loading into the DOM from HTML.
+		Therefore, it can not be corrected by this plugin or any javascript.
+	  </p>
+
+	  <p>
+		There is a need to output  a string replacement on the server side,
+		or to format conversion in Smarty template as follows.<br>
+
+		Fortunately, you can save as it is the datetime of T-delimited to the db of Mysql.
+	  </p>
+
+<pre class="source">
+&lt;input type="datetime-local" name="date_start"
+  value="{{$POST.date_start|date_format:'%Y-%d-%mT%H:%M:%S'}}"&gt;
+</pre>
+	</section>
+
+
 	<section id="thanks">
 	  <h2>Thanks</h2>
 
 	  <p>This plugin was derived from jquery.html5form-1.5.js.
-		But I determined that the project became apparent to another code, I was
-		allowed to change to a single copyright since version 2.
+		But I determined that the project became apparent to another code,
+		I was allowed to change to a single copyright since version 2.<br>
 		Some Variable names and structure may still have left a remnant of html5form.</p>
 
 
@@ -1228,6 +1256,8 @@ $(function() {
 	  <h3>Version -laster		(-today)</h3>
 
 	  <ul>
+		<li>Depending on a time zone, a step error occurred on the data state.</li>
+		<li>Added support of Shift and Ctrl to the spin button of the date state.</li>
 		<li>Fixed a bug of the datetime-local state with the Chrome.</li>
 		<li>Modified default values of the datapicker option.</li>
 		<li>Modified about a datalist to make work with IE 9.</li>

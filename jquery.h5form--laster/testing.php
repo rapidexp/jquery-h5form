@@ -1,54 +1,52 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Test of jQuery.h5form</title>
 
-	<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css" />
-	<link rel="stylesheet" type="text/css" href="css/jquery.h5form--laster.css" />
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="css/jquery.h5form--laster.css">
 
-	<style style="text/css">
-	  body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
-	  strong { color: firebrick; }
+<style>
+body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
+strong { color: firebrick; }
 
-	  table.sample { width: 90%; margin: auto; }
-	  table.sample th { width: 50%; text-align: left; }
+table.sample { width: 90%; margin: auto; }
+table.sample th { width: 50%; text-align: left; }
 
-	  .source { position:absolute; display: none; border: 2px solid orange; padding: 5px 10px; color: dimgray; background-color: white; border-radius: 8px; box-shadow: 3px 3px 6px gainsboro; z-index: 3; /*width:400px;*/ }
-	  .source strong { color: firebrick; font-weight: normal; }
-	  h3 sup { font-size: 10px; color: red; }
+.source { position:absolute; display: none; border: 2px solid orange; padding: 5px 10px; color: dimgray; background-color: white; border-radius: 8px; box-shadow: 3px 3px 6px gainsboro; z-index: 3; /*width:400px;*/ }
+.source strong { color: firebrick; font-weight: normal; }
+h3 sup { font-size: 10px; color: red; }
 
-	  header { display: block; color: white; background-color: black; padding: 1em 2em;  }
-	  footer { display: block; margin-top: 6em; padding: 1em; color: white; background-color: black; }
-	  header a, footer a { color: yellow; }
-	  section { display: block; margin: 1em; padding-bottom: 2em; }
+header { display: block; color: white; background-color: black; padding: 1em 2em;  }
+footer { display: block; margin-top: 6em; padding: 1em; color: white; background-color: black; }
+header a, footer a { color: yellow; }
+section { display: block; margin: 1em; padding-bottom: 2em; }
 
-	  .h5form-spinNumber button, .h5form-spinTime button { height: 12px; margin-top: 1px; }
-	  .delete  { color: gray; text-decoration: line-through; }
-	  .explanation { color: gray; font-style: italic;  }
-	</style>
+.h5form-spinNumber button, .h5form-spinTime button { height: 12px; margin-top: 1px; }
+.delete  { color: gray; text-decoration: line-through; }
+.explanation { color: gray; font-style: italic;  }
+</style>
 
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 
 	<!-- mask フォーカスで反転するタイプ -->
-	<script type="text/javascript" src="/lib/jquery.maskedinput.js"></script>
+	<!--script src="/lib/jquery.maskedinput.js"></script-->
 
-	<script type="text/javascript" src="en/jquery.h5form--laster.js"></script>
+	<script src="en/jquery.h5form--laster.js"></script>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 
-<script type="text/javascript">
+<script>
 $(function() {
 	$('form.h5form').h5form({
+		timeSpinRatio: 2,
 		datepicker: {
 			dateFormat: 'yy-mm-dd',
 			autoSize: true,
 			changeMonth: true,
 			changeYear: true,
-			//showButtonPanel: true,
-			//showOtherMonths: true,
-			//constrainInput: false,
 			showOn: 'button'
 		}
 	});
@@ -485,7 +483,7 @@ foreach ($_POST as $name => $value):
 		  <td>
 			<form action="#test-8" method="post">
 			  <input type="date" name="input-8-date" min="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d', strtotime('+1 week'));?>" title="One week from today"><br>
-			  <input type="time" name="input-8-time" min="7:00" max="18:00" step="600" title="From 7:00 to 18:00 step 10 minutes">
+			  <input type="time" name="input-8-time" min="7:00" max="18:00" step="120" title="From 7:00 to 18:00 step 2 minutes">
 			  <input type="submit" name="test-8" value="submit">
 			</form>
 <pre class="source" style="display:none">
@@ -493,7 +491,7 @@ foreach ($_POST as $name => $value):
   &lt;input <strong>type="date"</strong> name="input-8-date" <strong>min="<?php echo date('Y-m-d');?>"</strong>
     <strong>max="<?php echo date('Y-m-d', strtotime('+1 week'));?>"</strong> title="One week from today"&gt;&lt;br&gt;
   &lt;input <strong>type="time"</strong> name="input-8-time" <strong>min="7:00" max="18:00"</strong>
-    <strong>step="600"</strong>  title="From 7:00 to 18:00 step 10 minutes"&gt;
+    <strong>step="120"</strong>  title="From 7:00 to 18:00 step 2 minutes"&gt;
   &lt;input type="submit" name="test-8" value="submit" &gt;
 &lt;/form&gt;
 </pre>
@@ -501,7 +499,7 @@ foreach ($_POST as $name => $value):
 		  <td>
 			<form action="#test-8" method="post" class="h5form">
 			  <input type="date" name="input-8-date" min="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d', strtotime('+1 week'));?>" title="One week from today"><br>
-			  <input type="time" name="input-8-time" min="7:00" max="18:00" step="600" title="From 7:00 to 18:00 step 10 minutes">
+			  <input type="time" name="input-8-time" min="7:00" max="18:00" step="120" title="From 7:00 to 18:00 step 2 minutes">
 			  <input type="submit" name="test-8" value="submit">
 			</form>
 <pre class="source" style="display:none">
@@ -509,7 +507,7 @@ foreach ($_POST as $name => $value):
   &lt;input <strong>type="date"</strong> name="input-8-date" <strong>min="<?php echo date('Y-m-d');?>"</strong>
     <strong>max="<?php echo date('Y-m-d', strtotime('+1 week'));?>"</strong> title="One week from today"&gt;&lt;br&gt;
   &lt;input <strong>type="time"</strong> name="input-8-time" <strong>min="7:00" max="18:00"</strong>
-    <strong>step="600"</strong>  title="From 7:00 to 18:00 step 10 minutes"&gt;
+    <strong>step="120"</strong>  title="From 7:00 to 18:00 step 2 minutes"&gt;
   &lt;input type="submit" name="test-8" value="submit" &gt;
 &lt;/form&gt;
 </pre>

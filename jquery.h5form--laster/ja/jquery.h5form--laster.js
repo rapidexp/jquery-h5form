@@ -944,9 +944,10 @@
 			return new Array(date, time);
 		}
 		function utc2js(val) {
-			return val.replace(/-/g, '/').replace(/T/, ' ').replace(/Z/, ' GMT')
-				.replace(/^(\d+\/\d+\/\d+)$/, '$1 GMT')
+			ret = val.replace(/-/g, '/').replace(/T/, ' ').replace(/Z/, ' GMT')
 				.replace(/([+-])(\d+):(\d+)/, ' GMT$1$2$3');
+			if (!ret.match(/GMT/)) ret += ' GMT';
+			return ret;
 		}
 		function getTZ()
 		{

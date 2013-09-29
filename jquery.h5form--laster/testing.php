@@ -33,7 +33,7 @@ section { display: block; margin: 1em; padding-bottom: 2em; }
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 
 	<!-- mask フォーカスで反転するタイプ -->
-	<!--script src="/lib/jquery.maskedinput.js"></script-->
+	<script src="/lib/jquery.maskedinput.js"></script>
 
 	<script src="en/jquery.h5form--laster.js"></script>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -482,13 +482,14 @@ foreach ($_POST as $name => $value):
 		<tr>
 		  <td>
 			<form action="#test-8" method="post">
-			  <input type="date" name="input-8-date" min="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d', strtotime('+1 week'));?>" title="One week from today"><br>
+			  <input type="date" name="input-8-date1"><br>
+			  <input type="date" name="input-8-date2" min="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d', strtotime('+1 week'));?>" title="One week from today"><br>
 			  <input type="time" name="input-8-time" min="7:00" max="18:00" step="120" title="From 7:00 to 18:00 step 2 minutes">
 			  <input type="submit" name="test-8" value="submit">
 			</form>
 <pre class="source" style="display:none">
 &lt;form action="#test-8" method="post"&gt;
-  &lt;input <strong>type="date"</strong> name="input-8-date" <strong>min="<?php echo date('Y-m-d');?>"</strong>
+  &lt;input <strong>type="date"</strong> name="input-8-date"></strong>
     <strong>max="<?php echo date('Y-m-d', strtotime('+1 week'));?>"</strong> title="One week from today"&gt;&lt;br&gt;
   &lt;input <strong>type="time"</strong> name="input-8-time" <strong>min="7:00" max="18:00"</strong>
     <strong>step="120"</strong>  title="From 7:00 to 18:00 step 2 minutes"&gt;
@@ -498,7 +499,8 @@ foreach ($_POST as $name => $value):
 		  </td>
 		  <td>
 			<form action="#test-8" method="post" class="h5form">
-			  <input type="date" name="input-8-date" min="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d', strtotime('+1 week'));?>" title="One week from today"><br>
+			  <input type="date" name="input-8-date1" value="<?=(isset($_POST['input-8-date1']))?$_POST['input-8-date1']:''?>"><br>
+			  <input type="date" name="input-8-date2" min="<?php echo date('Y-m-d');?>" max="<?php echo date('Y-m-d', strtotime('+1 week'));?>" title="One week from today"><br>
 			  <input type="time" name="input-8-time" min="7:00" max="18:00" step="120" title="From 7:00 to 18:00 step 2 minutes">
 			  <input type="submit" name="test-8" value="submit">
 			</form>

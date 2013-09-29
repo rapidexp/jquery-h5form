@@ -944,10 +944,10 @@
 			return new Array(date, time);
 		}
 		function utc2js(val) {
-			ret = val.replace(/-/g, '/').replace(/T/, ' ').replace(/Z/, ' GMT')
-				.replace(/([+-])(\d+):(\d+)/, ' GMT$1$2$3');
-			if (!ret.match(/GMT/)) ret += ' GMT';
-			return ret;
+			return val.replace(/-/g, '/')					// 2013-09-21 ... --> 2013/09/21 ...
+				.replace(/T/, ' ').replace(/Z/, ' GMT')		// 2013/09/21T07:30:00Z --> 2013/09/21 07:30:00 GMT
+				.replace(/([+-])(\d+):(\d+)/, ' GMT$1$2$3')	// 2013/09/21 07:30:00+09:00 --> 2013/09/21 07:30:00 GMT+0900
+				.replace(/^(\d+\/\d+\/\d+)$/, '$1GMT');		// a plane date must be GMT, because 1970-01-01 is 0 as unix time.
 		}
 		function getTZ()
 		{

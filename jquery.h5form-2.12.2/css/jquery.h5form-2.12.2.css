@@ -1,5 +1,5 @@
 /**
- * CSS for jquery.h5form-2.12.0.js
+ * CSS for jquery.h5form-2.12.2.js
  *
  *  Author: by Yoshiyuki Mikomde http://www.rapidexp.com/h5form
  *
@@ -40,7 +40,7 @@
 	z-index: 1000;
 	-border-top-color: white; /* for IE6 */
 }
-.h5form-reversed p {
+.h5form-reversed {
 	float:right;
 	text-align: left;
 	margin: 0 -40px -20px -400px;
@@ -114,6 +114,12 @@ span.h5form-timezone  {
 	font-size: smaller;
 }
 
+/**
+ * Number
+ *
+ */
+
+.h5form-number { width: 4em; }
 
 /**
  * Slider
@@ -124,11 +130,17 @@ span.h5form-timezone  {
 .h5form-range .ui-slider-horizontal { top: 0; height: 0.3em; }
 .h5form-range .ui-slider-handle { top: -0.4em; width: 0.4em; height: 1em; }
 
+/**
+ * Date-time
+ *
+ */
 
+.h5form-date { width: 8em; }
+.h5form-time { width: 4em; }
 
 .h5form-datetime input[type="date"] {
 	/* for Chrome */
-	padding-right: 4em;
+/*	padding-right: 4em; */
 }
 
 

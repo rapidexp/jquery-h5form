@@ -33,6 +33,10 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.12.2 (2013-10-01)
+
+* Fixed an enbug of the datatime-local state.
+
 ### Version 2.12.1 (2013-09-27)
 
 * Depending on a time zone, a step error occurred on the data state.

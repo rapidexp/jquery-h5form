@@ -454,11 +454,11 @@
 
 //# DATETIME
 					// Datetime
-					if ((reqDateTime && type == 'datetime') || (reqDateTimeLocal && type == 'datetime-local')) {
+					if (isLocal = (reqDateTimeLocal && type == 'datetime-local') || (reqDateTime && type == 'datetime')) {
 						if (!ui.next().hasClass(opts.classDatetime)) {
-							var val = getLocalDatetime(ui.val()),
-								min = getLocalDatetime(getAttr(ui, 'min')),
-								max = getLocalDatetime(getAttr(ui, 'max')),
+							var val = getLocalDatetime(ui.val(), isLocal),
+								min = getLocalDatetime(getAttr(ui, 'min'), isLocal),
+								max = getLocalDatetime(getAttr(ui, 'max'), isLocal),
 								tz = (type == 'datetime') ?
 									'<span class="h5form-timezone">' + getTZ() + '</span>' : '';
 
@@ -631,6 +631,7 @@
 								ui0 = ui.parent().prev();	// hidden datetime control
 								// datetime or datetime-local
 								type0 = getAttr(ui0, 'type').toLowerCase();
+								var isLocal = (type0 == 'datetime-local');
 
 								ui2 = ui.parent().children('input');	// a set of date & time
 //								setCustomValidity(ui2, '');
@@ -639,14 +640,14 @@
 									// Complement the other control if empty
 									if (date == '' || time == '') {
 										// use min value
-										var min = getLocalDatetime(getAttr(ui0, 'min'), true);
+										var min = getLocalDatetime(getAttr(ui0, 'min'), isLocal, true);
 										if (i == 0 && date != '' && time == '') { ui2.eq(1).val(min[1]).change().blur(); }
 										if (i == 1 && time != '' && date == '') { ui2.eq(0).val(min[0]).change().blur(); }
 										date = ui2.eq(0).val(), time = ui2.eq(1).val();
 									}
 									// Copy to hidden datetime control
 									var val = $.trim(date + 'T' + time);
-									if (type0 == 'datetime-local') {
+									if (isLocal) {
 										ui0.val(val);
 									} else {
 										var dt = getUTCDatetime(val);
@@ -919,8 +920,10 @@
 			ret = (gmt) ? date.toUTCString() : toString();
 			return ret.replace((sec) ? /.* (\d+:\d+:\d+).*$/ : /.* (\d+:\d+).*$/, '$1');
 		}
-		function getLocalDatetime(val, NullIsToday) {
+		function getLocalDatetime(val, isLocal, NullIsToday) {
 			if (!val && !NullIsToday) return new Array('', '');
+			if (isLocal) return val.split(/[T ]/);
+
 			// string to date for TZ
 			var dt = (!val) ? new Date() : new Date(utc2js(val)),
 				date = dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate();

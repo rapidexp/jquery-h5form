@@ -643,7 +643,7 @@ $(function() {
 	  <h2>Download</h2>
 
 	  <p>
-		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.12.1.zip" target="_blank">jquery.h5form-2.12.1.zip</a>
+		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.12.3.zip" target="_blank">jquery.h5form-2.12.3.zip</a>
 		をダウンロードしてください。
 	  </p>
 
@@ -660,7 +660,7 @@ $(function() {
 	  <p>
 		不要な機能を省いたより小さな javascript もダウンロードできます。
 		不要な機能のチェックを外してから ダウンロード ボタンをクリックしてください。<br>
-		この他にアーカイブに含まれる <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.12.1/css/jquery.h5form-2.12.1.css" target="_blank">スタイルシート</a> は別途のダウンロードが必要です。
+		この他にアーカイブに含まれる <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.12.3/css/jquery.h5form-2.12.3.css" target="_blank">スタイルシート</a> は別途のダウンロードが必要です。
 	  </p>
 
 	  <p>
@@ -702,9 +702,9 @@ $(function() {
 	  </p>
 
  <pre class="source">
-&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.1.css"&gt;
+&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.3.css"&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="/js/jquery.h5form-2.12.1.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form-2.12.3.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
 $(function() {
@@ -1149,7 +1149,7 @@ $('form').h5form({
 <pre class="source">
 &lt;!-- Style sheets --&gt;
 &lt;link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css"&gt;
-&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.1.css"&gt;
+&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.3.css"&gt;
 
 &lt;!-- jquery & jquery ui --&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
@@ -1158,7 +1158,7 @@ $('form').h5form({
 
 &lt;!-- mask & h5form --&gt;
 &lt;script src="/js/jquery.maskedinput.js"&gt;&lt;/script&gt;
-&lt;script src="/js/jquery.h5form-2.12.1.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form-2.12.3.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
 $(function() {
@@ -1203,7 +1203,7 @@ $(function() {
 
 	  <p>
 		Datetime-local や Datetime 状態を使用するときは、日付と時刻の区切り文字に注意が必要です。<br>
-		MySql の Datetime 型は "2013-09-27 12:32:00" ですが HTML5 は ISO-8601 で定義された "2013-09-27T12:32:00" です。
+		MySql の Datetime 型は "2013-10-02 12:32:00" ですが HTML5 は ISO-8601 で定義された "2013-10-02T12:32:00" です。
 	  </p>
 	  <p>
 		HTML5 対応に先行した Opera は空白区切りの値でも動きますが、Chrome は T 区切りしか認識しません。<br>
@@ -1238,7 +1238,19 @@ $(function() {
 	<section id="history">
 	  <h2>History</h2>
 
-	  <h3>Version 2.12.1		(2013-09-27)</h3>
+	  <h3>Version 2.12.3		(2013-10-02)</h3>
+
+	  <ul>
+		<li>Datetime-local 状態で不正な日付の処理を入出力を統一した</li>
+	  </ul>
+
+	  <h3>Version 2.12.2 (2013-10-01)</h3>
+
+	  <ul>
+		<li>Datetime-local 状態のエンバグを修正</li>
+	  </ul>
+
+	  <h3>Version 2.12.1 (2013-09-27)</h3>
 
 	  <ul>
 		<li>タイムゾーンによって、Date 状態で Step エラーが出ていた</li>

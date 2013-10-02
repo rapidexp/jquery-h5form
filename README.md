@@ -33,6 +33,10 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.12.3 (2013-10-02)
+
+* Unified the processing of an unjust date on input and output in a datetime-local state.
+
 ### Version 2.12.2 (2013-10-01)
 
 * Fixed an enbug of the datatime-local state.

@@ -648,7 +648,7 @@ $(function() {
 
 	  <p>
 		Please download
-		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.12.1.zip" target="_blank">jquery.h5form-2.12.1.zip</a>
+		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.12.3.zip" target="_blank">jquery.h5form-2.12.3.zip</a>
 	  </p>
 
 
@@ -665,7 +665,7 @@ $(function() {
 	  <p>
 		And if you wish, you can get a smaller size javascript by removing unnecessary features.<br>
 		Please uncheck the unnecessary features and click the download button.
-		Oh yes, you must have the <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.12.1/css/jquery.h5form-2.12.1.css" target="_blank">style sheet</a> included in the archive above to the other.
+		Oh yes, you must have the <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.12.3/css/jquery.h5form-2.12.3.css" target="_blank">style sheet</a> included in the archive above to the other.
 	  </p>
 
 	  <p>
@@ -706,9 +706,9 @@ $(function() {
 	  </p>
 
 <pre class="source">
-&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.1.css"&gt;
+&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.3.css"&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="/js/jquery.h5form-2.12.1.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form-2.12.3.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
 $(function() {
@@ -1154,7 +1154,7 @@ $('form').h5form({
 <pre class="source">
 &lt;!-- Style sheets --&gt;
 &lt;link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css"&gt;
-&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.1.css"&gt;
+&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.3.css"&gt;
 
 &lt;!-- jquery & jquery ui --&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
@@ -1162,7 +1162,7 @@ $('form').h5form({
 
 &lt;!-- mask & h5form --&gt;
 &lt;script src="/js/jquery.maskedinput.js"&gt;&lt;/script&gt;
-&lt;script src="/js/jquery.h5form-2.12.1.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form-2.12.3.min.js"&gt;&lt;/script&gt;
 
 &lt;script"&gt;
 $(function() {
@@ -1210,8 +1210,8 @@ $(function() {
 		When using the datetime-local state or the datetime state,
 		you need to be aware delimiter of date and time.<br>
 
-		The type of datetime of Mysql is "2013-09-27 12:32:00",
-		but the type of HTML5 is "2013-09-27T12:32:00" defined in the ISO-8601.
+		The type of datetime of Mysql is "2013-10-02 12:32:00",
+		but the type of HTML5 is "2013-10-02T12:32:00" defined in the ISO-8601.
 	  </p>
 	  <p>
 		Opera that was prior to HTML5 support recognizes the value of space-separated,
@@ -1253,7 +1253,19 @@ $(function() {
 	<section id="history">
 	  <h2>History</h2>
 
-	  <h3>Version 2.12.1		(2013-09-27)</h3>
+	  <h3>Version 2.12.3		(2013-10-02)</h3>
+
+	  <ul>
+		<li>Unified the processing of an unjust date on input and output in a datetime-local state.</li>
+	  </ul>
+
+	  <h3>Version 2.12.2 (2013-10-01)</h3>
+
+	  <ul>
+		<li>Fixed an enbug of the datatime-local state.</li>
+	  </ul>
+
+	  <h3>Version 2.12.1 (2013-09-27)</h3>
 
 	  <ul>
 		<li>Depending on a time zone, a step error occurred on the data state.</li>

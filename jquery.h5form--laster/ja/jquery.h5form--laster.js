@@ -454,41 +454,40 @@
 
 //# DATETIME
 					// Datetime
-					if (isLocal = (reqDateTimeLocal && type == 'datetime-local') || (reqDateTime && type == 'datetime')) {
-						if (!ui.next().hasClass(opts.classDatetime)) {
-							var val = getLocalDatetime(ui.val(), isLocal),
-								min = getLocalDatetime(getAttr(ui, 'min'), isLocal),
-								max = getLocalDatetime(getAttr(ui, 'max'), isLocal),
-								tz = (type == 'datetime') ?
-									'<span class="h5form-timezone">' + getTZ() + '</span>' : '';
+					if ((isLocal = (reqDateTimeLocal && type == 'datetime-local')) || (reqDateTime && type == 'datetime')) {
+						ui = typeTo(ui, 'text', type);
+						var val = getLocalDatetime(ui.val(), isLocal),
+							min = getLocalDatetime(getAttr(ui, 'min'), isLocal),
+							max = getLocalDatetime(getAttr(ui, 'max'), isLocal),
+							tz = (type == 'datetime') ?
+								'<span class="h5form-timezone">' + getTZ() + '</span>' : '';
 
-							ui.hide().after(
-								'<span class="' + opts.classDatetime + '">' +
+						ui.hide().after(
+							'<span class="' + opts.classDatetime + '">' +
 
-								'<input type="date" value="' + val[0] + '"' +
-								' min="' + min[0] + '" max="' + max[0] + '"' +
-								' size="' + getAttr(ui, 'size') + '"' +
-								' class="' + getAttr(ui, 'class') + '"' +
-								' title="' + getAttr(ui, 'title') + '">' +
+							'<input type="date" value="' + val[0] + '"' +
+							' min="' + min[0] + '" max="' + max[0] + '"' +
+							' size="' + getAttr(ui, 'size') + '"' +
+							' class="' + getAttr(ui, 'class') + '"' +
+							' title="' + getAttr(ui, 'title') + '">' +
 
-								'<input type="time" value="' + val[1] + '"' +
-								' step="' + attr2num(ui, 'step', 60) + '"' +
-								' size="' + getAttr(ui, 'size') + '"' +
-								' class="' + getAttr(ui, 'class') + '"' +
-								' title="' + getAttr(ui, 'title') + '">' +
-								tz +
-								'</span>');
+							'<input type="time" value="' + val[1] + '"' +
+							' step="' + attr2num(ui, 'step', 60) + '"' +
+							' size="' + getAttr(ui, 'size') + '"' +
+							' class="' + getAttr(ui, 'class') + '"' +
+							' title="' + getAttr(ui, 'title') + '">' +
+							tz +
+							'</span>');
 //# REQUIRED|DATETIME
-							if (getAttr(ui, 'required')) {
-								ui.removeAttr('required');
-								initControl(ui.next().children().attr('required', 'required'));
-							} else {
+						if (getAttr(ui, 'required')) {
+							ui.removeAttr('required');
+							initControl(ui.next().children().attr('required', 'required'));
+						} else {
 //# DATETIME
-								initControl(ui.next().children());
+							initControl(ui.next().children());
 //# REQUIRED|DATETIME
-							}
-//# DATETIME
 						}
+//# DATETIME
 					}
 //# AUTOCOMPLETE
 					if ((reqDatalist) &&
@@ -630,12 +629,12 @@
 							if (ui.parent().hasClass(opts.classDatetime)) {
 								ui0 = ui.parent().prev();	// hidden datetime control
 								// datetime or datetime-local
-								type0 = getAttr(ui0, 'type').toLowerCase();
+								type0 = getAttr(ui0, 'class').replace(/.*h5form-(\w+).*/, '$1').toLowerCase();
 								var isLocal = (type0 == 'datetime-local');
 
 								ui2 = ui.parent().children('input');	// a set of date & time
-//								setCustomValidity(ui2, '');
 								var i = ui2.index(ui), date = ui2.eq(0).val(), time = ui2.eq(1).val();
+
 								if (date != '' || time != '') {
 									// Complement the other control if empty
 									if (date == '' || time == '') {
@@ -647,57 +646,57 @@
 									}
 									// Copy to hidden datetime control
 									var val = $.trim(date + 'T' + time);
-									if (isLocal) {
-										ui0.val(val);
-									} else {
-										var dt = getUTCDatetime(val);
-										ui0.val(dt[0] + 'T' + dt[1]);
-									}
+									ui0.val(val);
 								} else {
 									ui0.val('');
 								}
 							}
 //# NUMBER|DATETIME
+							setCustomValidity(ui2, '');
+
 							// Set validation parameters
 							var pattern = '^-?\\d+\\.?\\d*$',
+								format = '';
 								min = 0,
-								step = 1,
-								msgError = opts.msgNumber;
+								step = 1;
 //# DATETIME
 							switch (type0) {
 							case 'date':
-								pattern = '^\\d+-\\d+-\\d+$';
+								if (validateDate(ui0.val())) {
+									setCustomValidity(ui2, opts.msgDate);
+									return true;
+								}
 								min = '1970-01-01';
 								step = 1;
-								msgError = opts.msgDate;
 								break;
 							case 'time':
-								pattern = '^\\d+:\\d+:?\\d*\\.?\\d*$';
+								if (validateTime(ui0.val())) {
+									setCustomValidity(ui2, opts.msgTime);
+									return true;
+								}
 								min = '00:00';
 								step = 60;
-								msgError = opts.msgTime;
 								break;
 							case 'datetime':
-								pattern = '^\\d+-\\d+-\\d+T\\d+:\\d+:?\\d*\\.?\\d*Z$';
-								min = '1970-01-01T00:00';
-								step = 60;
-								msgError = opts.msgDatetime;
-								break;
 							case 'datetime-local':
-								pattern = '^\\d+-\\d+-\\d+T\\d+:\\d+:?\\d*\\.?\\d*$';
+								if (validateDatetime(ui0.val())) {
+									setCustomValidity(ui2, opts.msgDatetime);
+									return true;
+								}
 								min = '1970-01-01T00:00';
 								step = 60;
-								msgError = opts.msgDatetime;
+								break;
+
+							default:
+								if (validateRe(ui0, pattern)) {
+									setCustomValidity(ui2, opts.msgNumber);
+									return true;
+								}
 								break;
 							}
 //# NUMBER|DATETIME
 							// Perform validtions
-							setCustomValidity(ui2, '');
 
-							if (validateRe(ui0, pattern)) {
-								setCustomValidity(ui2, msgError);
-								return true;
-							}
 							if (validateStep(ui0, min, step)) {
 								setCustomValidity(ui2, opts.msgStep);
 								return true;
@@ -709,6 +708,11 @@
 							if (validateMax(ui0)) {
 								setCustomValidity(ui2, opts.msgMax.replace(/#/, getAttr(ui0, 'max')));
 								return true;
+							}
+
+							if (type0 == 'datetime') {
+								var dt = getUTCDatetime(ui0.val());
+								ui0.val(dt[0] + 'T' + dt[1]);
 							}
 						}
 //#
@@ -863,6 +867,20 @@
 			re = new RegExp(pattern, flags);
 			return ((item.val() != '') && item.val().search(re));
 		}
+		function validateTime(val) {
+			var sec = val.match(/\d+:\d+:\d+/);
+			return (val && sec2str(str2sec(val,true), sec, true) != val);
+		}
+		function validateDate(val) {
+			var arr;
+			return (val && (arr = getUTCDatetime(val + ' 00:00Z')) && arr[0] != val);
+		}
+		function validateDatetime(val) {
+			if (!val) return false;
+			var arr = val.split(/[TZ ]/);	// remove Z of end
+			return (validateDate(arr[0]) || validateTime(arr[1]));
+		}
+
 //# MAXLENGTH
 		function validateMaxlength(item) {
 			var len = item.val().length,
@@ -917,12 +935,12 @@
 		}
 		function sec2str(time, sec, gmt) {
 			var date = new Date(time * 1000);
-			ret = (gmt) ? date.toUTCString() : toString();
+			ret = (gmt) ? date.toUTCString() : date.toString();
 			return ret.replace((sec) ? /.* (\d+:\d+:\d+).*$/ : /.* (\d+:\d+).*$/, '$1');
 		}
 		function getLocalDatetime(val, isLocal, NullIsToday) {
 			if (!val && !NullIsToday) return new Array('', '');
-			if (isLocal) return val.split(/[T ]/);
+			if (isLocal) return val.replace(/(:\d+):00$/, '$1').split(/[T ]/);
 
 			// string to date for TZ
 			var dt = (!val) ? new Date() : new Date(utc2js(val)),

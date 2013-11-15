@@ -63,7 +63,6 @@
 			classSpinTime: 'h5form-spinTime',
 			classDatetime: 'h5form-datetime',
 			datepicker: {
-				dateFormat: 'yy-mm-dd',
 				onClose: function() { $(this).blur(); }
 			},
 			maskDate: '9999-99-99',
@@ -100,6 +99,7 @@
 			reqDateTime = !(opera > 8),
 			reqDate = reqDateTimeLocal && !(chrome > 21),
 			reqTime = reqDateTimeLocal && !(chrome > 22),
+			reqMonth = reqDateTimeLocal,	// I don't know the detailed version of Chrome
 //# MAXLENGTH
 			reqMaxlength = !('maxLength' in test2),
 //# FORM
@@ -407,15 +407,29 @@
 
 //# DATETIME
 					// Datepicker
-					if (reqDate && (type == 'date')) {
+					if ((reqDate && type == 'date') || (reqMonth && type == 'month')) {
+						var mask;
 						if ('datepicker' in ui) {
 							var option = opts.datepicker;
-							option.minDate = getAttr(ui, 'min');
-							option.maxDate = getAttr(ui, 'max');
+							switch(type) {
+							case 'date':
+								option.dateFormat = 'yy-mm-dd';
+								option.minDate = getAttr(ui, 'min');
+								option.maxDate = getAttr(ui, 'max');
+								mask = opts.maskDate;
+								break;
+							case 'month':
+								option.dateFormat = 'yy-mm';
+								mask = opts.maskDate.replace(/-[^-]+$/, '');
+								// Datepicker has a bug in minDate and maxDate of yy-mm
+								option.minDate = '';
+								option.maxDate = '';
+								break;
+							}
 							ui = typeTo(ui, 'text', type).datepicker(option);
 						}
 						if ('mask' in ui) {
-							ui.unbind('mask').mask(opts.maskDate);
+							ui.unbind('mask').mask(mask);
 						}
 					}
 //# NUMBER
@@ -617,13 +631,13 @@
 //# NUMBER
 							(reqNumber && type == 'number') ||
 //# DATETIME
-							((reqDateTimeLocal || reqDateTime) && (type == 'date' || type == 'time')) ||
+							(reqDate && type == 'date') || (reqTime && type == 'time') || (reqMonth && type == 'month') ||
 //# NUMBER|DATETIME
 							false) {
 							isNecessary = true;
 
 							// Set values to local
-							var ui0 = ui, type0 = type, ui2 = ui;
+							var ui0 = ui, type0 = type, $ui = ui;
 //# DATETIME
 							// Is this control within datetime?
 							if (ui.parent().hasClass(opts.classDatetime)) {
@@ -632,38 +646,35 @@
 								type0 = getAttr(ui0, 'class').replace(/.*h5form-(\w+).*/, '$1').toLowerCase();
 								var isLocal = (type0 == 'datetime-local');
 
-								ui2 = ui.parent().children('input');	// a set of date & time
-								var i = ui2.index(ui), date = ui2.eq(0).val(), time = ui2.eq(1).val();
+								$ui = ui.parent().children('input');
+								// ui2 is the other of data and time
+								var i = $ui.index(ui), ui2 = $ui.eq(1 - i);
 
-								if (date != '' || time != '') {
-									// Complement the other control if empty
-									if (date == '' || time == '') {
-										// use min value
-										var min = getLocalDatetime(getAttr(ui0, 'min'), isLocal, true);
-										if (i == 0 && date != '' && time == '') { ui2.eq(1).val(min[1]).change().blur(); }
-										if (i == 1 && time != '' && date == '') { ui2.eq(0).val(min[0]).change().blur(); }
-										date = ui2.eq(0).val(), time = ui2.eq(1).val();
-									}
-									// Copy to hidden datetime control
-									var val = $.trim(date + 'T' + time);
-									ui0.val(val);
-								} else {
+								if (ui.val() == '') {
+									ui2.val('');
 									ui0.val('');
+								} else {
+									if (ui2.val() == '') {
+										var min = getLocalDatetime(getAttr(ui0, 'min'), isLocal, true);
+										ui2.val(min[1 - i]).change().blur();
+									}
+									// i==0 ui: date, ui2: time / i==1: ui: time, ui2: date
+									ui0.val($.trim((i) ?
+										(ui2.val() + 'T' + ui.val()) : (ui.val() + 'T' + ui2.val())));
 								}
 							}
 //# NUMBER|DATETIME
-							setCustomValidity(ui2, '');
+							setCustomValidity($ui, '');
 
 							// Set validation parameters
 							var pattern = '^-?\\d+\\.?\\d*$',
-								format = '';
 								min = 0,
 								step = 1;
 //# DATETIME
 							switch (type0) {
 							case 'date':
 								if (validateDate(ui0.val())) {
-									setCustomValidity(ui2, opts.msgDate);
+									setCustomValidity($ui, opts.msgDate);
 									return true;
 								}
 								min = '1970-01-01';
@@ -671,7 +682,7 @@
 								break;
 							case 'time':
 								if (validateTime(ui0.val())) {
-									setCustomValidity(ui2, opts.msgTime);
+									setCustomValidity($ui, opts.msgTime);
 									return true;
 								}
 								min = '00:00';
@@ -680,16 +691,19 @@
 							case 'datetime':
 							case 'datetime-local':
 								if (validateDatetime(ui0.val())) {
-									setCustomValidity(ui2, opts.msgDatetime);
+									setCustomValidity($ui, opts.msgDatetime);
 									return true;
 								}
 								min = '1970-01-01T00:00';
 								step = 60;
 								break;
-
+							case 'month':
+								pattern = '^\\d{4}-(0?\\d|1[012])$';
+								min = '1970-01-01';
+								// FALL THROUGH
 							default:
 								if (validateRe(ui0, pattern)) {
-									setCustomValidity(ui2, opts.msgNumber);
+									setCustomValidity($ui, opts.msgNumber);
 									return true;
 								}
 								break;
@@ -698,15 +712,15 @@
 							// Perform validtions
 
 							if (validateStep(ui0, min, step)) {
-								setCustomValidity(ui2, opts.msgStep);
+								setCustomValidity($ui, opts.msgStep);
 								return true;
 							}
 							if (validateMin(ui0)) {
-								setCustomValidity(ui2, opts.msgMin.replace(/#/, getAttr(ui0, 'min')));
+								setCustomValidity($ui, opts.msgMin.replace(/#/, getAttr(ui0, 'min')));
 								return true;
 							}
 							if (validateMax(ui0)) {
-								setCustomValidity(ui2, opts.msgMax.replace(/#/, getAttr(ui0, 'max')));
+								setCustomValidity($ui, opts.msgMax.replace(/#/, getAttr(ui0, 'max')));
 								return true;
 							}
 

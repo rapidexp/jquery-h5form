@@ -414,17 +414,17 @@ $(function() {
 		  </tr>
 
 		  <tr>
-			<th>- Month state<sup>*3</sup></th>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
+			<th>- Month state<sup></sup></th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
 			<td>S</td>
-			<td>x</td>
+			<td>E</td>
 			<td>S</td>
-			<td>x</td>
+			<td>E</td>
 		  </tr>
 
 		  <tr>
@@ -882,25 +882,26 @@ $('form').h5form({
 
 		  <tr>
 			<td>datepicker</td>
-			<td>{
-			  dateFormat: 'yy-mm-dd',<br>
-			  onClose: function() { $(this).blur(); }
-			  }</td>
+			<td>{ onClose: function() { $(this).blur(); } }</td>
 			<td>
 			  The options of the datepicker. See the documents of the jQuery UI.<br>
-			  The maxDate and the minDate are determined by the attribute of the min and the max on the element.<br>
+			  The dateFormat is fixed "yy-mm-dd",
+			  and the maxDate and the minDate are determined by the attribute of the min and the max on the element.<br>
 			</td>
 		  </tr>
 
 		  <tr>
 			<td>maskDate</td>
 			<td>'9999-99-99'</td>
-			<td>Some plugin is { mask: '9999-99-99' }.</td>
+			<td rowspan="3">Some plugin is "{ mask: '9999-99-99' }".</td>
+		  </tr>
+		  <tr>
+			<td>maskMonth</td>
+			<td>'9999-99'</td>
 		  </tr>
 		  <tr>
 			<td>maskTime</td>
 			<td>'99:99'</td>
-			<td>Some plugin is { mask: '99-99' }</td>
 		  </tr>
 
 		  <tr>
@@ -960,7 +961,8 @@ $('form').h5form({
 					reqDate<br>
 					reqTime<br>
 					reqDateTimeLocal<br>
-					reqDateTime
+					reqDateTime<br>
+					reqMonth
 				  </td>
 				  <td>Use date-time userinterfaces of the plugin.</td>
 				</tr>
@@ -1182,12 +1184,14 @@ $(function() {
     msgMin: 'Please be greater than or equal to #.',
     msgMax: 'Please be less than or equal to #.',
     msgMaxlen: 'Too many # characters.',
+    msgSpin: 'Press Shift to vary a hour, or press Ctrl for with short steps.',
     // Unify UI between browsers with a calendar of jquery ui.
     options: {
       reqDateTimeLocal: true,
       reqDateTime: true,
       reqDate: true,
-      reqTime: true
+      reqTime: true,
+      reqMonth: true
     },
     // Calendar option (voluntarily)
     datepicker: {

@@ -66,6 +66,7 @@
 				onClose: function() { $(this).blur(); }
 			},
 			maskDate: '9999-99-99',
+			maskMonth: '9999-99',
 			maskTime: '99:99',
 			msgSpin: 'Press Shift to vary a hour, or press Ctrl for with short steps.',
 //#
@@ -377,8 +378,7 @@
 							var cc = ev.charCode || ev.keyCode;
 							if (cc == 38) spin(ui, 0);
 							if (cc == 40) spin(ui, 1);
-							if (($.inArray(cc, allow) >= 0) || (cc >= 48 && cc <= 57)) return true;
-							return false;
+							return (($.inArray(cc, allow) >= 0) || (cc >= 48 && cc <= 57));
 						});
 						if (type == 'time' && ('mask' in ui)) {
 							ui.unbind('mask').mask(opts.maskTime);
@@ -420,7 +420,7 @@
 								break;
 							case 'month':
 								option.dateFormat = 'yy-mm';
-								mask = opts.maskDate.replace(/-[^-]+$/, '');
+								mask = opts.maskMonth;
 								// Datepicker has a bug in minDate and maxDate of yy-mm
 								option.minDate = '';
 								option.maxDate = '';
@@ -457,11 +457,8 @@
 						// Keypress event attach
 						var evKeypress = (function(ev) {
 							var cc = ev.charCode || ev.keyCode;
-							if (($.inArray(cc, [8, 9, 37, 39, 46]) < 0) &&
-								(this.value.length >= maxlength)) {
-								return false;
-							}
-							return true;
+							return (($.inArray(cc, [8, 9, 37, 39, 46]) >= 0) ||
+									(this.value.length < maxlength));
 						});
 						ui.unbind('keypress', evKeypress).keypress(evKeypress);
 					}

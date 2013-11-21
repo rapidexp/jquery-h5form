@@ -408,17 +408,17 @@ $(function() {
 		  </tr>
 
 		  <tr>
-			<th>- Month 状態<sup>*3</sup></th>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
+			<th>- Month 状態<sup></sup></th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
 			<td>S</td>
-			<td>x</td>
+			<td>E</td>
 			<td>S</td>
-			<td>x</td>
+			<td>E</td>
 		  </tr>
 
 		  <tr>
@@ -879,29 +879,28 @@ $('form').h5form({
 
 		  <tr>
 			<td>datepicker</td>
-			<td>{
-			  dateFormat: 'yy-mm-dd',<br>
-			  onClose: function() { $(this).blur(); }
-			  }</td>
+			<td>{ onClose: function() { $(this).blur(); } }</td>
 			<td>
 			  jQuery UI datepicekr の options が指定できます。<br>
-			  ただし、minDate と maxDate は要素の min と max 属性から決定されます。
+			  ただし、dateFormatは "yy-mm-dd"（monthでは "yy-mm"）に固定で、
+			  minDate と maxDate は要素の min と max 属性から決定されます。
 			</td>
 		  </tr>
 
 		  <tr>
 			<td>maskDate</td>
 			<td>'9999-99-99'</td>
-			<td>
+			<td rowspan="3">
 			  利用する mask プラグインによっては { mask: '9999-99-99' } であるかもしれません。
 			</td>
 		  </tr>
 		  <tr>
+			<td>maskMonth</td>
+			<td>'9999-99'</td>
+		  </tr>
+		  <tr>
 			<td>maskTime</td>
 			<td>'99:99'</td>
-			<td>
-			  利用する mask プラグインによっては { mask: '99:99' } であるかもしれません。
-			</td>
 		  </tr>
 
 		  <tr>
@@ -959,7 +958,8 @@ $('form').h5form({
 					reqDate<br>
 					reqTime<br>
 					reqDateTimeLocal<br>
-					reqDateTime
+					reqDateTime<br>
+					reqMonth
 				  </td>
 				  <td>プラグインの日時UIを使います。</td>
 				</tr>
@@ -1178,12 +1178,14 @@ $(function() {
     msgMin: '# 以上で指定してください。',
     msgMax: '# 以下で指定してください。',
     msgMaxlen: '指定の文字数上限より # 文字多いです。',
+    msgSpin: 'Shiftを押すと１時間、Ctrlを押すと細かく増減します。',
     // カレンダーは jquery ui を使用しブラウザ間で UI を統一
     options: {
       reqDateTimeLocal: true,
       reqDateTime: true,
       reqDate: true,
-      reqTime: true
+      reqTime: true,
+      reqMonth: true
     },
     // カレンダーオプション（任意）
     datepicker: {
@@ -1241,7 +1243,7 @@ $(function() {
 	  <h3>Version -laster		(-today)</h3>
 
 	  <ul>
-		<li>Date、Datetime-local、Datetime 状態でグレゴリオ暦に基づく不正な日付判定</li>
+		<li>Date、Datetime-local、Datetime 状態でグレゴリオ暦に基づく日付判定</li>
 		<li>Datetime 状態の初期化バグ</li>
 		<li>Month 状態をサポート</li>
 	  </ul>

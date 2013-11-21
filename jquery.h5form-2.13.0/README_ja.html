@@ -408,17 +408,17 @@ $(function() {
 		  </tr>
 
 		  <tr>
-			<th>- Month 状態<sup>*3</sup></th>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
+			<th>- Month 状態<sup></sup></th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
 			<td>S</td>
-			<td>x</td>
+			<td>E</td>
 			<td>S</td>
-			<td>x</td>
+			<td>E</td>
 		  </tr>
 
 		  <tr>
@@ -643,7 +643,7 @@ $(function() {
 	  <h2>Download</h2>
 
 	  <p>
-		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.12.2.zip" target="_blank">jquery.h5form-2.12.2.zip</a>
+		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.13.0.zip" target="_blank">jquery.h5form-2.13.0.zip</a>
 		をダウンロードしてください。
 	  </p>
 
@@ -660,7 +660,7 @@ $(function() {
 	  <p>
 		不要な機能を省いたより小さな javascript もダウンロードできます。
 		不要な機能のチェックを外してから ダウンロード ボタンをクリックしてください。<br>
-		この他にアーカイブに含まれる <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.12.2/css/jquery.h5form-2.12.2.css" target="_blank">スタイルシート</a> は別途のダウンロードが必要です。
+		この他にアーカイブに含まれる <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.13.0/css/jquery.h5form-2.13.0.css" target="_blank">スタイルシート</a> は別途のダウンロードが必要です。
 	  </p>
 
 	  <p>
@@ -702,9 +702,9 @@ $(function() {
 	  </p>
 
  <pre class="source">
-&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.2.css"&gt;
+&lt;link rel="stylesheet" href="/css/jquery.h5form-2.13.0.css"&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="/js/jquery.h5form-2.12.2.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form-2.13.0.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
 $(function() {
@@ -879,29 +879,28 @@ $('form').h5form({
 
 		  <tr>
 			<td>datepicker</td>
-			<td>{
-			  dateFormat: 'yy-mm-dd',<br>
-			  onClose: function() { $(this).blur(); }
-			  }</td>
+			<td>{ onClose: function() { $(this).blur(); } }</td>
 			<td>
 			  jQuery UI datepicekr の options が指定できます。<br>
-			  ただし、minDate と maxDate は要素の min と max 属性から決定されます。
+			  ただし、dateFormatは "yy-mm-dd"（monthでは "yy-mm"）に固定で、
+			  minDate と maxDate は要素の min と max 属性から決定されます。
 			</td>
 		  </tr>
 
 		  <tr>
 			<td>maskDate</td>
 			<td>'9999-99-99'</td>
-			<td>
+			<td rowspan="3">
 			  利用する mask プラグインによっては { mask: '9999-99-99' } であるかもしれません。
 			</td>
 		  </tr>
 		  <tr>
+			<td>maskMonth</td>
+			<td>'9999-99'</td>
+		  </tr>
+		  <tr>
 			<td>maskTime</td>
 			<td>'99:99'</td>
-			<td>
-			  利用する mask プラグインによっては { mask: '99:99' } であるかもしれません。
-			</td>
 		  </tr>
 
 		  <tr>
@@ -959,7 +958,8 @@ $('form').h5form({
 					reqDate<br>
 					reqTime<br>
 					reqDateTimeLocal<br>
-					reqDateTime
+					reqDateTime<br>
+					reqMonth
 				  </td>
 				  <td>プラグインの日時UIを使います。</td>
 				</tr>
@@ -1149,7 +1149,7 @@ $('form').h5form({
 <pre class="source">
 &lt;!-- Style sheets --&gt;
 &lt;link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css"&gt;
-&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.2.css"&gt;
+&lt;link rel="stylesheet" href="/css/jquery.h5form-2.13.0.css"&gt;
 
 &lt;!-- jquery & jquery ui --&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
@@ -1158,7 +1158,7 @@ $('form').h5form({
 
 &lt;!-- mask & h5form --&gt;
 &lt;script src="/js/jquery.maskedinput.js"&gt;&lt;/script&gt;
-&lt;script src="/js/jquery.h5form-2.12.2.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form-2.13.0.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
 $(function() {
@@ -1178,12 +1178,14 @@ $(function() {
     msgMin: '# 以上で指定してください。',
     msgMax: '# 以下で指定してください。',
     msgMaxlen: '指定の文字数上限より # 文字多いです。',
+    msgSpin: 'Shiftを押すと１時間、Ctrlを押すと細かく増減します。',
     // カレンダーは jquery ui を使用しブラウザ間で UI を統一
     options: {
       reqDateTimeLocal: true,
       reqDateTime: true,
       reqDate: true,
-      reqTime: true
+      reqTime: true,
+      reqMonth: true
     },
     // カレンダーオプション（任意）
     datepicker: {
@@ -1203,7 +1205,7 @@ $(function() {
 
 	  <p>
 		Datetime-local や Datetime 状態を使用するときは、日付と時刻の区切り文字に注意が必要です。<br>
-		MySql の Datetime 型は "2013-10-01 12:32:00" ですが HTML5 は ISO-8601 で定義された "2013-10-01T12:32:00" です。
+		MySql の Datetime 型は "2013-11-21 12:32:00" ですが HTML5 は ISO-8601 で定義された "2013-11-21T12:32:00" です。
 	  </p>
 	  <p>
 		HTML5 対応に先行した Opera は空白区切りの値でも動きますが、Chrome は T 区切りしか認識しません。<br>
@@ -1238,7 +1240,21 @@ $(function() {
 	<section id="history">
 	  <h2>History</h2>
 
-	  <h3>Version 2.12.2		(2013-10-01)</h3>
+	  <h3>Version 2.13.0		(2013-11-21)</h3>
+
+	  <ul>
+		<li>Date、Datetime-local、Datetime 状態でグレゴリオ暦に基づく日付判定</li>
+		<li>Datetime 状態の初期化バグ</li>
+		<li>Month 状態をサポート</li>
+	  </ul>
+
+	  <h3>Version 2.12.3 (2013-10-02)</h3>
+
+	  <ul>
+		<li>Datetime-local 状態で不正な日付の処理を入出力を統一した</li>
+	  </ul>
+
+	  <h3>Version 2.12.2 (2013-10-01)</h3>
 
 	  <ul>
 		<li>Datetime-local 状態のエンバグを修正</li>

@@ -33,6 +33,12 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.13.0 (2013-11-21)
+
+* The date validateion on the Gregorian calendar in states of date, datetime-local and datetime.
+* Fixed a bug of the intialization in a datetime state.
+* Added support type=month.
+
 ### Version 2.12.3 (2013-10-02)
 
 * Unified the processing of an unjust date on input and output in a datetime-local state.

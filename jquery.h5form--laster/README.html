@@ -13,6 +13,8 @@ header { display: block; color: white; background-color: black; padding: 1em 2em
 header a { color: yellow; }
 header #lang { position: absolute; top: 1em; right: 2em; }
 header #lang li { display: inline-block; margin-left: 1em; }
+header #toc { margin-top: 3em; }
+header #toc li { display: inline-block; margin-left: 1em; }
 footer { display: block; margin-top: 6em; padding: 1em; color: white; background-color: black; }
 footer a { color: yellow; }
 section { display: block; margin: 1em; padding-bottom: 2em; }
@@ -104,6 +106,20 @@ $(function() {
 	  <ul id="lang">
 		<li><a href="./README_ja.html">日本語</a></li>
 		<li>English</li>
+	  </ul>
+
+	  <ul id="toc">
+		<li><a href="#support">Supported Forms</a></li>
+		<li><a href="#download">Download</a></li>
+		<li><a href="#installation">Installation</a></li>
+		<li><a href="#options">Options</a></li>
+		<li><a href="#utilities">Utilities</a></li>
+		<li><a href="#placeholder">Placeholder</a></li>
+		<li><a href="#balloon">Balloon messages</a></li>
+		<li><a href="#recommendation">Recommendation</a></li>
+		<li><a href="#note">Note</a></li>
+		<li><a href="#thanks">Thanks</a></li>
+		<li><a href="#histories">Histories</a></li>
 	  </ul>
 
 	</header>
@@ -984,7 +1000,7 @@ $('form').h5form({
 
 	</section>
 
-	<section>
+	<section id="utilities">
 	  <h2>Utilities</h2>
 
 	  <p>
@@ -1033,7 +1049,7 @@ $('form').h5form({
 	</section>
 
 
-	<section>
+	<section id="placeholder">
 	  <h2>Placeholder</h2>
 
 	  <p>
@@ -1079,7 +1095,7 @@ $('form').h5form({
 	</section>
 
 
-	<section>
+	<section id="balloon">
 	  <h2>Balloon messages</h2>
 
 	  <p>
@@ -1254,10 +1270,16 @@ $(function() {
 	</section>
 
 
-	<section id="history">
-	  <h2>History</h2>
+	<section id="histories">
+	  <h2>Histories</h2>
 
 	  <h3>Version -laster		(-today)</h3>
+
+	  <ul>
+		<li>Use the spinner of jquery ui.</li>
+	  </ul>
+
+	  <h3>Version 2.13.0 (2013-11-21)</h3>
 
 	  <ul>
 		<li>The date validateion on the Gregorian calendar in states of date, datetime-local and datetime.</li>

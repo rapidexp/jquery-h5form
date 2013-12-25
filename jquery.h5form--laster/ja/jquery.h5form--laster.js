@@ -56,8 +56,6 @@
 			msgMax: '# 以下で指定してください。',
 			msgMaxlen: '指定の文字数上限より # 文字多いです。',
 //# NUMBER
-			addSpin: true,
-			classSpinNumber: 'h5form-spinNumber',
 			classRange: 'h5form-range',
 //# DATETIME
 			classSpinTime: 'h5form-spinTime',
@@ -278,35 +276,45 @@
 			// when from has simply "novalidate" rather than "novalidate='novalidate'"
 			$novalidate = !!outerHTML(form).match(/^[^>]+ novalidate/);
 
-//# NUMBER|DATETIME
-			/**
-			 * Spin number or time
-			 * @param {object} ui	- ui.
-			 * @param {bool} isDown	- isDown.
-			 * @return {object}		-- this.
-			 */
+//# NUMBER
+			var evNumber = function(ev) {
+				var allow = [8, 9, 35, 36, 37, 39, 46, 58, 186, 190];
+				var cc = ev.charCode || ev.keyCode;
+				return (($.inArray(cc, allow) >= 0) || (cc >= 48 && cc <= 57));
+			}
+//# DATETIME
 			var spinShift = false,
 				spinCtrl = false;
-			var spin = function(ui, isDown) {
-				var	isNumber = (ui.hasClass('h5form-number')),
-					min = attr2num(ui, 'min', (isNumber) ? '' : 0),
-					max = attr2num(ui, 'max', (isNumber) ? '' : 86400),
-					step = step0 = attr2num(ui, 'step', (isNumber) ? 1 : 60),
-					base = (isNumber) ? min : 0,
-					val = (isNumber) ? Number(ui.val()) : str2sec(ui.val(), true);
 
-				if (!isNumber) {
-					if (spinShift) step = 3600;
-					else if (spinCtrl) step = step0;
-					else step = (step0 < 600) ? 600 : step0;
-				}
+			var spinAcc = (function(ev, flag) {
+				var cc = ev.charCode || ev.keyCode;
+				if (cc == 17) spinCtrl = flag;
+				if (cc == 16) spinShift = flag;
+			});
+
+			$('body')
+				.unbind('keydown', spinAcc)
+				.unbind('keyup', spinAcc)
+				.keydown(function(ev) { spinAcc(ev, true); })
+				.keyup(function(ev) { spinAcc(ev, false); });
+
+			var spinTime = function(ui, isDown) {
+				var min = attr2num(ui, 'min', 0),
+					max = attr2num(ui, 'max', 86400),
+					step = step0 = attr2num(ui, 'step', 60),
+					base = 0,
+					val = str2sec(ui.val(), true);
+
+				if (spinShift) step = 3600;
+				else if (spinCtrl) step = step0;
+				else step = (step0 < 600) ? 600 : step0;
 
 				val = val - ((val - base) % step) + step * ((isDown) ? -1 : 1);
 
 				if ((max || max == '0') && val > max) val = max;
 				if ((min || min == '0') && val < min) val = min;
 
-				ui.val((isNumber) ? val : sec2str(val, step % 60, true));
+				ui.val(sec2str(val, step % 60, true));
 				return ui;
 			};
 //#
@@ -344,67 +352,31 @@
 					}
 
 //# NUMBER|DATETIME
-					// Spin button
-					if (
+					if ('spinner' in ui) {
 //# NUMBER
-						(reqSpin && type == 'number') ||
+						if (reqSpin && type == "number")
+						{
+							ui = typeTo(ui, 'text', type).spinner()
+								.unbind('keydown', evNumber).keydown(evNumber);
+						}
 //# DATETIME
-						(reqTime && type == 'time') ||
-//# NUMBER|DATETIME
-						false) {
-						var className, allow;
-						ui = typeTo(ui, 'text', type);
-						switch (type) {
-//# NUMBER
-						case 'number':
-							className = opts.classSpinNumber;
-							allow = [8, 9, 35, 36, 37, 39, 46, 190];
-							break;
-//# DATETIME
-						default:
-							className = opts.classSpinTime;
-							allow = [8, 9, 35, 36, 37, 39, 46, 58, 186, 190];
-							break;
-//# NUMBER|DATETIME
-						}
+						if (reqTime && type == 'time')
+						{
+							ui = typeTo(ui, 'text', type).spinner({spin: function() {return false;} });
 
-						// Keydown event attach
-						var spinAcc = (function(ev, flag) {
-							var cc = ev.charCode || ev.keyCode;
-							if (cc == 17) spinCtrl = flag;
-							if (cc == 16) spinShift = flag;
-						});
-						var evKeydown = (function(ev) {
-							var cc = ev.charCode || ev.keyCode;
-							if (cc == 38) spin(ui, 0);
-							if (cc == 40) spin(ui, 1);
-							return (($.inArray(cc, allow) >= 0) || (cc >= 48 && cc <= 57));
-						});
-						if (type == 'time' && ('mask' in ui)) {
-							ui.unbind('mask').mask(opts.maskTime);
-						}
-						else {
-							ui.unbind('keydown', evKeydown).keydown(evKeydown);
-						}
+							if (('mask' in ui)) {
+								ui.unbind('mask').mask(opts.maskTime);
+							}
 
-						if (opts.addSpin) {
-							ui.after('<span class="' + className + '">' +
-									 '<button type="button">&and;</button>' +
-									 '<button type="button">&or;</button></span>');
-
-							// Click button
-							ui.next().children()
+							wi = ui.spinner('widget');
+							wi.find('.ui-icon')
 							.attr('title', opts.msgSpin)
 							.click(function() {
-								spin(ui, ui.next().children().index($(this))).change().blur();
-								// change for Chrome
-								// blur for mask
-							})
-							.keydown(function(ev) { spinAcc(ev, true); })
-							.keyup(function(ev) { spinAcc(ev, false); });
+								spinTime(ui, $(this).parents('.ui-spinner').find('.ui-icon').index($(this))).change().blur();
+							});
 						}
+//# NUMBER|DATETIME
 					}
-
 //# DATETIME
 					// Datepicker
 					if ((reqDate && type == 'date') || (reqMonth && type == 'month')) {
@@ -637,13 +609,14 @@
 							var ui0 = ui, type0 = type, $ui = ui;
 //# DATETIME
 							// Is this control within datetime?
-							if (ui.parent().hasClass(opts.classDatetime)) {
-								ui0 = ui.parent().prev();	// hidden datetime control
+							var uiParent = ui.parents('.' + opts.classDatetime);
+							if (uiParent.length) {
+								ui0 = uiParent.prev();	// hidden datetime control
 								// datetime or datetime-local
 								type0 = getAttr(ui0, 'class').replace(/.*h5form-(\w+).*/, '$1').toLowerCase();
 								var isLocal = (type0 == 'datetime-local');
 
-								$ui = ui.parent().children('input');
+								$ui = uiParent.find('input');
 								// ui2 is the other of data and time
 								var i = $ui.index(ui), ui2 = $ui.eq(1 - i);
 

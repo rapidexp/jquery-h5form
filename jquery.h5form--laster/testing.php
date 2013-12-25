@@ -27,6 +27,8 @@ section { display: block; margin: 1em; padding-bottom: 2em; }
 .h5form-spinNumber button, .h5form-spinTime button { height: 12px; margin-top: 1px; }
 .delete  { color: gray; text-decoration: line-through; }
 .explanation { color: gray; font-style: italic;  }
+
+.ui-widget { font-size: 1em; }
 </style>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

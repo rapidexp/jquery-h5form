@@ -13,6 +13,8 @@ header { display: block; color: white; background-color: black; padding: 1em 2em
 header a { color: yellow; }
 header #lang { position: absolute; top: 1em; right: 2em; }
 header #lang li { display: inline-block; margin-left: 1em; }
+header #toc { margin-top: 3em; }
+header #toc li { display: inline-block; margin-left: 1em; }
 footer { display: block; margin-top: 6em; padding: 1em; color: white; background-color: black; }
 footer a { color: yellow; }
 section { display: block; margin: 1em; padding-bottom: 2em; }
@@ -103,15 +105,29 @@ $(function() {
 		<li><a href="./README.html">English</a></li>
 	  </ul>
 
+	  <ul id="toc">
+		<li><a href="#support">サポート機能</a></li>
+		<li><a href="#download">ダウンロード</a></li>
+		<li><a href="#installation">インストール</a></li>
+		<li><a href="#options">オプション</a></li>
+		<li><a href="#utilities">ユーティリティ</a></li>
+		<li><a href="#placeholder">プレースホルダー</a></li>
+		<li><a href="#balloon">フキダシメッセージ</a></li>
+		<li><a href="#recommendation">推奨設定</a></li>
+		<li><a href="#note">補足</a></li>
+		<li><a href="#thanks">謝辞</a></li>
+		<li><a href="#histories">更新履歴</a></li>
+	  </ul>
+
 	</header>
 
 
 	<section id="support">
-	  <h2>Supported Forms</h2>
+	  <h2>サポート機能</h2>
 
 	  <p>
 		次の表の「S」はブラウザ自身の機能を、「E」はこのプラグインによる拡張を表しています。<br>
-		  項目名先頭の「*」は基本設定を、「+」はカスタマイズ設定を表しています。詳細は <a href="#download">download を参照</a> してください。
+		項目名先頭の「*」は基本設定を、「+」はカスタマイズ設定を表しています。詳細は <a href="#download">ダウンロード</a> を参照してください。
 	  </p>
 
 	  <p style="margin-left: 2em;">
@@ -640,7 +656,7 @@ $(function() {
 	</section>
 
 	<section id="download">
-	  <h2>Download</h2>
+	  <h2>ダウンロード</h2>
 
 	  <p>
 		<a href="http://www.rapidexp.com/archives/jquery.h5form--laster.zip" target="_blank">jquery.h5form--laster.zip</a>
@@ -693,7 +709,7 @@ $(function() {
 	</section>
 
 	<section id="installation">
-	  <h2>Installation</h2>
+	  <h2>インストール</h2>
 
 	  <p>
 		次のコードを HTML ヘッダに加えてください。<br>
@@ -762,8 +778,8 @@ $('form').h5form({
 
 	</section>
 
-	<section>
-	  <h2>Options</h2>
+	<section id="options">
+	  <h2>オプション</h2>
 
 	  <p>
 		必要なら以下の表のオプションを指定することができます。
@@ -981,8 +997,8 @@ $('form').h5form({
 
 	</section>
 
-	<section>
-	  <h2>Utilities</h2>
+	<section id="utilities">
+	  <h2>ユーティリティ</h2>
 
 	  <p>
 		HTML5のメソッドを非対応ブラウザでも利用できるように拡張しました。<br>
@@ -1029,8 +1045,8 @@ $('form').h5form({
 	</section>
 
 
-	<section>
-	  <h2>Placeholder</h2>
+	<section id="placeholder">
+	  <h2>プレースホルダー</h2>
 
 	  <p>
 		プレースホルダーはそれぞれの要素の直前に単純に Span 要素で挿入されます。<br>
@@ -1074,8 +1090,8 @@ $('form').h5form({
 	</section>
 
 
-	<section>
-	  <h2>Balloon messages</h2>
+	<section id="balloon">
+	  <h2>フキダシメッセージ</h2>
 
 	  <p>
 		フキダシメッセージはそれぞれの要素の直前に単純に挿入されます。<br>
@@ -1140,7 +1156,7 @@ $('form').h5form({
 
 
 	<section id="recommendation">
-	  <h2>Recommendation</h2>
+	  <h2>推奨設定</h2>
 
 	  <p>
 		Datetime 状態など HTML5 フォームをフル活用する場合の推奨設定を以下に示します。
@@ -1201,7 +1217,7 @@ $(function() {
 	</section>
 
 	<section id="note">
-	  <h2>Note</h2>
+	  <h2>補足</h2>
 
 	  <p>
 		Datetime-local や Datetime 状態を使用するときは、日付と時刻の区切り文字に注意が必要です。<br>
@@ -1224,7 +1240,7 @@ $(function() {
 	</section>
 
 	<section id="thanks">
-	  <h2>Thanks</h2>
+	  <h2>謝辞</h2>
 
 	  <p>このプラグインはjquery.html5form-1.5.js から派生しましたが、
 		明らかに別コードになったとの判断からバージョン２で単独著作の表記としました。<br>
@@ -1237,10 +1253,16 @@ $(function() {
 	</section>
 
 
-	<section id="history">
-	  <h2>History</h2>
+	<section id="histories">
+	  <h2>更新履歴</h2>
 
 	  <h3>Version -laster		(-today)</h3>
+
+	  <ul>
+		<li>jQuery UIのsupinnerを使用</li>
+	  </ul>
+
+	  <h3>Version 2.13.0 (2013-11-21)</h3>
 
 	  <ul>
 		<li>Date、Datetime-local、Datetime 状態でグレゴリオ暦に基づく日付判定</li>

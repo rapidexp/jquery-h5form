@@ -33,6 +33,12 @@ __More information about the support of each browser, [please see here...](http:
 
 ## History
 
+### Version 2.13.1 (2013-12-26)
+
+* Use the spinner of jquery ui.
+* Fixed a bug of the datetime-local that replaced utc time.
+* Fixed a bug of the datetime-local and the datetime with empty value.
+
 ### Version 2.13.0 (2013-11-21)
 
 * The date validateion on the Gregorian calendar in states of date, datetime-local and datetime.

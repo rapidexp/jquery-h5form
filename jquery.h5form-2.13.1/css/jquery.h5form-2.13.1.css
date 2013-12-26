@@ -1,5 +1,5 @@
 /**
- * CSS for jquery.h5form-2.12.3.js
+ * CSS for jquery.h5form-2.13.1.js
  *
  *  Author: by Yoshiyuki Mikomde http://www.rapidexp.com/h5form
  *
@@ -82,39 +82,6 @@ input[type="datetime"], input[type="datetime-local"],
 }
 
 /**
- * Spin Button
- *
- */
-
-.h5form-spinNumber, .h5form-spinTime {
-	display: inline-block;
-	vertical-align: top;
-}
-.h5form-spinNumber button, .h5form-spinTime button {
-	display: block;
-
-	width: 20px;
-	height: 10px;
-
-	border: 1px solid gray;
-	font-size: 50%;
-	padding: 0;
-	margin: 0;
-	text-align: center;
-	border-radius: 3px;
-}
-
-span.h5form-timezone  {
-	display: inline-block;
-	border: 1px solid silver;
-	margin-left: 1px;
-	padding: 1px;
-	color: gray;
-	background-color: whitesmoke;
-	font-size: smaller;
-}
-
-/**
  * Number
  *
  */
@@ -138,11 +105,15 @@ span.h5form-timezone  {
 .h5form-date { width: 8em; }
 .h5form-time { width: 4em; }
 
-.h5form-datetime input[type="date"] {
-	/* for Chrome */
-/*	padding-right: 4em; */
+span.h5form-timezone  {
+	display: inline-block;
+	border: 1px solid silver;
+	margin-left: 1px;
+	padding: 1px;
+	color: gray;
+	background-color: whitesmoke;
+	font-size: smaller;
 }
-
 
 /**
  *	HTML5

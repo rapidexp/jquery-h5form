@@ -13,6 +13,8 @@ header { display: block; color: white; background-color: black; padding: 1em 2em
 header a { color: yellow; }
 header #lang { position: absolute; top: 1em; right: 2em; }
 header #lang li { display: inline-block; margin-left: 1em; }
+header #toc { margin-top: 3em; }
+header #toc li { display: inline-block; margin-left: 1em; }
 footer { display: block; margin-top: 6em; padding: 1em; color: white; background-color: black; }
 footer a { color: yellow; }
 section { display: block; margin: 1em; padding-bottom: 2em; }
@@ -103,15 +105,29 @@ $(function() {
 		<li><a href="./README.html">English</a></li>
 	  </ul>
 
+	  <ul id="toc">
+		<li><a href="#support">サポート機能</a></li>
+		<li><a href="#download">ダウンロード</a></li>
+		<li><a href="#installation">インストール</a></li>
+		<li><a href="#options">オプション</a></li>
+		<li><a href="#utilities">ユーティリティ</a></li>
+		<li><a href="#placeholder">プレースホルダー</a></li>
+		<li><a href="#balloon">フキダシメッセージ</a></li>
+		<li><a href="#recommendation">推奨設定</a></li>
+		<li><a href="#note">補足</a></li>
+		<li><a href="#thanks">謝辞</a></li>
+		<li><a href="#histories">更新履歴</a></li>
+	  </ul>
+
 	</header>
 
 
 	<section id="support">
-	  <h2>Supported Forms</h2>
+	  <h2>サポート機能</h2>
 
 	  <p>
 		次の表の「S」はブラウザ自身の機能を、「E」はこのプラグインによる拡張を表しています。<br>
-		  項目名先頭の「*」は基本設定を、「+」はカスタマイズ設定を表しています。詳細は <a href="#download">download を参照</a> してください。
+		項目名先頭の「*」は基本設定を、「+」はカスタマイズ設定を表しています。詳細は <a href="#download">ダウンロード</a> を参照してください。
 	  </p>
 
 	  <p style="margin-left: 2em;">
@@ -408,17 +424,17 @@ $(function() {
 		  </tr>
 
 		  <tr>
-			<th>- Month 状態<sup>*3</sup></th>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
+			<th>- Month 状態<sup></sup></th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
 			<td>S</td>
-			<td>x</td>
+			<td>E</td>
 			<td>S</td>
-			<td>x</td>
+			<td>E</td>
 		  </tr>
 
 		  <tr>
@@ -640,10 +656,10 @@ $(function() {
 	</section>
 
 	<section id="download">
-	  <h2>Download</h2>
+	  <h2>ダウンロード</h2>
 
 	  <p>
-		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.12.3.zip" target="_blank">jquery.h5form-2.12.3.zip</a>
+		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.13.1.zip" target="_blank">jquery.h5form-2.13.1.zip</a>
 		をダウンロードしてください。
 	  </p>
 
@@ -660,7 +676,7 @@ $(function() {
 	  <p>
 		不要な機能を省いたより小さな javascript もダウンロードできます。
 		不要な機能のチェックを外してから ダウンロード ボタンをクリックしてください。<br>
-		この他にアーカイブに含まれる <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.12.3/css/jquery.h5form-2.12.3.css" target="_blank">スタイルシート</a> は別途のダウンロードが必要です。
+		この他にアーカイブに含まれる <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.13.1/css/jquery.h5form-2.13.1.css" target="_blank">スタイルシート</a> は別途のダウンロードが必要です。
 	  </p>
 
 	  <p>
@@ -693,7 +709,7 @@ $(function() {
 	</section>
 
 	<section id="installation">
-	  <h2>Installation</h2>
+	  <h2>インストール</h2>
 
 	  <p>
 		次のコードを HTML ヘッダに加えてください。<br>
@@ -702,9 +718,9 @@ $(function() {
 	  </p>
 
  <pre class="source">
-&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.3.css"&gt;
+&lt;link rel="stylesheet" href="/css/jquery.h5form-2.13.1.css"&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="/js/jquery.h5form-2.12.3.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form-2.13.1.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
 $(function() {
@@ -720,8 +736,8 @@ $(function() {
 	  <h3>jQuery UI</h3>
 
 	  <p>
-		Date や Number 状態のユーザインタフェース及び Autocomplete が必要なら jQeury UI をインストールしてください。<br>
-		Date や Range 状態の要素には、カレンダーやスライダーが自動的にハンドルされます。
+		Date や Number、Range 状態のユーザインタフェース及び Autocomplete が必要なら jQeury UI をインストールしてください。<br>
+		カレンダーやスピナー、スライダーが自動的にハンドルされます。
 	  </p>
 
 <pre class="source">
@@ -762,8 +778,8 @@ $('form').h5form({
 
 	</section>
 
-	<section>
-	  <h2>Options</h2>
+	<section id="options">
+	  <h2>オプション</h2>
 
 	  <p>
 		必要なら以下の表のオプションを指定することができます。
@@ -879,29 +895,28 @@ $('form').h5form({
 
 		  <tr>
 			<td>datepicker</td>
-			<td>{
-			  dateFormat: 'yy-mm-dd',<br>
-			  onClose: function() { $(this).blur(); }
-			  }</td>
+			<td>{ onClose: function() { $(this).blur(); } }</td>
 			<td>
 			  jQuery UI datepicekr の options が指定できます。<br>
-			  ただし、minDate と maxDate は要素の min と max 属性から決定されます。
+			  ただし、dateFormatは "yy-mm-dd"（monthでは "yy-mm"）に固定で、
+			  minDate と maxDate は要素の min と max 属性から決定されます。
 			</td>
 		  </tr>
 
 		  <tr>
 			<td>maskDate</td>
 			<td>'9999-99-99'</td>
-			<td>
+			<td rowspan="3">
 			  利用する mask プラグインによっては { mask: '9999-99-99' } であるかもしれません。
 			</td>
 		  </tr>
 		  <tr>
+			<td>maskMonth</td>
+			<td>'9999-99'</td>
+		  </tr>
+		  <tr>
 			<td>maskTime</td>
 			<td>'99:99'</td>
-			<td>
-			  利用する mask プラグインによっては { mask: '99:99' } であるかもしれません。
-			</td>
 		  </tr>
 
 		  <tr>
@@ -959,7 +974,8 @@ $('form').h5form({
 					reqDate<br>
 					reqTime<br>
 					reqDateTimeLocal<br>
-					reqDateTime
+					reqDateTime<br>
+					reqMonth
 				  </td>
 				  <td>プラグインの日時UIを使います。</td>
 				</tr>
@@ -981,8 +997,8 @@ $('form').h5form({
 
 	</section>
 
-	<section>
-	  <h2>Utilities</h2>
+	<section id="utilities">
+	  <h2>ユーティリティ</h2>
 
 	  <p>
 		HTML5のメソッドを非対応ブラウザでも利用できるように拡張しました。<br>
@@ -1029,8 +1045,8 @@ $('form').h5form({
 	</section>
 
 
-	<section>
-	  <h2>Placeholder</h2>
+	<section id="placeholder">
+	  <h2>プレースホルダー</h2>
 
 	  <p>
 		プレースホルダーはそれぞれの要素の直前に単純に Span 要素で挿入されます。<br>
@@ -1074,8 +1090,8 @@ $('form').h5form({
 	</section>
 
 
-	<section>
-	  <h2>Balloon messages</h2>
+	<section id="balloon">
+	  <h2>フキダシメッセージ</h2>
 
 	  <p>
 		フキダシメッセージはそれぞれの要素の直前に単純に挿入されます。<br>
@@ -1140,7 +1156,7 @@ $('form').h5form({
 
 
 	<section id="recommendation">
-	  <h2>Recommendation</h2>
+	  <h2>推奨設定</h2>
 
 	  <p>
 		Datetime 状態など HTML5 フォームをフル活用する場合の推奨設定を以下に示します。
@@ -1149,7 +1165,7 @@ $('form').h5form({
 <pre class="source">
 &lt;!-- Style sheets --&gt;
 &lt;link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css"&gt;
-&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.3.css"&gt;
+&lt;link rel="stylesheet" href="/css/jquery.h5form-2.13.1.css"&gt;
 
 &lt;!-- jquery & jquery ui --&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
@@ -1158,7 +1174,7 @@ $('form').h5form({
 
 &lt;!-- mask & h5form --&gt;
 &lt;script src="/js/jquery.maskedinput.js"&gt;&lt;/script&gt;
-&lt;script src="/js/jquery.h5form-2.12.3.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form-2.13.1.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
 $(function() {
@@ -1178,12 +1194,14 @@ $(function() {
     msgMin: '# 以上で指定してください。',
     msgMax: '# 以下で指定してください。',
     msgMaxlen: '指定の文字数上限より # 文字多いです。',
+    msgSpin: 'Shiftを押すと１時間、Ctrlを押すと細かく増減します。',
     // カレンダーは jquery ui を使用しブラウザ間で UI を統一
     options: {
       reqDateTimeLocal: true,
       reqDateTime: true,
       reqDate: true,
-      reqTime: true
+      reqTime: true,
+      reqMonth: true
     },
     // カレンダーオプション（任意）
     datepicker: {
@@ -1199,11 +1217,11 @@ $(function() {
 	</section>
 
 	<section id="note">
-	  <h2>Note</h2>
+	  <h2>補足</h2>
 
 	  <p>
 		Datetime-local や Datetime 状態を使用するときは、日付と時刻の区切り文字に注意が必要です。<br>
-		MySql の Datetime 型は "2013-10-02 12:32:00" ですが HTML5 は ISO-8601 で定義された "2013-10-02T12:32:00" です。
+		MySql の Datetime 型は "2013-12-26 12:32:00" ですが HTML5 は ISO-8601 で定義された "2013-12-26T12:32:00" です。
 	  </p>
 	  <p>
 		HTML5 対応に先行した Opera は空白区切りの値でも動きますが、Chrome は T 区切りしか認識しません。<br>
@@ -1222,7 +1240,7 @@ $(function() {
 	</section>
 
 	<section id="thanks">
-	  <h2>Thanks</h2>
+	  <h2>謝辞</h2>
 
 	  <p>このプラグインはjquery.html5form-1.5.js から派生しましたが、
 		明らかに別コードになったとの判断からバージョン２で単独著作の表記としました。<br>
@@ -1235,10 +1253,26 @@ $(function() {
 	</section>
 
 
-	<section id="history">
-	  <h2>History</h2>
+	<section id="histories">
+	  <h2>更新履歴</h2>
 
-	  <h3>Version 2.12.3		(2013-10-02)</h3>
+	  <h3>Version 2.13.1		(2013-12-26)</h3>
+
+	  <ul>
+		<li>jQuery UIのsupinnerを使用</li>
+		<li>Datetime-local が UTC 時刻に変換されるバグ</li>
+		<li>Datetime と Datetime-local で空値のときのバグ</li>
+	  </ul>
+
+	  <h3>Version 2.13.0 (2013-11-21)</h3>
+
+	  <ul>
+		<li>Date、Datetime-local、Datetime 状態でグレゴリオ暦に基づく日付判定</li>
+		<li>Datetime 状態の初期化バグ</li>
+		<li>Month 状態をサポート</li>
+	  </ul>
+
+	  <h3>Version 2.12.3 (2013-10-02)</h3>
 
 	  <ul>
 		<li>Datetime-local 状態で不正な日付の処理を入出力を統一した</li>

@@ -1,6 +1,6 @@
 /**
  *	jQuery.h5form - HTML5 Forms Plugin
- *	Version 2.12.3 / Japanese
+ *	Version 2.13.1 / English
  *
  *	Author: by Yoshiyuki Mikomde http://www.rapidexp.com/h5form
  *
@@ -38,32 +38,30 @@
 			exprBehind: '.h5fom-behind',
 			styleErr: { backgroundColor: 'mistyrose' },
 			classPlaceholder: 'h5form-placeholder',
-			msgEmpty: 'このフィールドを入力してください。',
-			msgUnselect: 'いずれかのオプションを選択してください。',
-			msgUncheck: 'チェックボックスをチェックしてください。',
-			msgPattern: '必用なパターンに一致していません。',
-			msgEmail: 'メールアドレスが正しくありません。',
-			msgUrl: 'URLが正しくありません。',
-			msgNumber: '数値で入力してください。',
-			msgDatetime: '日時が正しくありません。',
-			msgDate: '日付が正しくありません。',
-			msgTime: '時刻が正しくありません。',
-			msgStep: '値の刻みが正しくありません。',
-			msgMin: '# 以上で指定してください。',
-			msgMax: '# 以下で指定してください。',
-			msgMaxlen: '指定の文字数上限より # 文字多いです。',
-			addSpin: true,
-			classSpinNumber: 'h5form-spinNumber',
+			msgEmpty: 'Please enter this field.',
+			msgUnselect: 'Please select an item.',
+			msgUncheck: 'Please check this checkbox.',
+			msgPattern: 'Does not match the required pattern.',
+			msgEmail: 'E-mail address is not correct.',
+			msgUrl: 'URL is not correct.',
+			msgNumber: 'Number is not correct.',
+			msgDatetime: 'Date time is not correct.',
+			msgDate: 'Date is not correct.',
+			msgTime: 'Time is not correct.',
+			msgStep: 'Step is not correct.',
+			msgMin: 'Please be greater than or equal to #.',
+			msgMax: 'Please be less than or equal to #.',
+			msgMaxlen: 'Too many # characters.',
 			classRange: 'h5form-range',
 			classSpinTime: 'h5form-spinTime',
 			classDatetime: 'h5form-datetime',
 			datepicker: {
-				dateFormat: 'yy-mm-dd',
 				onClose: function() { $(this).blur(); }
 			},
 			maskDate: '9999-99-99',
+			maskMonth: '9999-99',
 			maskTime: '99:99',
-			msgSpin: 'Shiftを押すと１時間、Ctrlを押すと細かく増減します。',
+			msgSpin: 'Press Shift to vary a hour, or press Ctrl for with short steps.',
 			options: {},
 			dynamicHtml: '.h5form-dynamic'
 		};
@@ -87,6 +85,7 @@
 			reqDateTime = !(opera > 8),
 			reqDate = reqDateTimeLocal && !(chrome > 21),
 			reqTime = reqDateTimeLocal && !(chrome > 22),
+			reqMonth = reqDateTimeLocal,	// I don't know the detailed version of Chrome
 			reqMaxlength = !('maxLength' in test2),
 			reqFormAttr = !('form' in test1) || !('formAction' in test1) || android,
 			reqDatalist = !('autocomplete' in test1) || !('list' in test1),
@@ -245,37 +244,45 @@
 			// when from has simply "novalidate" rather than "novalidate='novalidate'"
 			$novalidate = !!outerHTML(form).match(/^[^>]+ novalidate/);
 
-			/**
-			 * Spin number or time
-			 * @param {object} ui	- ui.
-			 * @param {bool} isDown	- isDown.
-			 * @return {object}		-- this.
-			 */
+			var evNumber = function(ev) {
+				var allow = [8, 9, 35, 36, 37, 39, 46, 58, 186, 190];
+				var cc = ev.charCode || ev.keyCode;
+				return (($.inArray(cc, allow) >= 0) || (cc >= 48 && cc <= 57));
+			}
 			var spinShift = false,
 				spinCtrl = false;
-			var spin = function(ui, isDown) {
-				var	isNumber = (ui.hasClass('h5form-number')),
-					min = attr2num(ui, 'min', (isNumber) ? '' : 0),
-					max = attr2num(ui, 'max', (isNumber) ? '' : 86400),
-					step = step0 = attr2num(ui, 'step', (isNumber) ? 1 : 60),
-					base = (isNumber) ? min : 0,
-					val = (isNumber) ? Number(ui.val()) : str2sec(ui.val(), true);
 
-				if (!isNumber) {
-					if (spinShift) step = 3600;
-					else if (spinCtrl) step = step0;
-					else step = (step0 < 600) ? 600 : step0;
-				}
+			var spinAcc = (function(ev, flag) {
+				var cc = ev.charCode || ev.keyCode;
+				if (cc == 17) spinCtrl = flag;
+				if (cc == 16) spinShift = flag;
+			});
+
+			$('body')
+				.unbind('keydown', spinAcc)
+				.unbind('keyup', spinAcc)
+				.keydown(function(ev) { spinAcc(ev, true); })
+				.keyup(function(ev) { spinAcc(ev, false); });
+
+			var spinTime = function(ui, isDown) {
+				var min = attr2num(ui, 'min', 0),
+					max = attr2num(ui, 'max', 86400),
+					step = step0 = attr2num(ui, 'step', 60),
+					base = 0,
+					val = str2sec(ui.val(), true);
+
+				if (spinShift) step = 3600;
+				else if (spinCtrl) step = step0;
+				else step = (step0 < 600) ? 600 : step0;
 
 				val = val - ((val - base) % step) + step * ((isDown) ? -1 : 1);
 
 				if ((max || max == '0') && val > max) val = max;
 				if ((min || min == '0') && val < min) val = min;
 
-				ui.val((isNumber) ? val : sec2str(val, step % 60, true));
+				ui.val(sec2str(val, step % 60, true));
 				return ui;
 			};
-
 			/**
 			 * For each control function
 			 * @return {object} -- this.
@@ -306,72 +313,52 @@
 						  .removeAttr('placeholder');
 					}
 
-					// Spin button
-					if (
-						(reqSpin && type == 'number') ||
-						(reqTime && type == 'time') ||
-						false) {
-						var className, allow;
-						ui = typeTo(ui, 'text', type);
-						switch (type) {
-						case 'number':
-							className = opts.classSpinNumber;
-							allow = [8, 9, 35, 36, 37, 39, 46, 190];
-							break;
-						default:
-							className = opts.classSpinTime;
-							allow = [8, 9, 35, 36, 37, 39, 46, 58, 186, 190];
-							break;
+					if ('spinner' in ui) {
+						if (reqSpin && type == "number")
+						{
+							ui = typeTo(ui, 'text', type).spinner()
+								.unbind('keydown', evNumber).keydown(evNumber);
 						}
+						if (reqTime && type == 'time')
+						{
+							ui = typeTo(ui, 'text', type).spinner({spin: function() {return false;} });
 
-						// Keydown event attach
-						var spinAcc = (function(ev, flag) {
-							var cc = ev.charCode || ev.keyCode;
-							if (cc == 17) spinCtrl = flag;
-							if (cc == 16) spinShift = flag;
-						});
-						var evKeydown = (function(ev) {
-							var cc = ev.charCode || ev.keyCode;
-							if (cc == 38) spin(ui, 0);
-							if (cc == 40) spin(ui, 1);
-							if (($.inArray(cc, allow) >= 0) || (cc >= 48 && cc <= 57)) return true;
-							return false;
-						});
-						if (type == 'time' && ('mask' in ui)) {
-							ui.unbind('mask').mask(opts.maskTime);
-						}
-						else {
-							ui.unbind('keydown', evKeydown).keydown(evKeydown);
-						}
+							if (('mask' in ui)) {
+								ui.unbind('mask').mask(opts.maskTime);
+							}
 
-						if (opts.addSpin) {
-							ui.after('<span class="' + className + '">' +
-									 '<button type="button">&and;</button>' +
-									 '<button type="button">&or;</button></span>');
-
-							// Click button
-							ui.next().children()
+							wi = ui.spinner('widget');
+							wi.find('.ui-icon')
 							.attr('title', opts.msgSpin)
 							.click(function() {
-								spin(ui, ui.next().children().index($(this))).change().blur();
-								// change for Chrome
-								// blur for mask
-							})
-							.keydown(function(ev) { spinAcc(ev, true); })
-							.keyup(function(ev) { spinAcc(ev, false); });
+								spinTime(ui, $(this).parents('.ui-spinner').find('.ui-icon').index($(this))).change().blur();
+							});
 						}
 					}
-
 					// Datepicker
-					if (reqDate && (type == 'date')) {
+					if ((reqDate && type == 'date') || (reqMonth && type == 'month')) {
+						var mask;
 						if ('datepicker' in ui) {
 							var option = opts.datepicker;
-							option.minDate = getAttr(ui, 'min');
-							option.maxDate = getAttr(ui, 'max');
+							switch(type) {
+							case 'date':
+								option.dateFormat = 'yy-mm-dd';
+								option.minDate = getAttr(ui, 'min');
+								option.maxDate = getAttr(ui, 'max');
+								mask = opts.maskDate;
+								break;
+							case 'month':
+								option.dateFormat = 'yy-mm';
+								mask = opts.maskMonth;
+								// Datepicker has a bug in minDate and maxDate of yy-mm
+								option.minDate = '';
+								option.maxDate = '';
+								break;
+							}
 							ui = typeTo(ui, 'text', type).datepicker(option);
 						}
 						if ('mask' in ui) {
-							ui.unbind('mask').mask(opts.maskDate);
+							ui.unbind('mask').mask(mask);
 						}
 					}
 					// Slider
@@ -397,46 +384,42 @@
 						// Keypress event attach
 						var evKeypress = (function(ev) {
 							var cc = ev.charCode || ev.keyCode;
-							if (($.inArray(cc, [8, 9, 37, 39, 46]) < 0) &&
-								(this.value.length >= maxlength)) {
-								return false;
-							}
-							return true;
+							return (($.inArray(cc, [8, 9, 37, 39, 46]) >= 0) ||
+									(this.value.length < maxlength));
 						});
 						ui.unbind('keypress', evKeypress).keypress(evKeypress);
 					}
 
 					// Datetime
-					if (isLocal = (reqDateTimeLocal && type == 'datetime-local') || (reqDateTime && type == 'datetime')) {
-						if (!ui.next().hasClass(opts.classDatetime)) {
-							var val = getLocalDatetime(ui.val(), isLocal),
-								min = getLocalDatetime(getAttr(ui, 'min'), isLocal),
-								max = getLocalDatetime(getAttr(ui, 'max'), isLocal),
-								tz = (type == 'datetime') ?
-									'<span class="h5form-timezone">' + getTZ() + '</span>' : '';
+					if ((isLocal = (reqDateTimeLocal && type == 'datetime-local')) || (reqDateTime && type == 'datetime')) {
+						ui = typeTo(ui, 'text', type);
+						var val = getLocalDatetime(ui.val(), isLocal),
+							min = getLocalDatetime(getAttr(ui, 'min'), isLocal),
+							max = getLocalDatetime(getAttr(ui, 'max'), isLocal),
+							tz = (type == 'datetime') ?
+								'<span class="h5form-timezone">' + getTZ() + '</span>' : '';
 
-							ui.hide().after(
-								'<span class="' + opts.classDatetime + '">' +
+						ui.hide().after(
+							'<span class="' + opts.classDatetime + '">' +
 
-								'<input type="date" value="' + val[0] + '"' +
-								' min="' + min[0] + '" max="' + max[0] + '"' +
-								' size="' + getAttr(ui, 'size') + '"' +
-								' class="' + getAttr(ui, 'class') + '"' +
-								' title="' + getAttr(ui, 'title') + '">' +
+							'<input type="date" value="' + val[0] + '"' +
+							' min="' + min[0] + '" max="' + max[0] + '"' +
+							' size="' + getAttr(ui, 'size') + '"' +
+							' class="' + getAttr(ui, 'class') + '"' +
+							' title="' + getAttr(ui, 'title') + '">' +
 
-								'<input type="time" value="' + val[1] + '"' +
-								' step="' + attr2num(ui, 'step', 60) + '"' +
-								' size="' + getAttr(ui, 'size') + '"' +
-								' class="' + getAttr(ui, 'class') + '"' +
-								' title="' + getAttr(ui, 'title') + '">' +
-								tz +
-								'</span>');
-							if (getAttr(ui, 'required')) {
-								ui.removeAttr('required');
-								initControl(ui.next().children().attr('required', 'required'));
-							} else {
-								initControl(ui.next().children());
-							}
+							'<input type="time" value="' + val[1] + '"' +
+							' step="' + attr2num(ui, 'step', 60) + '"' +
+							' size="' + getAttr(ui, 'size') + '"' +
+							' class="' + getAttr(ui, 'class') + '"' +
+							' title="' + getAttr(ui, 'title') + '">' +
+							tz +
+							'</span>');
+						if (getAttr(ui, 'required')) {
+							ui.removeAttr('required');
+							initControl(ui.next().children().attr('required', 'required'));
+						} else {
+							initControl(ui.next().children());
 						}
 					}
 					if ((reqDatalist) &&
@@ -556,92 +539,98 @@
 						// Number, Date, Time
 						if (
 							(reqNumber && type == 'number') ||
-							((reqDateTimeLocal || reqDateTime) && (type == 'date' || type == 'time')) ||
+							(reqDate && type == 'date') || (reqTime && type == 'time') || (reqMonth && type == 'month') ||
 							false) {
 							isNecessary = true;
 
 							// Set values to local
-							var ui0 = ui, type0 = type, ui2 = ui;
+							var ui0 = ui, type0 = type, $ui = ui;
 							// Is this control within datetime?
-							if (ui.parent().hasClass(opts.classDatetime)) {
-								ui0 = ui.parent().prev();	// hidden datetime control
+							var uiParent = ui.parents('.' + opts.classDatetime);
+							if (uiParent.length) {
+								ui0 = uiParent.prev();	// hidden datetime control
 								// datetime or datetime-local
-								type0 = getAttr(ui0, 'type').toLowerCase();
+								type0 = getAttr(ui0, 'class').replace(/.*h5form-([^ ]+).*/, '$1').toLowerCase();
 								var isLocal = (type0 == 'datetime-local');
 
-								ui2 = ui.parent().children('input');	// a set of date & time
-//								setCustomValidity(ui2, '');
-								var i = ui2.index(ui), date = ui2.eq(0).val(), time = ui2.eq(1).val();
-								if (date != '' || time != '') {
-									// Complement the other control if empty
-									if (date == '' || time == '') {
-										// use min value
-										var min = getLocalDatetime(getAttr(ui0, 'min'), isLocal, true);
-										if (i == 0 && date != '' && time == '') { ui2.eq(1).val(min[1]).change().blur(); }
-										if (i == 1 && time != '' && date == '') { ui2.eq(0).val(min[0]).change().blur(); }
-										date = ui2.eq(0).val(), time = ui2.eq(1).val();
-									}
-									// Copy to hidden datetime control
-									var val = $.trim(date + 'T' + time);
-									if (isLocal) {
-										ui0.val(val);
-									} else {
-										var dt = getUTCDatetime(val);
-										ui0.val(dt[0] + 'T' + dt[1]);
-									}
-								} else {
+								$ui = uiParent.find('input');
+								// ui2 is the other of data and time
+								var i = $ui.index(ui), ui2 = $ui.eq(1 - i);
+
+								if (ui.val() == '') {
+									ui2.val('');
 									ui0.val('');
+								} else {
+									if (ui2.val() == '') {
+										var min = getLocalDatetime(getAttr(ui0, 'min'), isLocal, true);
+										ui2.val(min[1 - i]).change().blur();
+									}
+									// i==0 ui: date, ui2: time / i==1: ui: time, ui2: date
+									ui0.val($.trim((i) ?
+										(ui2.val() + 'T' + ui.val()) : (ui.val() + 'T' + ui2.val())));
 								}
 							}
+							setCustomValidity($ui, '');
+
 							// Set validation parameters
 							var pattern = '^-?\\d+\\.?\\d*$',
 								min = 0,
-								step = 1,
-								msgError = opts.msgNumber;
+								step = 1;
 							switch (type0) {
 							case 'date':
-								pattern = '^\\d+-\\d+-\\d+$';
+								if (validateDate(ui0.val())) {
+									setCustomValidity($ui, opts.msgDate);
+									return true;
+								}
 								min = '1970-01-01';
 								step = 1;
-								msgError = opts.msgDate;
 								break;
 							case 'time':
-								pattern = '^\\d+:\\d+:?\\d*\\.?\\d*$';
+								if (validateTime(ui0.val())) {
+									setCustomValidity($ui, opts.msgTime);
+									return true;
+								}
 								min = '00:00';
 								step = 60;
-								msgError = opts.msgTime;
 								break;
 							case 'datetime':
-								pattern = '^\\d+-\\d+-\\d+T\\d+:\\d+:?\\d*\\.?\\d*Z$';
-								min = '1970-01-01T00:00';
-								step = 60;
-								msgError = opts.msgDatetime;
-								break;
 							case 'datetime-local':
-								pattern = '^\\d+-\\d+-\\d+T\\d+:\\d+:?\\d*\\.?\\d*$';
+								if (validateDatetime(ui0.val())) {
+									setCustomValidity($ui, opts.msgDatetime);
+									return true;
+								}
 								min = '1970-01-01T00:00';
 								step = 60;
-								msgError = opts.msgDatetime;
+								break;
+							case 'month':
+								pattern = '^\\d{4}-(0?\\d|1[012])$';
+								min = '1970-01-01';
+								// FALL THROUGH
+							default:
+								if (validateRe(ui0, pattern)) {
+									setCustomValidity($ui, opts.msgNumber);
+									return true;
+								}
 								break;
 							}
 							// Perform validtions
-							setCustomValidity(ui2, '');
 
-							if (validateRe(ui0, pattern)) {
-								setCustomValidity(ui2, msgError);
-								return true;
-							}
 							if (validateStep(ui0, min, step)) {
-								setCustomValidity(ui2, opts.msgStep);
+								setCustomValidity($ui, opts.msgStep);
 								return true;
 							}
 							if (validateMin(ui0)) {
-								setCustomValidity(ui2, opts.msgMin.replace(/#/, getAttr(ui0, 'min')));
+								setCustomValidity($ui, opts.msgMin.replace(/#/, getAttr(ui0, 'min')));
 								return true;
 							}
 							if (validateMax(ui0)) {
-								setCustomValidity(ui2, opts.msgMax.replace(/#/, getAttr(ui0, 'max')));
+								setCustomValidity($ui, opts.msgMax.replace(/#/, getAttr(ui0, 'max')));
 								return true;
+							}
+
+							if (type0 == 'datetime' && ui0.val()) {
+								var dt = getUTCDatetime(ui0.val());
+								ui0.val(dt[0] + 'T' + dt[1]);
 							}
 						}
 						return isNecessary;
@@ -785,6 +774,20 @@
 			re = new RegExp(pattern, flags);
 			return ((item.val() != '') && item.val().search(re));
 		}
+		function validateTime(val) {
+			var sec = val.match(/\d+:\d+:\d+/);
+			return (val && sec2str(str2sec(val,true), sec, true) != val);
+		}
+		function validateDate(val) {
+			var arr;
+			return (val && (arr = getUTCDatetime(val + ' 00:00Z')) && arr[0] != val);
+		}
+		function validateDatetime(val) {
+			if (!val) return false;
+			var arr = val.split(/[TZ ]/);	// remove Z of end
+			return (validateDate(arr[0]) || validateTime(arr[1]));
+		}
+
 		function validateMaxlength(item) {
 			var len = item.val().length,
 				max = attr2num(item, 'maxlength', 0);
@@ -834,12 +837,12 @@
 		}
 		function sec2str(time, sec, gmt) {
 			var date = new Date(time * 1000);
-			ret = (gmt) ? date.toUTCString() : toString();
+			ret = (gmt) ? date.toUTCString() : date.toString();
 			return ret.replace((sec) ? /.* (\d+:\d+:\d+).*$/ : /.* (\d+:\d+).*$/, '$1');
 		}
 		function getLocalDatetime(val, isLocal, NullIsToday) {
 			if (!val && !NullIsToday) return new Array('', '');
-			if (isLocal) return val.split(/[T ]/);
+			if (isLocal) return val.replace(/(:\d+):00$/, '$1').split(/[T ]/);
 
 			// string to date for TZ
 			var dt = (!val) ? new Date() : new Date(utc2js(val)),

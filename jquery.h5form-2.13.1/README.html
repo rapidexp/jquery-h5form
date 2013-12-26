@@ -13,6 +13,8 @@ header { display: block; color: white; background-color: black; padding: 1em 2em
 header a { color: yellow; }
 header #lang { position: absolute; top: 1em; right: 2em; }
 header #lang li { display: inline-block; margin-left: 1em; }
+header #toc { margin-top: 3em; }
+header #toc li { display: inline-block; margin-left: 1em; }
 footer { display: block; margin-top: 6em; padding: 1em; color: white; background-color: black; }
 footer a { color: yellow; }
 section { display: block; margin: 1em; padding-bottom: 2em; }
@@ -104,6 +106,20 @@ $(function() {
 	  <ul id="lang">
 		<li><a href="./README_ja.html">日本語</a></li>
 		<li>English</li>
+	  </ul>
+
+	  <ul id="toc">
+		<li><a href="#support">Supported Forms</a></li>
+		<li><a href="#download">Download</a></li>
+		<li><a href="#installation">Installation</a></li>
+		<li><a href="#options">Options</a></li>
+		<li><a href="#utilities">Utilities</a></li>
+		<li><a href="#placeholder">Placeholder</a></li>
+		<li><a href="#balloon">Balloon messages</a></li>
+		<li><a href="#recommendation">Recommendation</a></li>
+		<li><a href="#note">Note</a></li>
+		<li><a href="#thanks">Thanks</a></li>
+		<li><a href="#histories">Histories</a></li>
 	  </ul>
 
 	</header>
@@ -414,17 +430,17 @@ $(function() {
 		  </tr>
 
 		  <tr>
-			<th>- Month state<sup>*3</sup></th>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
-			<td>x</td>
+			<th>- Month state<sup></sup></th>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
+			<td>E</td>
 			<td>S</td>
-			<td>x</td>
+			<td>E</td>
 			<td>S</td>
-			<td>x</td>
+			<td>E</td>
 		  </tr>
 
 		  <tr>
@@ -648,7 +664,7 @@ $(function() {
 
 	  <p>
 		Please download
-		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.12.3.zip" target="_blank">jquery.h5form-2.12.3.zip</a>
+		<a href="http://www.rapidexp.com/archives/jquery.h5form-2.13.1.zip" target="_blank">jquery.h5form-2.13.1.zip</a>
 	  </p>
 
 
@@ -665,7 +681,7 @@ $(function() {
 	  <p>
 		And if you wish, you can get a smaller size javascript by removing unnecessary features.<br>
 		Please uncheck the unnecessary features and click the download button.
-		Oh yes, you must have the <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.12.3/css/jquery.h5form-2.12.3.css" target="_blank">style sheet</a> included in the archive above to the other.
+		Oh yes, you must have the <a href="https://github.com/rapidexp/jquery-h5form/blob/master/jquery.h5form-2.13.1/css/jquery.h5form-2.13.1.css" target="_blank">style sheet</a> included in the archive above to the other.
 	  </p>
 
 	  <p>
@@ -706,9 +722,9 @@ $(function() {
 	  </p>
 
 <pre class="source">
-&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.3.css"&gt;
+&lt;link rel="stylesheet" href="/css/jquery.h5form-2.13.1.css"&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="/js/jquery.h5form-2.12.3.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form-2.13.1.min.js"&gt;&lt;/script&gt;
 
 &lt;script&gt;
 $(function() {
@@ -724,8 +740,8 @@ $(function() {
 	  <h3>jQuery UI</h3>
 
 	  <p>
-		If you wisth, please install the jQeury UI for the date, the range and the autocomplete.<br>
-		On the element of the date or the range, the datepicker or the slider will be automatically handle.
+		If you wisth, please install the jQeury UI for the date, the number, the range and the autocomplete.<br>
+		The datepicker, the spinner or the slider will be automatically handle on these elements.
 	  </p>
 
 <pre class="source">
@@ -882,25 +898,26 @@ $('form').h5form({
 
 		  <tr>
 			<td>datepicker</td>
-			<td>{
-			  dateFormat: 'yy-mm-dd',<br>
-			  onClose: function() { $(this).blur(); }
-			  }</td>
+			<td>{ onClose: function() { $(this).blur(); } }</td>
 			<td>
 			  The options of the datepicker. See the documents of the jQuery UI.<br>
-			  The maxDate and the minDate are determined by the attribute of the min and the max on the element.<br>
+			  The dateFormat is fixed "yy-mm-dd",
+			  and the maxDate and the minDate are determined by the attribute of the min and the max on the element.<br>
 			</td>
 		  </tr>
 
 		  <tr>
 			<td>maskDate</td>
 			<td>'9999-99-99'</td>
-			<td>Some plugin is { mask: '9999-99-99' }.</td>
+			<td rowspan="3">Some plugin is "{ mask: '9999-99-99' }".</td>
+		  </tr>
+		  <tr>
+			<td>maskMonth</td>
+			<td>'9999-99'</td>
 		  </tr>
 		  <tr>
 			<td>maskTime</td>
 			<td>'99:99'</td>
-			<td>Some plugin is { mask: '99-99' }</td>
 		  </tr>
 
 		  <tr>
@@ -960,7 +977,8 @@ $('form').h5form({
 					reqDate<br>
 					reqTime<br>
 					reqDateTimeLocal<br>
-					reqDateTime
+					reqDateTime<br>
+					reqMonth
 				  </td>
 				  <td>Use date-time userinterfaces of the plugin.</td>
 				</tr>
@@ -982,7 +1000,7 @@ $('form').h5form({
 
 	</section>
 
-	<section>
+	<section id="utilities">
 	  <h2>Utilities</h2>
 
 	  <p>
@@ -1031,7 +1049,7 @@ $('form').h5form({
 	</section>
 
 
-	<section>
+	<section id="placeholder">
 	  <h2>Placeholder</h2>
 
 	  <p>
@@ -1077,7 +1095,7 @@ $('form').h5form({
 	</section>
 
 
-	<section>
+	<section id="balloon">
 	  <h2>Balloon messages</h2>
 
 	  <p>
@@ -1154,7 +1172,7 @@ $('form').h5form({
 <pre class="source">
 &lt;!-- Style sheets --&gt;
 &lt;link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css"&gt;
-&lt;link rel="stylesheet" href="/css/jquery.h5form-2.12.3.css"&gt;
+&lt;link rel="stylesheet" href="/css/jquery.h5form-2.13.1.css"&gt;
 
 &lt;!-- jquery & jquery ui --&gt;
 &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"&gt;&lt;/script&gt;
@@ -1162,7 +1180,7 @@ $('form').h5form({
 
 &lt;!-- mask & h5form --&gt;
 &lt;script src="/js/jquery.maskedinput.js"&gt;&lt;/script&gt;
-&lt;script src="/js/jquery.h5form-2.12.3.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery.h5form-2.13.1.min.js"&gt;&lt;/script&gt;
 
 &lt;script"&gt;
 $(function() {
@@ -1182,12 +1200,14 @@ $(function() {
     msgMin: 'Please be greater than or equal to #.',
     msgMax: 'Please be less than or equal to #.',
     msgMaxlen: 'Too many # characters.',
+    msgSpin: 'Press Shift to vary a hour, or press Ctrl for with short steps.',
     // Unify UI between browsers with a calendar of jquery ui.
     options: {
       reqDateTimeLocal: true,
       reqDateTime: true,
       reqDate: true,
-      reqTime: true
+      reqTime: true,
+      reqMonth: true
     },
     // Calendar option (voluntarily)
     datepicker: {
@@ -1210,8 +1230,8 @@ $(function() {
 		When using the datetime-local state or the datetime state,
 		you need to be aware delimiter of date and time.<br>
 
-		The type of datetime of Mysql is "2013-10-02 12:32:00",
-		but the type of HTML5 is "2013-10-02T12:32:00" defined in the ISO-8601.
+		The type of datetime of Mysql is "2013-12-26 12:32:00",
+		but the type of HTML5 is "2013-12-26T12:32:00" defined in the ISO-8601.
 	  </p>
 	  <p>
 		Opera that was prior to HTML5 support recognizes the value of space-separated,
@@ -1250,10 +1270,26 @@ $(function() {
 	</section>
 
 
-	<section id="history">
-	  <h2>History</h2>
+	<section id="histories">
+	  <h2>Histories</h2>
 
-	  <h3>Version 2.12.3		(2013-10-02)</h3>
+	  <h3>Version 2.13.1		(2013-12-26)</h3>
+
+	  <ul>
+		<li>Use the spinner of jquery ui.</li>
+		<li>Fixed a bug of the datetime-local that replaced utc time.
+		<li>Fixed a bug of the datetime-local and the datetime with empty value.
+	  </ul>
+
+	  <h3>Version 2.13.0 (2013-11-21)</h3>
+
+	  <ul>
+		<li>The date validateion on the Gregorian calendar in states of date, datetime-local and datetime.</li>
+		<li>Fixed a bug of the intialization in a datetime state.</li>
+		<li>Added support type=month.</li>
+	  </ul>
+
+	  <h3>Version 2.12.3 (2013-10-02)</h3>
 
 	  <ul>
 		<li>Unified the processing of an unjust date on input and output in a datetime-local state.</li>

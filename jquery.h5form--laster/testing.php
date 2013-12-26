@@ -42,7 +42,7 @@ section { display: block; margin: 1em; padding-bottom: 2em; }
 
 <script>
 $(function() {
-	$('form.h5form').h5form({
+	$('form.h5form0').h5form({
 		timeSpinRatio: 2,
 		datepicker: {
 			dateFormat: 'yy-mm-dd',
@@ -559,8 +559,8 @@ foreach ($_POST as $name => $value):
 </pre>
 		  </td>
 		  <td>
-			<form action="#test-9" method="post" class="h5form">
-			  <input type="datetime" name="input-9-gm" min="<?php echo gmdate('Y-m-d\TH:i:s', ceil(time()/1800)*1800).'Z';?>" step="1800" title="Every 30 minutes from now." value="<?=(isset($_POST['input-9-gm']))?$_POST['input-9-gm']:'';?>"><br>
+			<form action="#test-9" method="post" class="h5form0">
+			  <!--input type="datetime" name="input-9-gm" min="<?php echo gmdate('Y-m-d\TH:i:s', ceil(time()/1800)*1800).'Z';?>" step="1800" title="Every 30 minutes from now." value="<?=(isset($_POST['input-9-gm']))?$_POST['input-9-gm']:'';?>"><br-->
 			  <input type="datetime-local" name="input-9-lc" min="<?php echo date('Y-m-d\TH:i:s', ceil(time()/1800)*1800); ?>" step="1800" title="Every 30 minutes from now." value="<?=(isset($_POST['input-9-lc']))?$_POST['input-9-lc']:'';?>">
 			  <input type="submit" name="test-9" value="submit">
 			</form>

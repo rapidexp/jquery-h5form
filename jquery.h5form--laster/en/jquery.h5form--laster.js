@@ -612,7 +612,7 @@
 							if (uiParent.length) {
 								ui0 = uiParent.prev();	// hidden datetime control
 								// datetime or datetime-local
-								type0 = getAttr(ui0, 'class').replace(/.*h5form-(\w+).*/, '$1').toLowerCase();
+								type0 = getAttr(ui0, 'class').replace(/.*h5form-([^ ]+).*/, '$1').toLowerCase();
 								var isLocal = (type0 == 'datetime-local');
 
 								$ui = uiParent.find('input');
@@ -693,7 +693,7 @@
 								return true;
 							}
 
-							if (type0 == 'datetime') {
+							if (type0 == 'datetime' && ui0.val()) {
 								var dt = getUTCDatetime(ui0.val());
 								ui0.val(dt[0] + 'T' + dt[1]);
 							}

@@ -6,7 +6,7 @@
 	<title>Test of jQuery.h5form</title>
 
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css">
-	<link rel="stylesheet" href="css/jquery.h5form-2.13.0.css">
+	<link rel="stylesheet" href="css/jquery.h5form-2.13.1.css">
 
 <style>
 body, td, input, select, textarea { font-family: Meiryo, sans-serif; font-size: 10pt;  }
@@ -27,6 +27,8 @@ section { display: block; margin: 1em; padding-bottom: 2em; }
 .h5form-spinNumber button, .h5form-spinTime button { height: 12px; margin-top: 1px; }
 .delete  { color: gray; text-decoration: line-through; }
 .explanation { color: gray; font-style: italic;  }
+
+.ui-widget { font-size: 1em; }
 </style>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -35,7 +37,7 @@ section { display: block; margin: 1em; padding-bottom: 2em; }
 	<!-- mask フォーカスで反転するタイプ -->
 	<script src="/lib/jquery.maskedinput.js"></script>
 
-	<script src="en/jquery.h5form-2.13.0.js"></script>
+	<script src="en/jquery.h5form-2.13.1.js"></script>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 
 <script>

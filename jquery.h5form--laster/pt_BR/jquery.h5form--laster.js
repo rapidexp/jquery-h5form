@@ -41,20 +41,20 @@
 //# PLACEHOLDER
 			classPlaceholder: 'h5form-placeholder',
 //#
-			msgEmpty: 'Please enter this field.',
-			msgUnselect: 'Please select an item.',
-			msgUncheck: 'Please check this checkbox.',
-			msgPattern: 'Does not match the required pattern.',
-			msgEmail: 'E-mail address is not correct.',
-			msgUrl: 'URL is not correct.',
-			msgNumber: 'Number is not correct.',
-			msgDatetime: 'Date time is not correct.',
-			msgDate: 'Date is not correct.',
-			msgTime: 'Time is not correct.',
-			msgStep: 'Step is not correct.',
-			msgMin: 'Please be greater than or equal to #.',
-			msgMax: 'Please be less than or equal to #.',
-			msgMaxlen: 'Too many # characters.',
+			msgEmpty: 'Campo obrigatório.',
+			msgUnselect: 'Você preciso slecionar um item.',
+			msgUncheck: 'Você precisa confirmar.',
+			msgPattern: 'Não esta de acordo com o padrão requerido.',
+			msgEmail: 'E-mail em formato inválido.',
+			msgUrl: 'URL é inválida.',
+			msgNumber: 'Número incorreto.',
+			msgDatetime: 'Data e horas incorretos.',
+			msgDate: 'Data incorreta.',
+			msgTime: 'Horas incorreta.',
+			msgStep: 'Limite incorreto.',
+			msgMin: 'Entre com um valor maior ou igual a #.',
+			msgMax: 'Entre com um valor menor ou iqual a #.',
+			msgMaxlen: 'O máximo de caracteres é de #.',
 //# NUMBER
 			classRange: 'h5form-range',
 //# DATETIME
@@ -66,7 +66,7 @@
 			maskDate: '9999-99-99',
 			maskMonth: '9999-99',
 			maskTime: '99:99',
-			msgSpin: 'Press Shift to vary a hour, or press Ctrl for with short steps.',
+			msgSpin: 'Pressione "Shift" para mudar a hora, ou pressione "Ctrl" para passos menores.',
 //#
 			options: {},
 			dynamicHtml: '.h5form-dynamic'

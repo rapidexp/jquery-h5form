@@ -3,6 +3,7 @@
  *	Version 2.13.1 / Portuguese Brazil
  *
  *	Author: by Yoshiyuki Mikomde http://www.rapidexp.com/h5form
+ *      Translator: Job Diogenes Ribeiro Borges - https://github.com/jobdiogenes
  *
  *	Copyright (c) 2012 - 2013 Yoshiyuki Mikome (http://www.rapidexp.com)
  *	Dual licensed under the MIT (MIT-LICENSE.txt)
